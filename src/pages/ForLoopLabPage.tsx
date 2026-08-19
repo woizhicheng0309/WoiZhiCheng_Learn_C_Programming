@@ -39,6 +39,7 @@ import {
 } from '../data'
 import { isForLoopLessonCompleted } from '../state'
 import { useLearningProgress } from '../hooks/useLearningProgress'
+import { NestedLoopLab } from '../components/NestedLoopLab'
 
 const phaseLabels: Record<LoopPhase, string> = {
   init: '初始化',
@@ -355,7 +356,7 @@ export function ForLoopLabPage() {
               <Link className="back-link" to="/learn"><ArrowLeft size={16} /> 回到課程地圖</Link>
               <span className="section-kicker">LESSON 03 · LOOPS</span>
               <h1>看見 <em>for</em> 迴圈<br />一步一步執行。</h1>
-              <p>調整四個參數，再用播放或單步控制，跟著電腦走過初始化、判斷、執行與更新。</p>
+              <p>先調整參數看懂單層 for，再用可變尺寸的乘法表，觀察兩層迴圈如何一起執行。</p>
             </motion.div>
             <motion.div
               className={lessonCompleted ? 'lesson-status-card complete' : 'lesson-status-card'}
@@ -468,6 +469,8 @@ export function ForLoopLabPage() {
           </div>
         </div>
       </section>
+
+      <NestedLoopLab />
 
       <section className="challenge-section">
         <div className="page-width">

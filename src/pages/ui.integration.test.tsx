@@ -238,6 +238,55 @@ describe('ForLoopLabPage execution controls', () => {
   })
 })
 
+describe('ForLoopLabPage nested-loop multiplication table', () => {
+  it('starts at 9 by 9 and rebuilds the table and C source for a by b', () => {
+    renderLab()
+
+    expect(screen.getByRole('table', { name: '9 × 9 乘法表，已完成 0 格' })).toBeInTheDocument()
+
+    setLabNumber(/外層上限 a/, 3)
+    setLabNumber(/內層上限 b/, 4)
+
+    expect(screen.getByRole('table', { name: '3 × 4 乘法表，已完成 0 格' })).toBeInTheDocument()
+    expect(screen.getByText(/共執行/)).toHaveTextContent('共執行 12 次內層迴圈')
+    expect(screen.getByLabelText('巢狀 for 迴圈 C 程式碼')).toHaveTextContent('int a = 3;')
+    expect(screen.getByLabelText('巢狀 for 迴圈 C 程式碼')).toHaveTextContent('int b = 4;')
+  })
+
+  it('single-steps cells row by row and explains when the inner loop resets', () => {
+    renderLab()
+    setLabNumber(/外層上限 a/, 2)
+    setLabNumber(/內層上限 b/, 2)
+
+    fireEvent.click(screen.getByRole('button', { name: '巢狀迴圈執行下一步' }))
+    expect(screen.getByLabelText('巢狀迴圈目前狀態')).toHaveTextContent('計算 1 × 1 = 1')
+    expect(screen.getByRole('cell', { name: '1 乘以 1 等於 1，已產生' })).toHaveClass('active')
+
+    fireEvent.click(screen.getByRole('button', { name: '巢狀迴圈執行下一步' }))
+    expect(screen.getByLabelText('巢狀迴圈目前狀態')).toHaveTextContent('計算 1 × 2 = 2')
+    expect(screen.getByLabelText('巢狀迴圈目前狀態')).toHaveTextContent('j 重設為 1')
+    expect(screen.getByLabelText('巢狀迴圈目前狀態')).toHaveTextContent('i 增加為 2')
+
+    fireEvent.click(screen.getByRole('button', { name: '巢狀迴圈執行下一步' }))
+    expect(screen.getByLabelText('巢狀迴圈目前狀態')).toHaveTextContent('計算 2 × 1 = 2')
+  })
+
+  it('plays the animation at the selected speed and pauses in place', () => {
+    vi.useFakeTimers()
+    renderLab()
+    setLabNumber(/外層上限 a/, 1)
+    setLabNumber(/內層上限 b/, 2)
+
+    fireEvent.click(screen.getByRole('button', { name: '開始巢狀迴圈動畫' }))
+    act(() => vi.advanceTimersByTime(280))
+    expect(screen.getByLabelText('巢狀迴圈目前狀態')).toHaveTextContent('計算 1 × 1 = 1')
+
+    fireEvent.click(screen.getByRole('button', { name: '暫停巢狀迴圈動畫' }))
+    act(() => vi.advanceTimersByTime(560))
+    expect(screen.getByLabelText('巢狀迴圈目前狀態')).toHaveTextContent('計算 1 × 1 = 1')
+  })
+})
+
 describe('ForLoopLabPage challenges and local progress', () => {
   it('accepts all three exact output sequences and persists lesson completion', () => {
     renderLab()

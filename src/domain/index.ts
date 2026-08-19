@@ -19,6 +19,15 @@ export {
 } from './foundationSimulator'
 
 export {
+  MULTIPLICATION_TABLE_LIMITS,
+  simulateNestedMultiplicationTable,
+  type MultiplicationCell,
+  type NestedLoopFrame,
+  type NestedLoopPhase,
+  type NestedLoopSimulation,
+} from './nestedLoopSimulator'
+
+export {
   COMPARATORS,
   DEFAULT_LOOP_CONFIG,
   LOOP_LIMITS,

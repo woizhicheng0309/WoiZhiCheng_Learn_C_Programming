@@ -5,6 +5,7 @@ import { MotionConfig } from 'motion/react'
 import App from './App'
 import './styles.css'
 import './foundation-lessons.css'
+import './nested-loop.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
