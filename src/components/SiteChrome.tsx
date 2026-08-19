@@ -5,8 +5,10 @@ import { Link, NavLink } from 'react-router-dom'
 
 const navItems = [
   { to: '/', label: '首頁', end: true },
-  { to: '/learn', label: '課程地圖' },
-  { to: '/learn/loops/for', label: 'for 迴圈實驗室' },
+  { to: '/learn', label: '課程地圖', end: true },
+  { to: '/learn/variables', label: '變數與運算' },
+  { to: '/learn/conditionals', label: '條件判斷' },
+  { to: '/learn/loops/for', label: 'for 迴圈' },
 ]
 
 export function SiteHeader() {

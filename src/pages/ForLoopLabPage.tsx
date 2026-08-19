@@ -353,7 +353,7 @@ export function ForLoopLabPage() {
               animate={{ opacity: 1, y: 0 }}
             >
               <Link className="back-link" to="/learn"><ArrowLeft size={16} /> 回到課程地圖</Link>
-              <span className="section-kicker">LESSON 01 · LOOPS</span>
+              <span className="section-kicker">LESSON 03 · LOOPS</span>
               <h1>看見 <em>for</em> 迴圈<br />一步一步執行。</h1>
               <p>調整四個參數，再用播放或單步控制，跟著電腦走過初始化、判斷、執行與更新。</p>
             </motion.div>
@@ -539,7 +539,7 @@ export function ForLoopLabPage() {
               <button type="button" onClick={() => setShowClearConfirm(true)}><Trash2 size={15} /> 清除這台裝置的學習進度</button>
             ) : (
               <div className="clear-confirm" role="alert">
-                <span>確定要清除所有挑戰與參數紀錄嗎？這個動作無法復原。</span>
+                <span>確定要清除所有單元、挑戰與參數紀錄嗎？這個動作無法復原。</span>
                 <button type="button" onClick={clearAllProgress}>確定清除</button>
                 <button type="button" onClick={() => setShowClearConfirm(false)}>取消</button>
               </div>

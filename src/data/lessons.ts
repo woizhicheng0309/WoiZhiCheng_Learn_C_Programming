@@ -23,28 +23,28 @@ export interface LessonDefinition {
  * The ordered course map displayed on the learning page.
  *
  * A null path is intentional: coming-soon cards must not navigate to an empty
- * lesson page. The loops card is the only lesson available in the MVP.
+ * lesson page. The first three foundation lessons are currently available.
  */
 export const LESSONS: readonly LessonDefinition[] = [
   {
     id: 'variables',
     order: 1,
-    title: '變數',
-    englishTitle: 'Variables',
-    description: '認識資料型別、命名與賦值，學會把資料存進程式。',
-    topics: ['資料型別', '宣告', '賦值'],
-    status: 'coming-soon',
-    path: null,
+    title: '變數與運算',
+    englishTitle: 'Variables & Operators',
+    description: '從宣告、賦值到整數運算，觀察資料如何被存放與重新計算。',
+    topics: ['資料型別', '賦值', '算術運算子'],
+    status: 'available',
+    path: '/learn/variables',
   },
   {
     id: 'conditionals',
     order: 2,
     title: '條件判斷',
     englishTitle: 'Conditionals',
-    description: '用條件讓程式做選擇，理解不同分支何時執行。',
-    topics: ['if', 'else', '比較運算子'],
-    status: 'coming-soon',
-    path: null,
+    description: '把比較組合成 true 或 false，實際看見 if/else 選中哪一條路。',
+    topics: ['if / else', '比較運算子', '邏輯運算子'],
+    status: 'available',
+    path: '/learn/conditionals',
   },
   {
     id: 'loops',

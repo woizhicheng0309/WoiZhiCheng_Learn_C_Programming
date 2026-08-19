@@ -6,6 +6,8 @@ import { CHALLENGE_IDS } from '../data/challenges'
 import { createDefaultProgress, PROGRESS_STORAGE_KEY, saveProgress } from '../state'
 import { ForLoopLabPage } from './ForLoopLabPage'
 import { HomePage } from './HomePage'
+import { VariablesLessonPage } from './VariablesLessonPage'
+import { ConditionalsLessonPage } from './ConditionalsLessonPage'
 
 function renderHome() {
   return render(
@@ -19,6 +21,22 @@ function renderLab() {
   return render(
     <MemoryRouter>
       <ForLoopLabPage />
+    </MemoryRouter>,
+  )
+}
+
+function renderVariablesLesson() {
+  return render(
+    <MemoryRouter>
+      <VariablesLessonPage />
+    </MemoryRouter>,
+  )
+}
+
+function renderConditionalsLesson() {
+  return render(
+    <MemoryRouter>
+      <ConditionalsLessonPage />
     </MemoryRouter>,
   )
 }
@@ -78,6 +96,73 @@ describe('HomePage interactive loop preview', () => {
     expect(source).toHaveTextContent('for (int i = 2; i < 8; i += 2) {')
     expect(screen.getByLabelText('輸出：2 4 6')).toBeInTheDocument()
     expect(screen.getByText('3 次迭代')).toBeInTheDocument()
+  })
+})
+
+describe('VariablesLessonPage interactive lesson', () => {
+  it('updates the integer expression and explains division by zero', () => {
+    renderVariablesLesson()
+
+    expect(screen.getByRole('status')).toHaveTextContent('8 + 3 = 11')
+    fireEvent.change(screen.getByRole('spinbutton', { name: /變數 a/ }), {
+      target: { value: '7' },
+    })
+    fireEvent.change(screen.getByRole('spinbutton', { name: /變數 b/ }), {
+      target: { value: '2' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: /\/.*除/ }))
+
+    expect(screen.getByLabelText(/整數運算 C 程式碼/)).toHaveTextContent('int result = a / b;')
+    expect(screen.getByRole('status')).toHaveTextContent('7 / 2 = 3')
+    expect(screen.getByRole('status')).toHaveTextContent('小數部分會被捨去')
+
+    fireEvent.change(screen.getByRole('spinbutton', { name: /變數 b/ }), {
+      target: { value: '0' },
+    })
+    expect(screen.getByRole('status')).toHaveTextContent('無法計算')
+    expect(screen.getByRole('status')).toHaveTextContent('除數不能是 0')
+  })
+
+  it('records lesson completion after all three answers are correct', () => {
+    renderVariablesLesson()
+
+    fireEvent.click(within(screen.getByRole('radiogroup', { name: /哪一個是變數名稱/ })).getByRole('radio', { name: 'score' }))
+    fireEvent.click(within(screen.getByRole('radiogroup', { name: /result 會得到多少/ })).getByRole('radio', { name: '3' }))
+    fireEvent.click(within(screen.getByRole('radiogroup', { name: /取餘數運算/ })).getByRole('radio', { name: '2' }))
+
+    expect(screen.getAllByText('單元完成').length).toBeGreaterThan(0)
+    expect(JSON.parse(window.localStorage.getItem(PROGRESS_STORAGE_KEY) ?? '{}')).toMatchObject({
+      completedLessonIds: ['variables'],
+    })
+  })
+})
+
+describe('ConditionalsLessonPage interactive lesson', () => {
+  it('shows how AND and OR choose different branches', () => {
+    renderConditionalsLesson()
+
+    expect(screen.getByRole('status')).toHaveTextContent('通過')
+    fireEvent.change(screen.getByRole('spinbutton', { name: /出席率 attendance/ }), {
+      target: { value: '65' },
+    })
+    expect(screen.getByRole('status')).toHaveTextContent('再練習')
+    expect(screen.getByRole('status')).toHaveTextContent('false')
+
+    fireEvent.click(screen.getByRole('button', { name: /\|\|.*一個就好/ }))
+    expect(screen.getByRole('status')).toHaveTextContent('通過')
+    expect(screen.getByRole('status')).toHaveTextContent('if 區塊')
+  })
+
+  it('records conditional lesson completion after all answers are correct', () => {
+    renderConditionalsLesson()
+
+    fireEvent.click(within(screen.getByRole('radiogroup', { name: /false.*else/ })).getByRole('radio', { name: 'else 區塊' }))
+    fireEvent.click(within(screen.getByRole('radiogroup', { name: /表達式會得到/ })).getByRole('radio', { name: 'false' }))
+    fireEvent.click(within(screen.getByRole('radiogroup', { name: /x 是 120/ })).getByRole('radio', { name: 'true' }))
+
+    expect(JSON.parse(window.localStorage.getItem(PROGRESS_STORAGE_KEY) ?? '{}')).toMatchObject({
+      completedLessonIds: ['conditionals'],
+    })
   })
 })
 
@@ -220,7 +305,8 @@ describe('App hash routes and keyboard semantics', () => {
       </HashRouter>,
     )
 
-    expect(screen.getByRole('heading', { name: /魏志成的\s*程式設計基礎\s*學習網站/ })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /程式設計基礎\s*學習網站/ })).toBeInTheDocument()
+    expect(screen.getByText('作者：魏志成')).toBeInTheDocument()
 
     const courseMapLink = screen.getByRole('link', { name: '課程地圖' })
     courseMapLink.focus()
@@ -231,7 +317,21 @@ describe('App hash routes and keyboard semantics', () => {
     expect(window.location.hash).toBe('#/learn')
     expect(screen.getByRole('link', { name: '課程地圖' })).toHaveAttribute('aria-current', 'page')
 
-    const labLink = screen.getByRole('link', { name: 'for 迴圈實驗室' })
+    const variablesLink = screen.getByRole('link', { name: '變數與運算' })
+    variablesLink.focus()
+    await user.keyboard('{Enter}')
+
+    expect(await screen.findByRole('heading', { name: /把資料放進變數/ })).toBeInTheDocument()
+    expect(window.location.hash).toBe('#/learn/variables')
+
+    const conditionalsLink = screen.getByRole('link', { name: '條件判斷' })
+    conditionalsLink.focus()
+    await user.keyboard('{Enter}')
+
+    expect(await screen.findByRole('heading', { name: /把問題變成真假/ })).toBeInTheDocument()
+    expect(window.location.hash).toBe('#/learn/conditionals')
+
+    const labLink = screen.getByRole('link', { name: 'for 迴圈' })
     labLink.focus()
     await user.keyboard('{Enter}')
 
@@ -247,7 +347,7 @@ describe('App hash routes and keyboard semantics', () => {
       </HashRouter>,
     )
 
-    expect(await screen.findByRole('heading', { name: /魏志成的\s*程式設計基礎\s*學習網站/ })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: /程式設計基礎\s*學習網站/ })).toBeInTheDocument()
     expect(window.location.hash).toBe('#/')
   })
 })

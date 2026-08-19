@@ -4,6 +4,8 @@ import { SiteFooter, SiteHeader } from './components/SiteChrome'
 import { HomePage } from './pages/HomePage'
 import { LearnPage } from './pages/LearnPage'
 import { ForLoopLabPage } from './pages/ForLoopLabPage'
+import { VariablesLessonPage } from './pages/VariablesLessonPage'
+import { ConditionalsLessonPage } from './pages/ConditionalsLessonPage'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -24,6 +26,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/learn" element={<LearnPage />} />
+          <Route path="/learn/variables" element={<VariablesLessonPage />} />
+          <Route path="/learn/conditionals" element={<ConditionalsLessonPage />} />
           <Route path="/learn/loops/for" element={<ForLoopLabPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

@@ -164,7 +164,8 @@ export function HomePage() {
             transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="eyebrow"><span>C PROGRAMMING LAB</span><i /></div>
-            <h1>魏志成的<br /><em>程式設計基礎</em><br />學習網站</h1>
+            <h1><em>程式設計基礎</em><br />學習網站</h1>
+            <p className="hero-author">作者：魏志成</p>
             <p className="hero-lead">調整參數，看見程式一步一步運行。</p>
             <p className="hero-description">
               不只背語法，而是親手改變程式、觀察結果，從每一次執行中建立真正的程式邏輯。
@@ -217,7 +218,7 @@ export function HomePage() {
       <section className="section course-highlight">
         <div className="page-width highlight-grid">
           <Reveal className="highlight-copy">
-            <span className="section-kicker">FIRST LESSON</span>
+            <span className="section-kicker">FEATURED LAB</span>
             <h2>從一個迴圈，<br />看懂程式的節奏。</h2>
             <p>完整的 for 迴圈實驗室，把一行看似複雜的語法拆成初始化、條件判斷、執行與更新四個清楚步驟。</p>
             <ul className="feature-list">
@@ -231,7 +232,7 @@ export function HomePage() {
           </Reveal>
 
           <Reveal className="lesson-poster" delay={0.1}>
-            <div className="poster-stamp">LESSON 01</div>
+            <div className="poster-stamp">LESSON 03</div>
             <div className="poster-loop" aria-hidden="true">
               <span>i = 0</span><i>→</i><span>i &lt; 5</span><i>→</i><span>i++</span>
             </div>
@@ -258,14 +259,14 @@ export function HomePage() {
           <Reveal className="section-heading center-heading">
             <span className="section-kicker">LEARNING PATH</span>
             <h2>一張持續成長的學習地圖</h2>
-            <p>從基礎語法到記憶體觀念，未來將逐步加入更多可互動的程式邏輯單元。</p>
+            <p>變數與運算、條件判斷和迴圈已經開放，從基礎語法一步步建立程式邏輯。</p>
           </Reveal>
           <Reveal className="topic-ribbon">
             {['變數與運算', '條件判斷', '迴圈', '函式', '陣列與字串', '指標'].map((topic, index) => (
-              <div className={topic === '迴圈' ? 'topic-pill available' : 'topic-pill'} key={topic}>
+              <div className={index < 3 ? 'topic-pill available' : 'topic-pill'} key={topic}>
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <strong>{topic}</strong>
-                <small>{topic === '迴圈' ? '現在開放' : '即將推出'}</small>
+                <small>{index < 3 ? '現在開放' : '即將推出'}</small>
               </div>
             ))}
           </Reveal>
@@ -281,7 +282,7 @@ export function HomePage() {
             <div className="closing-braces" aria-hidden="true">{'{ }'}</div>
             <span className="section-kicker light">READY TO EXPERIMENT?</span>
             <h2>不要只讀程式。<br />動手讓它跑起來。</h2>
-            <Link className="button button-light" to="/learn/loops/for">
+            <Link className="button button-light" to="/learn/variables">
               開始第一個實驗 <ArrowRight size={18} />
             </Link>
           </Reveal>

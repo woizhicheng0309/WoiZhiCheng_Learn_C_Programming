@@ -7,13 +7,14 @@ import {
   loadProgress,
   PROGRESS_STORAGE_KEY,
   saveProgress,
-  type ProgressV1,
+  type FoundationLessonId,
+  type ProgressV2,
 } from '../state'
 
-type ProgressUpdater = (current: ProgressV1) => ProgressV1
+type ProgressUpdater = (current: ProgressV2) => ProgressV2
 
 export function useLearningProgress() {
-  const [progress, setProgress] = useState<ProgressV1>(() => loadProgress())
+  const [progress, setProgress] = useState<ProgressV2>(() => loadProgress())
 
   useEffect(() => {
     const syncProgress = (event: StorageEvent) => {
@@ -33,6 +34,16 @@ export function useLearningProgress() {
 
   const markGuidedRunCompleted = useCallback(() => {
     updateProgress((current) => ({ ...current, guidedRunCompleted: true }))
+  }, [updateProgress])
+
+  const markLessonCompleted = useCallback((id: FoundationLessonId) => {
+    updateProgress((current) => {
+      if (current.completedLessonIds.includes(id)) return current
+      return {
+        ...current,
+        completedLessonIds: [...current.completedLessonIds, id],
+      }
+    })
   }, [updateProgress])
 
   const markChallengeCompleted = useCallback((id: ChallengeId) => {
@@ -59,6 +70,7 @@ export function useLearningProgress() {
   return {
     progress,
     updateProgress,
+    markLessonCompleted,
     markGuidedRunCompleted,
     markChallengeCompleted,
     rememberConfig,

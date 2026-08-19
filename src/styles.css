@@ -446,8 +446,16 @@ h4 {
   transform-origin: left;
 }
 
+.hero-author {
+  margin: 20px 0 0;
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
 .hero-lead {
-  margin: 28px 0 8px;
+  margin: 22px 0 8px;
   font-family: var(--serif);
   font-size: 1.32rem;
   font-weight: 600;

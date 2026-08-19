@@ -16,7 +16,7 @@ import type { LucideIcon } from 'lucide-react'
 import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { LESSONS, isLessonAvailable, type LessonDefinition, type LessonId } from '../data'
-import { isForLoopLessonCompleted } from '../state'
+import { isLessonCompleted } from '../state'
 import { Reveal } from '../components/Reveal'
 import { useLearningProgress } from '../hooks/useLearningProgress'
 
@@ -68,7 +68,10 @@ function LessonCard({ lesson, completed }: { lesson: LessonDefinition; completed
 
 export function LearnPage() {
   const { progress } = useLearningProgress()
-  const completed = isForLoopLessonCompleted(progress)
+  const availableLessons = LESSONS.filter(isLessonAvailable)
+  const completedLessonCount = availableLessons.filter((lesson) => isLessonCompleted(progress, lesson.id)).length
+  const nextLesson = availableLessons.find((lesson) => !isLessonCompleted(progress, lesson.id)) ?? availableLessons[0]
+  const allAvailableLessonsCompleted = completedLessonCount === availableLessons.length
 
   return (
     <div className="learn-page">
@@ -90,7 +93,7 @@ export function LearnPage() {
             >
               <span className="section-kicker">COURSE MAP</span>
               <h1>從第一行程式，<br />一路建立思考方式。</h1>
-              <p>每個主題都將抽象語法轉成能觀察、能改動、能反覆實驗的學習體驗。先從 for 迴圈開始，逐步擴充你的程式工具箱。</p>
+              <p>每個主題都將抽象語法轉成能觀察、能改動、能反覆實驗的學習體驗。從變數與運算開始，一路串起判斷與迴圈。</p>
             </motion.div>
 
             <motion.aside
@@ -103,13 +106,13 @@ export function LearnPage() {
                 <span>你的學習進度</span>
                 <Braces size={22} aria-hidden="true" />
               </div>
-              <strong>{progress.completedChallengeIds.length}<small>/3</small></strong>
-              <p>個 for 迴圈挑戰已完成</p>
+              <strong>{completedLessonCount}<small>/{availableLessons.length}</small></strong>
+              <p>個互動單元已完成</p>
               <div className="map-progress-track">
-                <motion.span initial={{ width: 0 }} animate={{ width: `${progress.completedChallengeIds.length / 3 * 100}%` }} />
+                <motion.span initial={{ width: 0 }} animate={{ width: `${completedLessonCount / availableLessons.length * 100}%` }} />
               </div>
-              <Link to="/learn/loops/for">
-                {progress.guidedRunCompleted ? '繼續上次進度' : '開始第一堂課'} <ArrowRight size={16} />
+              <Link to={nextLesson.path}>
+                {allAvailableLessonsCompleted ? '重溫第一堂課' : completedLessonCount > 0 ? `繼續：${nextLesson.title}` : '開始第一堂課'} <ArrowRight size={16} />
               </Link>
             </motion.aside>
           </div>
@@ -123,12 +126,12 @@ export function LearnPage() {
               <span className="section-kicker">6 CORE TOPICS</span>
               <h2>基礎程式設計路線</h2>
             </div>
-            <p><Code2 size={17} /> 首版開放 1 個互動單元，更多內容將陸續加入。</p>
+            <p><Code2 size={17} /> 目前開放 3 個互動單元，更多內容將陸續加入。</p>
           </Reveal>
           <div className="lesson-map-grid">
             {LESSONS.map((lesson, index) => (
               <Reveal key={lesson.id} delay={index * 0.055}>
-                <LessonCard lesson={lesson} completed={lesson.id === 'loops' && completed} />
+                <LessonCard lesson={lesson} completed={isLessonCompleted(progress, lesson.id)} />
               </Reveal>
             ))}
           </div>
@@ -142,7 +145,7 @@ export function LearnPage() {
             <h2>進度只留在你的瀏覽器</h2>
             <p>不需要帳號，也不會上傳姓名或學習資料。完成狀態會安全地保存在這台裝置。</p>
           </div>
-          <Link className="button button-dark" to="/learn/loops/for">開始 for 迴圈 <ArrowRight size={18} /></Link>
+          <Link className="button button-dark" to={nextLesson.path}>{allAvailableLessonsCompleted ? '重溫變數與運算' : completedLessonCount > 0 ? '繼續學習' : '開始變數與運算'} <ArrowRight size={18} /></Link>
         </div>
       </section>
     </div>

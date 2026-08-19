@@ -4,6 +4,7 @@ import { HashRouter } from 'react-router-dom'
 import { MotionConfig } from 'motion/react'
 import App from './App'
 import './styles.css'
+import './foundation-lessons.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
