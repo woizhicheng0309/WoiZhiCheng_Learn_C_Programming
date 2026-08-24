@@ -13,33 +13,43 @@ import {
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Link } from 'react-router-dom'
-import { simulateForLoop, type LoopConfig } from '../domain'
+import { COURSE_TOPICS, VARIABLE_CHALLENGE_IDS, isLessonAvailable } from '../data'
+import {
+  DEFAULT_VARIABLE_CONFIG,
+  formatVariableNumber,
+  simulateVariableProgram,
+  type ArithmeticOperator,
+  type VariableConfig,
+} from '../domain'
+import { isLessonCompleted } from '../state'
 import { Reveal } from '../components/Reveal'
 import { useLearningProgress } from '../hooks/useLearningProgress'
+
+const previewOperators: readonly ArithmeticOperator[] = ['+', '-', '*', '/', '%']
 
 const learningSteps = [
   {
     number: '01',
-    title: '調整',
-    body: '改變初始值、條件與步進值，親手建立不同的迴圈。',
-    icon: MousePointer2,
+    title: '預測',
+    body: '先猜猜算式會輸出什麼，練習像電腦一樣讀程式。',
+    icon: Lightbulb,
   },
   {
     number: '02',
-    title: '預測',
-    body: '先想一想輸出會是什麼，訓練閱讀程式的直覺。',
-    icon: Lightbulb,
+    title: '調整',
+    body: '改變變數與運算子，親手觀察每個參數如何影響結果。',
+    icon: MousePointer2,
   },
   {
     number: '03',
     title: '執行',
-    body: '播放或逐步前進，看見每一行程式真正做了什麼。',
+    body: '播放或逐步前進，看見資料從宣告、計算到輸出的過程。',
     icon: CirclePlay,
   },
   {
     number: '04',
     title: '理解',
-    body: '把條件、變數與輸出串起來，找到程式運作的規律。',
+    body: '比較預測與實際結果，建立型別、賦值與運算的直覺。',
     icon: Sparkles,
   },
 ]
@@ -48,26 +58,32 @@ function PreviewControl({
   id,
   label,
   value,
+  displayValue = value,
   min,
   max,
+  step = 1,
   onChange,
 }: {
   id: string
   label: string
   value: number
+  displayValue?: number | string
   min: number
   max: number
+  step?: number
   onChange: (value: number) => void
 }) {
   return (
     <label className="preview-control" htmlFor={id}>
       <span>{label}</span>
-      <strong>{value}</strong>
+      <strong>{displayValue}</strong>
       <input
         id={id}
+        aria-label={label}
         type="range"
         min={min}
         max={max}
+        step={step}
         value={value}
         onChange={(event) => onChange(Number(event.target.value))}
       />
@@ -75,15 +91,14 @@ function PreviewControl({
   )
 }
 
-function LoopPreview() {
-  const [config, setConfig] = useState<LoopConfig>({
-    start: 0,
-    end: 5,
-    comparator: '<',
-    step: 1,
+function VariablePreview() {
+  const [config, setConfig] = useState<VariableConfig>({
+    ...DEFAULT_VARIABLE_CONFIG,
   })
-  const simulation = useMemo(() => simulateForLoop(config), [config])
-  const update = (key: 'start' | 'end' | 'step', value: number) => {
+  const simulation = useMemo(() => simulateVariableProgram(config), [config])
+  const operatorIndex = previewOperators.indexOf(config.operator)
+
+  const updateNumber = (key: 'x' | 'y', value: number) => {
     setConfig((current) => ({ ...current, [key]: value }))
   }
 
@@ -100,25 +115,37 @@ function LoopPreview() {
           <span />
           <span />
         </div>
-        <span className="demo-filename">first-loop.c</span>
+        <span className="demo-filename">variables.c</span>
         <span className="live-label"><i /> 即時預覽</span>
       </div>
 
-      <div className="preview-code" aria-label="即時產生的 C 語言 for 迴圈程式碼">
+      <div className="preview-code" aria-label="即時產生的 C 語言變數與運算程式碼">
         <span className="line-no">1</span>
-        <code><b>for</b> (<em>int</em> i = <mark>{config.start}</mark>; i &lt; <mark>{config.end}</mark>; i += <mark>{config.step}</mark>) {'{'}</code>
+        <code><em>int</em> main(void) {'{'}</code>
         <span className="line-no">2</span>
-        <code>&nbsp;&nbsp;printf(<q>&quot;%d &quot;</q>, i);</code>
+        <code>&nbsp;&nbsp;<em>int</em> x = <mark>{config.x}</mark>;</code>
         <span className="line-no">3</span>
+        <code>&nbsp;&nbsp;<em>int</em> y = <mark>{config.y}</mark>;</code>
+        <span className="line-no">4</span>
+        <code>&nbsp;&nbsp;<em>int</em> result = x <mark>{config.operator}</mark> y;</code>
+        <span className="line-no">5</span>
+        <code>&nbsp;&nbsp;printf(<q>&quot;%d\n&quot;</q>, result);</code>
+        <span className="line-no">6</span>
         <code>{'}'}</code>
       </div>
 
       <div className="preview-output">
         <div className="preview-output-heading">
           <span>OUTPUT</span>
-          <small>{simulation.output.length} 次迭代</small>
+          <small>{simulation.status === 'completed' ? '執行完成' : '安全阻止'}</small>
         </div>
-        <div className="token-row" aria-live="polite" aria-label={`輸出：${simulation.output.join(' ') || '沒有輸出'}`}>
+        <div
+          className="token-row"
+          aria-live="polite"
+          aria-label={simulation.status === 'completed'
+            ? `輸出：${simulation.output.map(formatVariableNumber).join(' ')}`
+            : `無法執行：${simulation.message}`}
+        >
           <AnimatePresence mode="popLayout">
             {simulation.output.map((value, index) => (
               <motion.span
@@ -130,26 +157,57 @@ function LoopPreview() {
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ type: 'spring', stiffness: 360, damping: 27 }}
               >
-                {value}
+                {formatVariableNumber(value)}
               </motion.span>
             ))}
           </AnimatePresence>
-          {simulation.output.length === 0 && <span className="empty-output">條件一開始就是 false</span>}
+          {simulation.status === 'blocked' && (
+            <span className="empty-output">{simulation.message}</span>
+          )}
         </div>
       </div>
 
-      <div className="preview-controls" aria-label="迴圈參數">
-        <PreviewControl id="preview-start" label="從哪裡開始？" value={config.start} min={0} max={5} onChange={(value) => update('start', value)} />
-        <PreviewControl id="preview-end" label="小於多少？" value={config.end} min={1} max={12} onChange={(value) => update('end', value)} />
-        <PreviewControl id="preview-step" label="每次增加？" value={config.step} min={1} max={3} onChange={(value) => update('step', value)} />
+      <div className="preview-controls" aria-label="變數與運算參數">
+        <PreviewControl
+          id="preview-x"
+          label="x 的值"
+          value={config.x}
+          min={-10}
+          max={10}
+          onChange={(value) => updateNumber('x', value)}
+        />
+        <PreviewControl
+          id="preview-y"
+          label="y 的值"
+          value={config.y}
+          min={-10}
+          max={10}
+          onChange={(value) => updateNumber('y', value)}
+        />
+        <PreviewControl
+          id="preview-operator"
+          label="運算子"
+          value={operatorIndex}
+          displayValue={config.operator}
+          min={0}
+          max={previewOperators.length - 1}
+          onChange={(value) => setConfig((current) => ({
+            ...current,
+            operator: previewOperators[value],
+          }))}
+        />
       </div>
     </motion.div>
   )
 }
 
 export function HomePage() {
-  const { progress } = useLearningProgress()
-  const completedCount = progress.completedChallengeIds.length
+  const { progress, getLessonProgress } = useLearningProgress()
+  const lessonProgress = getLessonProgress('variables-basics')
+  const completedCount = VARIABLE_CHALLENGE_IDS.filter((challengeId) =>
+    lessonProgress.completedChallengeIds.includes(challengeId),
+  ).length
+  const lessonCompleted = isLessonCompleted(progress, 'variables-basics')
 
   return (
     <>
@@ -170,8 +228,8 @@ export function HomePage() {
               不只背語法，而是親手改變程式、觀察結果，從每一次執行中建立真正的程式邏輯。
             </p>
             <div className="hero-actions">
-              <Link className="button button-primary" to="/learn/loops/for">
-                開始探索迴圈 <ArrowRight size={18} aria-hidden="true" />
+              <Link className="button button-primary" to="/learn/variables/basics">
+                開始探索變數 <ArrowRight size={18} aria-hidden="true" />
               </Link>
               <Link className="text-link" to="/learn">
                 查看課程地圖 <ChevronRight size={17} aria-hidden="true" />
@@ -183,7 +241,7 @@ export function HomePage() {
               <span><Check size={15} aria-hidden="true" /> 適合初學者</span>
             </div>
           </motion.div>
-          <LoopPreview />
+          <VariablePreview />
         </div>
       </section>
 
@@ -194,7 +252,7 @@ export function HomePage() {
               <span className="section-kicker">LEARN BY DOING</span>
               <h2>讓每一步，都看得見。</h2>
             </div>
-            <p>程式不是一瞬間得到答案。跟著電腦的節奏，逐步理解變數如何改變、條件如何決定下一步。</p>
+            <p>程式不是一瞬間得到答案。跟著電腦的節奏，逐步理解資料如何進入記憶體、算式如何產生結果。</p>
           </Reveal>
           <div className="method-grid">
             {learningSteps.map((step, index) => {
@@ -218,35 +276,38 @@ export function HomePage() {
         <div className="page-width highlight-grid">
           <Reveal className="highlight-copy">
             <span className="section-kicker">FIRST LESSON</span>
-            <h2>從一個迴圈，<br />看懂程式的節奏。</h2>
-            <p>完整的 for 迴圈實驗室，把一行看似複雜的語法拆成初始化、條件判斷、執行與更新四個清楚步驟。</p>
+            <h2>從三個記憶盒，<br />看懂程式怎麼算。</h2>
+            <p>完整的變數與運算實驗室，帶你從 main 函式開始，依序看見宣告、初始化、計算、賦值與輸出。</p>
             <ul className="feature-list">
-              <li><span><Binary size={18} /></span> 程式碼逐行高亮</li>
-              <li><span><Gauge size={18} /></span> 自由控制播放速度</li>
-              <li><span><Braces size={18} /></span> 三個即時檢查挑戰</li>
+              <li><span><Binary size={18} aria-hidden="true" /></span> 程式碼與記憶盒同步高亮</li>
+              <li><span><Gauge size={18} aria-hidden="true" /></span> 自由調整型別、數值與運算</li>
+              <li><span><Braces size={18} aria-hidden="true" /></span> 預測、調參與找錯三種挑戰</li>
             </ul>
-            <Link className="button button-dark" to="/learn/loops/for">
-              {completedCount > 0 ? '繼續學習' : '進入實驗室'} <ArrowRight size={18} aria-hidden="true" />
+            <Link className="button button-dark" to="/learn/variables/basics">
+              {lessonProgress.guidedRunCompleted ? '繼續變數單元' : '進入第一堂課'} <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </Reveal>
 
           <Reveal className="lesson-poster" delay={0.1}>
-            <div className="poster-stamp">LESSON 01</div>
+            <div className="poster-stamp">MODULE 01 · LESSON 01</div>
             <div className="poster-loop" aria-hidden="true">
-              <span>i = 0</span><i>→</i><span>i &lt; 5</span><i>→</i><span>i++</span>
+              <span>x = 5</span><i>+</i><span>y = 2</span><i>→</i><span>result = 7</span>
             </div>
             <div className="poster-main">
-              <small>重複，直到條件不成立</small>
-              <strong>for</strong>
-              <span>迴圈</span>
+              <small>資料進入、計算，再輸出</small>
+              <strong>int</strong>
+              <span>變數與運算</span>
             </div>
             <div className="poster-progress">
               <div>
-                <span>挑戰進度</span>
-                <strong>{completedCount} / 3</strong>
+                <span>{lessonCompleted ? '單元已完成' : '挑戰進度'}</span>
+                <strong>{completedCount} / {VARIABLE_CHALLENGE_IDS.length}</strong>
               </div>
-              <div className="progress-track" aria-label={`已完成 ${completedCount} 個挑戰，共 3 個`}>
-                <motion.span initial={false} animate={{ width: `${(completedCount / 3) * 100}%` }} />
+              <div className="progress-track" aria-label={`已完成 ${completedCount} 個挑戰，共 ${VARIABLE_CHALLENGE_IDS.length} 個`}>
+                <motion.span
+                  initial={false}
+                  animate={{ width: `${(completedCount / VARIABLE_CHALLENGE_IDS.length) * 100}%` }}
+                />
               </div>
             </div>
           </Reveal>
@@ -258,19 +319,22 @@ export function HomePage() {
           <Reveal className="section-heading center-heading">
             <span className="section-kicker">LEARNING PATH</span>
             <h2>一張持續成長的學習地圖</h2>
-            <p>從基礎語法到記憶體觀念，未來將逐步加入更多可互動的程式邏輯單元。</p>
+            <p>先建立變數基礎，再前往條件與迴圈；已開放單元都能自由進入，不會被先備課程鎖住。</p>
           </Reveal>
           <Reveal className="topic-ribbon">
-            {['變數與運算', '條件判斷', '迴圈', '函式', '陣列與字串', '指標'].map((topic, index) => (
-              <div className={topic === '迴圈' ? 'topic-pill available' : 'topic-pill'} key={topic}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <strong>{topic}</strong>
-                <small>{topic === '迴圈' ? '現在開放' : '即將推出'}</small>
-              </div>
-            ))}
+            {COURSE_TOPICS.map((topic) => {
+              const available = topic.lessons.some(isLessonAvailable)
+              return (
+                <div className={available ? 'topic-pill available' : 'topic-pill'} key={topic.id}>
+                  <span>{String(topic.order).padStart(2, '0')}</span>
+                  <strong>{topic.title}</strong>
+                  <small>{available ? '現在開放' : '即將推出'}</small>
+                </div>
+              )
+            })}
           </Reveal>
           <Reveal className="center-action">
-            <Link className="text-link strong" to="/learn">查看完整課程地圖 <ArrowRight size={18} /></Link>
+            <Link className="text-link strong" to="/learn">查看完整課程地圖 <ArrowRight size={18} aria-hidden="true" /></Link>
           </Reveal>
         </div>
       </section>
@@ -281,8 +345,8 @@ export function HomePage() {
             <div className="closing-braces" aria-hidden="true">{'{ }'}</div>
             <span className="section-kicker light">READY TO EXPERIMENT?</span>
             <h2>不要只讀程式。<br />動手讓它跑起來。</h2>
-            <Link className="button button-light" to="/learn/loops/for">
-              開始第一個實驗 <ArrowRight size={18} />
+            <Link className="button button-light" to="/learn/variables/basics">
+              開始第一個實驗 <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </Reveal>
         </div>

@@ -16,8 +16,11 @@ export {
   type LoopConfig,
   type LoopFrame,
   type LoopPhase,
+  type LoopTraceRow,
   type LoopValidationIssue,
   type SimulationBlockReason,
   type SimulationResult,
   type SimulationStatus,
 } from './types'
+
+export * from './variables'

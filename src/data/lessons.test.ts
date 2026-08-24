@@ -1,35 +1,60 @@
-import { LESSONS, getLessonById, isLessonAvailable } from './lessons'
+import {
+  COURSE_TOPICS,
+  LESSONS,
+  VARIABLE_BASICS_CHALLENGE_IDS,
+  getLessonById,
+  getLessonsByTopicId,
+  getTopicById,
+  isLessonAvailable,
+  isLessonId,
+} from './lessons'
 
-describe('course catalog', () => {
-  it('lists the six MVP topics in teaching order', () => {
-    expect(LESSONS.map((lesson) => lesson.title)).toEqual([
-      '變數',
-      '條件判斷',
-      '迴圈',
-      '函式',
-      '陣列與字串',
-      '指標',
+describe('two-level course catalog', () => {
+  it('orders topics and nests lessons under their owner', () => {
+    expect(COURSE_TOPICS.map((topic) => topic.id)).toEqual([
+      'variables',
+      'conditionals',
+      'loops',
+      'functions',
+      'arrays-and-strings',
+      'pointers',
     ])
-    expect(LESSONS.map((lesson) => lesson.order)).toEqual([1, 2, 3, 4, 5, 6])
+    expect(getLessonsByTopicId('variables').map((lesson) => lesson.id)).toEqual([
+      'variables-basics',
+    ])
+    expect(getLessonsByTopicId('functions')).toEqual([])
   })
 
-  it('only enables the for-loop lesson route', () => {
-    const available = LESSONS.filter(isLessonAvailable)
-
-    expect(available).toHaveLength(1)
-    expect(available[0]).toMatchObject({
-      id: 'loops',
-      status: 'available',
-      path: '/learn/loops/for',
+  it('defines the next two available lessons without locking the for lab', () => {
+    expect(LESSONS.filter(isLessonAvailable).map((lesson) => lesson.id)).toEqual([
+      'variables-basics',
+      'loops-for',
+    ])
+    expect(getLessonById('variables-basics')).toMatchObject({
+      path: '/learn/variables/basics',
+      moduleNumber: 1,
+      lessonNumber: 1,
+      estimatedMinutes: 18,
+      requiredChallengeIds: VARIABLE_BASICS_CHALLENGE_IDS,
     })
-    expect(
-      LESSONS.filter((lesson) => lesson.status === 'coming-soon').every(
-        (lesson) => lesson.path === null,
-      ),
-    ).toBe(true)
+    expect(getLessonById('loops-for')).toMatchObject({
+      path: '/learn/loops/for',
+      moduleNumber: 3,
+      lessonNumber: 1,
+      prerequisiteLessonIds: ['variables-basics'],
+    })
   })
 
-  it('finds a lesson by its stable id', () => {
-    expect(getLessonById('pointers')?.englishTitle).toBe('Pointers')
+  it('keeps coming-soon lessons non-navigable', () => {
+    const lesson = getLessonById('conditionals-if-else')
+    expect(lesson).toMatchObject({ status: 'coming-soon', path: null })
+    expect(lesson && isLessonAvailable(lesson)).toBe(false)
+  })
+
+  it('provides safe topic and lesson lookups', () => {
+    expect(getTopicById('pointers')?.englishTitle).toBe('Pointers')
+    expect(isLessonId('variables-basics')).toBe(true)
+    expect(isLessonId('variables')).toBe(false)
+    expect(isLessonId(null)).toBe(false)
   })
 })

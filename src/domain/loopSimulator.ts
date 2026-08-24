@@ -7,6 +7,7 @@ import {
   type LoopConfig,
   type LoopFrame,
   type LoopPhase,
+  type LoopTraceRow,
   type LoopValidationIssue,
   type SimulationBlockReason,
   type SimulationResult,
@@ -174,6 +175,7 @@ export function simulateForLoop(
   const stableConfig = copyConfig(config)
   const source = buildForLoopSource(stableConfig)
   const frames: LoopFrame[] = []
+  const traceRows: LoopTraceRow[] = []
   const output: number[] = []
   let value = stableConfig.start
   let completedIterations = 0
@@ -183,8 +185,8 @@ export function simulateForLoop(
     explanation: string,
     conditionResult: boolean | null = null,
     iteration = completedIterations,
-  ) => {
-    frames.push({
+  ): LoopFrame => {
+    const frame: LoopFrame = {
       index: frames.length,
       phase,
       iteration,
@@ -195,7 +197,9 @@ export function simulateForLoop(
       activeLine: source.lineByPhase[phase],
       activePart: source.partByPhase[phase],
       explanation,
-    })
+    }
+    frames.push(frame)
+    return frame
   }
 
   addFrame('init', `將 i 初始化為 ${formatNumber(value)}。`)
@@ -208,6 +212,7 @@ export function simulateForLoop(
       config: stableConfig,
       source,
       frames,
+      traceRows,
       output,
       iterations: 0,
       status: 'blocked',
@@ -223,19 +228,32 @@ export function simulateForLoop(
       stableConfig.end,
     )
     const expression = conditionForValue(value, stableConfig)
-    addFrame(
+    const conditionFrame = addFrame(
       'condition',
       `判斷 ${expression}，結果為${conditionResult ? '真' : '假'}。`,
       conditionResult,
     )
 
     if (!conditionResult) {
+      traceRows.push({
+        kind: 'exit-check',
+        iteration: null,
+        conditionValue: value,
+        conditionExpression: expression,
+        conditionResult: false,
+        printedValue: null,
+        afterValue: null,
+        conditionFrameIndex: conditionFrame.index,
+        bodyFrameIndex: null,
+        incrementFrameIndex: null,
+      })
       const message = `條件為假，離開 for 迴圈；共執行 ${completedIterations} 次。`
       addFrame('done', message, false)
       return {
         config: stableConfig,
         source,
         frames,
+        traceRows,
         output: [...output],
         iterations: completedIterations,
         status: 'completed',
@@ -246,12 +264,25 @@ export function simulateForLoop(
 
     const unsafeDirection = safetyBlockReason(stableConfig)
     if (unsafeDirection) {
+      traceRows.push({
+        kind: 'blocked-check',
+        iteration: null,
+        conditionValue: value,
+        conditionExpression: expression,
+        conditionResult: true,
+        printedValue: null,
+        afterValue: null,
+        conditionFrameIndex: conditionFrame.index,
+        bodyFrameIndex: null,
+        incrementFrameIndex: null,
+      })
       const message = blockMessage(unsafeDirection)
       addFrame('blocked', message, true)
       return {
         config: stableConfig,
         source,
         frames,
+        traceRows,
         output: [...output],
         iterations: completedIterations,
         status: 'blocked',
@@ -261,12 +292,25 @@ export function simulateForLoop(
     }
 
     if (completedIterations >= LOOP_LIMITS.maxIterations) {
+      traceRows.push({
+        kind: 'blocked-check',
+        iteration: null,
+        conditionValue: value,
+        conditionExpression: expression,
+        conditionResult: true,
+        printedValue: null,
+        afterValue: null,
+        conditionFrameIndex: conditionFrame.index,
+        bodyFrameIndex: null,
+        incrementFrameIndex: null,
+      })
       const message = blockMessage('iteration-limit')
       addFrame('blocked', message, true)
       return {
         config: stableConfig,
         source,
         frames,
+        traceRows,
         output: [...output],
         iterations: completedIterations,
         status: 'blocked',
@@ -277,7 +321,7 @@ export function simulateForLoop(
 
     completedIterations += 1
     output.push(value)
-    addFrame(
+    const bodyFrame = addFrame(
       'body',
       `條件為真，執行 printf，輸出 ${formatNumber(value)}。`,
       true,
@@ -286,11 +330,23 @@ export function simulateForLoop(
 
     const previousValue = value
     value += stableConfig.step
-    addFrame(
+    const incrementFrame = addFrame(
       'increment',
       `執行 i ${stableConfig.step < 0 ? '-=' : '+='} ${formatNumber(Math.abs(stableConfig.step))}，i 從 ${formatNumber(previousValue)} 變成 ${formatNumber(value)}。`,
       null,
       completedIterations,
     )
+    traceRows.push({
+      kind: 'iteration',
+      iteration: completedIterations,
+      conditionValue: previousValue,
+      conditionExpression: expression,
+      conditionResult: true,
+      printedValue: previousValue,
+      afterValue: value,
+      conditionFrameIndex: conditionFrame.index,
+      bodyFrameIndex: bodyFrame.index,
+      incrementFrameIndex: incrementFrame.index,
+    })
   }
 }

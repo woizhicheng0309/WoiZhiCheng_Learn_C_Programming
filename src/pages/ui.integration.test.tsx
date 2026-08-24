@@ -1,25 +1,30 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { HashRouter, MemoryRouter } from 'react-router-dom'
 import App from '../App'
 import { CHALLENGE_IDS } from '../data/challenges'
+import { ProgressProvider } from '../hooks/useLearningProgress'
 import { createDefaultProgress, PROGRESS_STORAGE_KEY, saveProgress } from '../state'
 import { ForLoopLabPage } from './ForLoopLabPage'
 import { HomePage } from './HomePage'
 
 function renderHome() {
   return render(
-    <MemoryRouter>
-      <HomePage />
-    </MemoryRouter>,
+    <ProgressProvider>
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>
+    </ProgressProvider>,
   )
 }
 
 function renderLab() {
   return render(
-    <MemoryRouter>
-      <ForLoopLabPage />
-    </MemoryRouter>,
+    <ProgressProvider>
+      <MemoryRouter>
+        <ForLoopLabPage />
+      </MemoryRouter>
+    </ProgressProvider>,
   )
 }
 
@@ -57,27 +62,25 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-describe('HomePage interactive loop preview', () => {
+describe('HomePage interactive variables preview', () => {
   it('updates the generated C source and output as each slider changes', () => {
     renderHome()
 
-    expect(screen.getByLabelText('輸出：0 1 2 3 4')).toBeInTheDocument()
-    expect(screen.getByText('5 次迭代')).toBeInTheDocument()
+    expect(screen.getByLabelText('輸出：7')).toBeInTheDocument()
 
-    fireEvent.change(screen.getByRole('slider', { name: /從哪裡開始/ }), {
+    fireEvent.change(screen.getByRole('slider', { name: 'x 的值' }), {
+      target: { value: '5' },
+    })
+    fireEvent.change(screen.getByRole('slider', { name: 'y 的值' }), {
       target: { value: '2' },
     })
-    fireEvent.change(screen.getByRole('slider', { name: /小於多少/ }), {
-      target: { value: '8' },
-    })
-    fireEvent.change(screen.getByRole('slider', { name: /每次增加/ }), {
-      target: { value: '2' },
+    fireEvent.change(screen.getByRole('slider', { name: '運算子' }), {
+      target: { value: '3' },
     })
 
-    const source = screen.getByLabelText('即時產生的 C 語言 for 迴圈程式碼')
-    expect(source).toHaveTextContent('for (int i = 2; i < 8; i += 2) {')
-    expect(screen.getByLabelText('輸出：2 4 6')).toBeInTheDocument()
-    expect(screen.getByText('3 次迭代')).toBeInTheDocument()
+    const source = screen.getByLabelText('即時產生的 C 語言變數與運算程式碼')
+    expect(source).toHaveTextContent('int result = x / y;')
+    expect(screen.getByLabelText('輸出：2')).toBeInTheDocument()
   })
 })
 
@@ -127,7 +130,12 @@ describe('ForLoopLabPage execution controls', () => {
     )
 
     expect(JSON.parse(window.localStorage.getItem(PROGRESS_STORAGE_KEY) ?? '{}')).toMatchObject({
-      lastConfig: { start: 2, end: 10, comparator: '<=', step: 2 },
+      version: 2,
+      lessons: {
+        'loops-for': {
+          savedState: { start: 2, end: 10, comparator: '<=', step: 2 },
+        },
+      },
     })
 
     fireEvent.click(screen.getByRole('button', { name: /恢復預設參數/ }))
@@ -181,27 +189,32 @@ describe('ForLoopLabPage challenges and local progress', () => {
 
     expect(screen.getByRole('heading', { name: /你已完成 for 迴圈單元/ })).toBeInTheDocument()
     expect(JSON.parse(window.localStorage.getItem(PROGRESS_STORAGE_KEY) ?? '{}')).toMatchObject({
-      completedChallengeIds: [...CHALLENGE_IDS],
+      lessons: {
+        'loops-for': { completedChallengeIds: [...CHALLENGE_IDS] },
+      },
     })
   })
 
   it('requires confirmation before clearing saved progress and restores defaults', () => {
     const saved = createDefaultProgress()
-    saved.completedChallengeIds = [...CHALLENGE_IDS]
-    saved.lastConfig = { start: 5, end: 0, comparator: '>', step: -1 }
+    saved.lessons['loops-for'] = {
+      guidedRunCompleted: false,
+      completedChallengeIds: [...CHALLENGE_IDS],
+      savedState: { start: 5, end: 0, comparator: '>', step: -1 },
+    }
     saveProgress(saved)
     renderLab()
 
     expect(screen.getByRole('spinbutton', { name: /起始值/ })).toHaveValue(5)
     fireEvent.click(screen.getByRole('button', { name: /清除這台裝置的學習進度/ }))
 
-    let confirmation = screen.getByRole('alert')
+    let confirmation = screen.getByRole('alertdialog')
     expect(confirmation).toHaveTextContent('這個動作無法復原')
     fireEvent.click(within(confirmation).getByRole('button', { name: '取消' }))
     expect(window.localStorage.getItem(PROGRESS_STORAGE_KEY)).not.toBeNull()
 
     fireEvent.click(screen.getByRole('button', { name: /清除這台裝置的學習進度/ }))
-    confirmation = screen.getByRole('alert')
+    confirmation = screen.getByRole('alertdialog')
     fireEvent.click(within(confirmation).getByRole('button', { name: '確定清除' }))
 
     expect(window.localStorage.getItem(PROGRESS_STORAGE_KEY)).toBeNull()
@@ -215,9 +228,11 @@ describe('App hash routes and keyboard semantics', () => {
     const user = userEvent.setup()
     window.location.hash = '#/'
     render(
-      <HashRouter>
-        <App />
-      </HashRouter>,
+      <ProgressProvider>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </ProgressProvider>,
     )
 
     expect(screen.getByRole('heading', { name: /魏志成的\s*程式設計基礎\s*學習網站/ })).toBeInTheDocument()
@@ -231,7 +246,17 @@ describe('App hash routes and keyboard semantics', () => {
     expect(window.location.hash).toBe('#/learn')
     expect(screen.getByRole('link', { name: '課程地圖' })).toHaveAttribute('aria-current', 'page')
 
-    const labLink = screen.getByRole('link', { name: 'for 迴圈實驗室' })
+    const continueLink = screen.getByRole('link', { name: '繼續學習' })
+    continueLink.focus()
+    await user.keyboard('{Enter}')
+
+    const variablesHeading = await screen.findByRole('heading', { name: /從程式骨架開始/ })
+    expect(window.location.hash).toBe('#/learn/variables/basics')
+    expect(document.title).toContain('程式骨架、變數與運算')
+    await waitFor(() => expect(variablesHeading).toHaveFocus())
+
+    await user.click(screen.getAllByRole('link', { name: '課程地圖' })[0])
+    const labLink = await screen.findByRole('link', { name: /for 迴圈，未開始/ })
     labLink.focus()
     await user.keyboard('{Enter}')
 
@@ -242,9 +267,11 @@ describe('App hash routes and keyboard semantics', () => {
   it('redirects an unknown hash route to the landing page', async () => {
     window.location.hash = '#/missing-page'
     render(
-      <HashRouter>
-        <App />
-      </HashRouter>,
+      <ProgressProvider>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </ProgressProvider>,
     )
 
     expect(await screen.findByRole('heading', { name: /魏志成的\s*程式設計基礎\s*學習網站/ })).toBeInTheDocument()

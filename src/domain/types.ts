@@ -67,6 +67,19 @@ export interface LoopFrame {
   explanation: string
 }
 
+export interface LoopTraceRow {
+  kind: 'iteration' | 'exit-check' | 'blocked-check'
+  iteration: number | null
+  conditionValue: number
+  conditionExpression: string
+  conditionResult: boolean
+  printedValue: number | null
+  afterValue: number | null
+  conditionFrameIndex: number
+  bodyFrameIndex: number | null
+  incrementFrameIndex: number | null
+}
+
 export type SimulationStatus = 'completed' | 'blocked'
 
 export type SimulationBlockReason =
@@ -90,6 +103,7 @@ export interface SimulationResult {
   config: Readonly<LoopConfig>
   source: GeneratedLoopSource
   frames: readonly LoopFrame[]
+  traceRows: readonly LoopTraceRow[]
   output: readonly number[]
   iterations: number
   status: SimulationStatus

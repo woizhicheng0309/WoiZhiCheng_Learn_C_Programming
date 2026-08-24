@@ -46,6 +46,21 @@ describe('simulateForLoop', () => {
     ])
     expect(result.frames.filter((frame) => frame.phase === 'body')).toHaveLength(5)
     expect(result.frames.at(-1)?.output).toEqual(result.output)
+    expect(result.traceRows).toHaveLength(6)
+    expect(result.traceRows.at(-1)).toMatchObject({
+      kind: 'exit-check',
+      conditionValue: 5,
+      conditionExpression: '5 < 5',
+      conditionResult: false,
+      printedValue: null,
+      afterValue: null,
+    })
+    expect(result.traceRows[0]).toMatchObject({
+      kind: 'iteration',
+      conditionValue: 0,
+      printedValue: 0,
+      afterValue: 1,
+    })
   })
 
   it('simulates a descending loop with a negative step', () => {
@@ -116,6 +131,15 @@ describe('simulateForLoop', () => {
     expect(result.status).toBe('blocked')
     expect(result.blockReason).toBe('step-zero')
     expect(phasesFor(result)).toEqual(['init', 'condition', 'blocked'])
+    expect(result.traceRows).toEqual([
+      expect.objectContaining({
+        kind: 'blocked-check',
+        conditionExpression: '0 < 5',
+        conditionResult: true,
+        printedValue: null,
+        afterValue: null,
+      }),
+    ])
   })
 
   it.each([

@@ -1,29 +1,22 @@
-import { useEffect } from 'react'
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { RouteExperience } from './components/RouteExperience'
 import { SiteFooter, SiteHeader } from './components/SiteChrome'
 import { HomePage } from './pages/HomePage'
 import { LearnPage } from './pages/LearnPage'
 import { ForLoopLabPage } from './pages/ForLoopLabPage'
-
-function ScrollToTop() {
-  const { pathname } = useLocation()
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' })
-  }, [pathname])
-
-  return null
-}
+import { VariablesBasicsPage } from './pages/VariablesBasicsPage'
 
 export default function App() {
   return (
     <div className="site-frame">
-      <ScrollToTop />
+      <a className="skip-link" href="#main-content">跳至主要內容</a>
+      <RouteExperience />
       <SiteHeader />
       <main id="main-content">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/learn" element={<LearnPage />} />
+          <Route path="/learn/variables/basics" element={<VariablesBasicsPage />} />
           <Route path="/learn/loops/for" element={<ForLoopLabPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

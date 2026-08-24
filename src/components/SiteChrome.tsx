@@ -2,15 +2,21 @@ import { ArrowUpRight, Braces, GitFork, Menu, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-
-const navItems = [
-  { to: '/', label: '首頁', end: true },
-  { to: '/learn', label: '課程地圖' },
-  { to: '/learn/loops/for', label: 'for 迴圈實驗室' },
-]
+import { getContinueLearningPath } from '../state'
+import { useLearningProgress } from '../hooks/useLearningProgress'
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
+  const { progress } = useLearningProgress()
+  const navItems = [
+    { to: '/', label: '首頁', end: true },
+    { to: '/learn', label: '課程地圖', end: true },
+    {
+      to: getContinueLearningPath(progress),
+      label: '繼續學習',
+      end: true,
+    },
+  ]
 
   return (
     <header className="site-header">
