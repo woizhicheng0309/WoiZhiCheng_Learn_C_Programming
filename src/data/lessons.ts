@@ -1,5 +1,6 @@
 import { CHALLENGE_IDS } from './challenges'
 import { VARIABLE_CHALLENGE_IDS } from './variableChallenges'
+import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
 
 export const TOPIC_IDS = [
   'variables',
@@ -78,13 +79,13 @@ const lessons: readonly LessonDefinition[] = [
     order: 2,
     title: 'if 與 else',
     englishTitle: 'if & else',
-    description: '用條件讓程式做選擇，理解不同分支何時執行。',
-    concepts: ['if', 'else', '比較運算子'],
-    status: 'coming-soon',
-    path: null,
+    description: '用條件讓程式做選擇，理解比較、邏輯運算與不同分支何時執行。',
+    concepts: ['if', 'else', '比較運算子', '&& / ||'],
+    status: 'available',
+    path: '/learn/conditionals/if-else',
     estimatedMinutes: 20,
     prerequisiteLessonIds: ['variables-basics'],
-    requiredChallengeIds: [],
+    requiredChallengeIds: CONDITIONAL_CHALLENGE_IDS,
   },
   {
     id: 'loops-for',

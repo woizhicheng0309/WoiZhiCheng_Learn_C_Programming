@@ -17,6 +17,7 @@ import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import {
   COURSE_TOPICS,
+  LESSONS,
   getLessonById,
   isLessonAvailable,
   type LessonDefinition,
@@ -150,6 +151,7 @@ export function LearnPage() {
   const courseProgress = getCourseProgress(progress)
   const continueLesson = getContinueLearningLesson(progress)
   const continuePath = getContinueLearningPath(progress)
+  const availableLessonCount = LESSONS.filter(isLessonAvailable).length
 
   return (
     <div className="learn-page">
@@ -214,7 +216,7 @@ export function LearnPage() {
               <span className="section-kicker">{COURSE_TOPICS.length} CORE TOPICS</span>
               <h2>基礎程式設計路線</h2>
             </div>
-            <p><Code2 size={17} aria-hidden="true" /> 本版開放 2 個互動單元，更多內容將陸續加入。</p>
+            <p><Code2 size={17} aria-hidden="true" /> 本版開放 {availableLessonCount} 個互動單元，更多內容將陸續加入。</p>
           </Reveal>
 
           <div className="course-topic-list">

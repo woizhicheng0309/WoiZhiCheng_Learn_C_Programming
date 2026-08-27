@@ -8,6 +8,7 @@ import {
   isLessonAvailable,
   isLessonId,
 } from './lessons'
+import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
 
 describe('two-level course catalog', () => {
   it('orders topics and nests lessons under their owner', () => {
@@ -25,9 +26,10 @@ describe('two-level course catalog', () => {
     expect(getLessonsByTopicId('functions')).toEqual([])
   })
 
-  it('defines the next two available lessons without locking the for lab', () => {
+  it('defines the available lessons without locking the for lab', () => {
     expect(LESSONS.filter(isLessonAvailable).map((lesson) => lesson.id)).toEqual([
       'variables-basics',
+      'conditionals-if-else',
       'loops-for',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
@@ -45,10 +47,14 @@ describe('two-level course catalog', () => {
     })
   })
 
-  it('keeps coming-soon lessons non-navigable', () => {
+  it('opens the conditionals lesson with its required challenges', () => {
     const lesson = getLessonById('conditionals-if-else')
-    expect(lesson).toMatchObject({ status: 'coming-soon', path: null })
-    expect(lesson && isLessonAvailable(lesson)).toBe(false)
+    expect(lesson).toMatchObject({
+      status: 'available',
+      path: '/learn/conditionals/if-else',
+      requiredChallengeIds: CONDITIONAL_CHALLENGE_IDS,
+    })
+    expect(lesson && isLessonAvailable(lesson)).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {

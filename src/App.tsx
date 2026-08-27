@@ -5,6 +5,7 @@ import { HomePage } from './pages/HomePage'
 import { LearnPage } from './pages/LearnPage'
 import { ForLoopLabPage } from './pages/ForLoopLabPage'
 import { VariablesBasicsPage } from './pages/VariablesBasicsPage'
+import { ConditionalsLessonPage } from './pages/ConditionalsLessonPage'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/learn" element={<LearnPage />} />
           <Route path="/learn/variables/basics" element={<VariablesBasicsPage />} />
+          <Route path="/learn/conditionals/if-else" element={<ConditionalsLessonPage />} />
           <Route path="/learn/loops/for" element={<ForLoopLabPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

@@ -1,7 +1,8 @@
-import { DEFAULT_LOOP_CONFIG } from '../domain'
+import { DEFAULT_CONDITIONAL_CONFIG, DEFAULT_LOOP_CONFIG } from '../domain'
 import { CHALLENGE_IDS } from '../data/challenges'
 import { VARIABLE_BASICS_CHALLENGE_IDS } from '../data/lessons'
 import {
+  DEFAULT_CONDITIONAL_STATE,
   DEFAULT_VARIABLE_BASICS_STATE,
   LEGACY_PROGRESS_STORAGE_KEY,
   PROGRESS_STORAGE_KEY,
@@ -18,6 +19,7 @@ import {
   isProgressV1,
   isProgressV2,
   isVariableBasicsSavedState,
+  isConditionalSavedState,
   loadProgress,
   saveProgress,
   type ProgressStorage,
@@ -45,6 +47,8 @@ describe('Progress V2 storage and migration', () => {
       .toEqual(DEFAULT_VARIABLE_BASICS_STATE)
     expect(createDefaultLessonProgress('loops-for').savedState)
       .toEqual(DEFAULT_LOOP_CONFIG)
+    expect(createDefaultLessonProgress('conditionals-if-else').savedState)
+      .toEqual(DEFAULT_CONDITIONAL_STATE)
   })
 
   it('round-trips valid V2 progress through the versioned key', () => {
@@ -176,6 +180,11 @@ describe('Progress V2 storage and migration', () => {
     expect(isVariableBasicsSavedState({
       valueType: 'double', x: 2.5, y: 2, operator: '%',
     })).toBe(true)
+    expect(isConditionalSavedState(DEFAULT_CONDITIONAL_CONFIG)).toBe(true)
+    expect(isConditionalSavedState({
+      ...DEFAULT_CONDITIONAL_CONFIG,
+      score: 100.5,
+    })).toBe(false)
 
     const progress = createDefaultProgress()
     const loop = createDefaultLessonProgress('loops-for')
@@ -254,10 +263,10 @@ describe('progress selectors', () => {
       .toBe('not-started')
     expect(getCourseProgress(progress)).toEqual({
       completedLessons: 2,
-      totalLessons: 2,
+      totalLessons: 3,
       completedChallenges: 6,
-      totalChallenges: 6,
-      percentage: 100,
+      totalChallenges: 9,
+      percentage: 67,
     })
   })
 
@@ -271,6 +280,6 @@ describe('progress selectors', () => {
     expect(getLessonProgressStatus(progress, 'loops-for')).toBe('in-progress')
 
     progress.lastVisitedLessonId = 'conditionals-if-else'
-    expect(getContinueLearningLesson(progress)?.id).toBe('variables-basics')
+    expect(getContinueLearningLesson(progress)?.id).toBe('conditionals-if-else')
   })
 })

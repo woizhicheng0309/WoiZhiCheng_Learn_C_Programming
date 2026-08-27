@@ -1,5 +1,12 @@
-import { COMPARATORS, DEFAULT_LOOP_CONFIG, validateLoopConfig } from '../domain'
-import type { LoopConfig } from '../domain'
+import {
+  COMPARATORS,
+  CONDITIONAL_LIMITS,
+  CONDITIONAL_LOGICAL_OPERATORS,
+  DEFAULT_CONDITIONAL_CONFIG,
+  DEFAULT_LOOP_CONFIG,
+  validateLoopConfig,
+} from '../domain'
+import type { ConditionalConfig, LoopConfig } from '../domain'
 import {
   LESSONS,
   getLessonById,
@@ -34,6 +41,12 @@ export interface VariableBasicsSavedState extends JsonObject {
   x: number
   y: number
   operator: VariableOperator
+}
+
+export interface ConditionalSavedState extends JsonObject {
+  score: number
+  attendance: number
+  logicalOperator: ConditionalConfig['logicalOperator']
 }
 
 export interface LessonProgress {
@@ -80,6 +93,10 @@ export const DEFAULT_VARIABLE_BASICS_STATE: Readonly<VariableBasicsSavedState> =
   operator: '+',
 }
 
+export const DEFAULT_CONDITIONAL_STATE: Readonly<ConditionalSavedState> = {
+  ...DEFAULT_CONDITIONAL_CONFIG,
+}
+
 export function createDefaultProgress(): ProgressV2 {
   return {
     version: PROGRESS_VERSION,
@@ -98,6 +115,7 @@ export function createDefaultLessonProgress(id: LessonId): LessonProgress {
 
 export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'variables-basics') return { ...DEFAULT_VARIABLE_BASICS_STATE }
+  if (id === 'conditionals-if-else') return { ...DEFAULT_CONDITIONAL_STATE }
   if (id === 'loops-for') return { ...DEFAULT_LOOP_CONFIG }
   return null
 }
@@ -152,11 +170,34 @@ export function isVariableBasicsSavedState(
     (Number.isInteger(state.x) && Number.isInteger(state.y))
 }
 
+export function isConditionalSavedState(
+  value: unknown,
+): value is ConditionalSavedState {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+
+  const state = value as Record<string, unknown>
+  return (
+    isFiniteNumber(state.score) &&
+    Number.isInteger(state.score) &&
+    state.score >= CONDITIONAL_LIMITS.score.min &&
+    state.score <= CONDITIONAL_LIMITS.score.max &&
+    isFiniteNumber(state.attendance) &&
+    Number.isInteger(state.attendance) &&
+    state.attendance >= CONDITIONAL_LIMITS.attendance.min &&
+    state.attendance <= CONDITIONAL_LIMITS.attendance.max &&
+    typeof state.logicalOperator === 'string' &&
+    CONDITIONAL_LOGICAL_OPERATORS.includes(
+      state.logicalOperator as ConditionalConfig['logicalOperator'],
+    )
+  )
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
 ): value is JsonObject | null {
   if (id === 'variables-basics') return isVariableBasicsSavedState(value)
+  if (id === 'conditionals-if-else') return isConditionalSavedState(value)
   if (id === 'loops-for') return isLoopConfig(value)
   return value === null
 }

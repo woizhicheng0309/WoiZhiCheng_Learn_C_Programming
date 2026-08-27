@@ -5,6 +5,7 @@ import { MotionConfig } from 'motion/react'
 import App from './App'
 import { ProgressProvider } from './hooks/useLearningProgress'
 import './styles.css'
+import './styles/conditionals.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

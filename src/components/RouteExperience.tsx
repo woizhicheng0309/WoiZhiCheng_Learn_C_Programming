@@ -7,6 +7,7 @@ const routeTitles: Record<string, string> = {
   '/': SITE_TITLE,
   '/learn': `課程地圖｜${SITE_TITLE}`,
   '/learn/variables/basics': `程式骨架、變數與運算｜${SITE_TITLE}`,
+  '/learn/conditionals/if-else': `if 與 else｜${SITE_TITLE}`,
   '/learn/loops/for': `for 迴圈實驗室｜${SITE_TITLE}`,
 }
 
