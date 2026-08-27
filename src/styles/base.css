@@ -446,8 +446,56 @@ h4 {
   transform-origin: left;
 }
 
+.hero-author {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 24px;
+  padding: 6px 13px 6px 7px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  gap: 9px;
+  background: rgba(255, 250, 242, 0.72);
+  box-shadow: 0 8px 24px rgba(46, 38, 31, 0.05);
+}
+
+.hero-author-mark {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--cream);
+  font-family: var(--serif);
+  font-size: 0.84rem;
+  font-weight: 650;
+  background: var(--accent-dark);
+}
+
+.hero-author-copy {
+  display: grid;
+  gap: 1px;
+}
+
+.hero-author-copy small {
+  color: var(--ink-faint);
+  font-family: var(--mono);
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  line-height: 1;
+}
+
+.hero-author-copy strong {
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  font-weight: 720;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+
 .hero-lead {
-  margin: 28px 0 8px;
+  margin: 20px 0 8px;
   font-family: var(--serif);
   font-size: 1.32rem;
   font-weight: 600;

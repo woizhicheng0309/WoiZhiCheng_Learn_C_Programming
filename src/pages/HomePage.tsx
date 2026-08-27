@@ -222,7 +222,14 @@ export function HomePage() {
             transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="eyebrow"><span>C PROGRAMMING LAB</span><i /></div>
-            <h1>魏志成的<br /><em>程式設計基礎</em><br />學習網站</h1>
+            <h1><em>程式設計基礎</em><br />學習網站</h1>
+            <div className="hero-author" aria-label="作者：魏志成">
+              <span className="hero-author-mark" aria-hidden="true">魏</span>
+              <span className="hero-author-copy">
+                <small>AUTHOR</small>
+                <strong>作者：魏志成</strong>
+              </span>
+            </div>
             <p className="hero-lead">調整參數，看見程式一步一步運行。</p>
             <p className="hero-description">
               不只背語法，而是親手改變程式、觀察結果，從每一次執行中建立真正的程式邏輯。

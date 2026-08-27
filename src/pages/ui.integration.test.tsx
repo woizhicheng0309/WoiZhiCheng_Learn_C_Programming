@@ -235,7 +235,8 @@ describe('App hash routes and keyboard semantics', () => {
       </ProgressProvider>,
     )
 
-    expect(screen.getByRole('heading', { name: /魏志成的\s*程式設計基礎\s*學習網站/ })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /程式設計基礎\s*學習網站/ })).toBeInTheDocument()
+    expect(screen.getByLabelText('作者：魏志成')).toBeInTheDocument()
 
     const courseMapLink = screen.getByRole('link', { name: '課程地圖' })
     courseMapLink.focus()
@@ -274,7 +275,7 @@ describe('App hash routes and keyboard semantics', () => {
       </ProgressProvider>,
     )
 
-    expect(await screen.findByRole('heading', { name: /魏志成的\s*程式設計基礎\s*學習網站/ })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: /程式設計基礎\s*學習網站/ })).toBeInTheDocument()
     expect(window.location.hash).toBe('#/')
   })
 })
