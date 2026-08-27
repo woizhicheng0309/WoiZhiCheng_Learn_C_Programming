@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { SiteHeader } from '../components/SiteChrome'
 import { ProgressProvider } from '../hooks/useLearningProgress'
@@ -87,16 +87,42 @@ describe('two-level course map', () => {
   })
 })
 
-describe('continue learning navigation', () => {
-  it('returns to the last visited available lesson', () => {
+describe('site navigation and contextual learning progress', () => {
+  it('keeps the header stable and marks the course section active on lesson pages', () => {
     const storage = createMemoryStorage({
       version: 2,
       lessons: {},
       lastVisitedLessonId: 'loops-for',
     })
-    renderWithProgress(<SiteHeader />, storage)
+    render(
+      <ProgressProvider storage={storage}>
+        <MemoryRouter initialEntries={['/learn/variables/basics']}>
+          <SiteHeader />
+        </MemoryRouter>
+      </ProgressProvider>,
+    )
 
-    expect(screen.getByRole('link', { name: '繼續學習' }))
+    const desktopNav = screen.getByRole('navigation', { name: '主要導覽' })
+    expect(within(desktopNav).queryByRole('link', { name: '繼續學習' })).not.toBeInTheDocument()
+    expect(within(desktopNav).getByRole('link', { name: '課程地圖' }))
+      .toHaveAttribute('aria-current', 'page')
+
+    fireEvent.click(screen.getByRole('button', { name: '開啟導覽選單' }))
+    const mobileNav = screen.getByRole('navigation', { name: '行動版導覽' })
+    expect(within(mobileNav).queryByRole('link', { name: '繼續學習' })).not.toBeInTheDocument()
+    expect(within(mobileNav).getByRole('link', { name: '課程地圖' }))
+      .toHaveAttribute('aria-current', 'page')
+  })
+
+  it('keeps the specific last-visited lesson in the course-map progress card', () => {
+    const storage = createMemoryStorage({
+      version: 2,
+      lessons: {},
+      lastVisitedLessonId: 'loops-for',
+    })
+    renderWithProgress(<LearnPage />, storage)
+
+    expect(screen.getByRole('link', { name: '繼續上次進度：for 迴圈' }))
       .toHaveAttribute('href', '/learn/loops/for')
   })
 })
