@@ -25,3 +25,13 @@ export {
 
 export * from './variables'
 export * from './conditionals'
+
+export {
+  MULTIPLICATION_TABLE_LIMITS,
+  simulateNestedMultiplicationTable,
+  type MultiplicationCell,
+  type NestedLoopFrame,
+  type NestedLoopPhase,
+  type NestedLoopSimulation,
+  type NestedLoopSourcePart,
+} from './nestedLoopSimulator'

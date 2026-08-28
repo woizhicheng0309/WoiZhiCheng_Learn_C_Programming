@@ -17,6 +17,8 @@ export interface PlaybackControlsProps
   onReset: () => void
   onReplay: () => void
   onSpeedChange: (speed: PlaybackSpeed) => void
+  /** Optional lesson name used to make controls unique on multi-lab pages. */
+  controlName?: string
 }
 
 function joinClassNames(...classNames: Array<string | false | undefined>) {
@@ -34,11 +36,15 @@ export function PlaybackControls({
   onReset,
   onReplay,
   onSpeedChange,
+  controlName,
   className,
   ...rest
 }: PlaybackControlsProps) {
   const togglePlayback = playing ? onPause : atEnd ? onReplay : onPlay
   const toggleLabel = playing ? '暫停播放' : atEnd ? '重新播放' : '開始播放'
+  const namedLabel = (label: string) => controlName
+    ? `${controlName}：${label}`
+    : label
 
   return (
     <div
@@ -51,7 +57,7 @@ export function PlaybackControls({
         className="playback-controls__button playback-controls__reset"
         onClick={onReset}
         disabled={atStart && !playing}
-        aria-label="回到第一步"
+        aria-label={namedLabel('回到第一步')}
       >
         <RotateCcw size={18} aria-hidden="true" />
       </button>
@@ -59,7 +65,7 @@ export function PlaybackControls({
         type="button"
         className="playback-controls__button playback-controls__play"
         onClick={togglePlayback}
-        aria-label={toggleLabel}
+        aria-label={namedLabel(toggleLabel)}
       >
         {playing
           ? <Pause size={19} aria-hidden="true" />
@@ -70,14 +76,14 @@ export function PlaybackControls({
         className="playback-controls__button playback-controls__next"
         onClick={onNext}
         disabled={atEnd}
-        aria-label="執行下一步"
+        aria-label={namedLabel('執行下一步')}
       >
         <StepForward size={18} aria-hidden="true" />
       </button>
       <div
         className="playback-controls__speed"
         role="radiogroup"
-        aria-label="播放速度"
+        aria-label={namedLabel('播放速度')}
       >
         {PLAYBACK_SPEEDS.map((option) => (
           <button
@@ -86,7 +92,7 @@ export function PlaybackControls({
               'playback-controls__speed-button',
               speed === option && 'is-active',
             )}
-            aria-label={`${option} 倍速`}
+            aria-label={namedLabel(`${option} 倍速`)}
             aria-pressed={speed === option}
             key={option}
             onClick={() => onSpeedChange(option)}

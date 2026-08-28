@@ -159,6 +159,31 @@ describe('ForLoopLabPage execution controls', () => {
     fireEvent.click(screen.getByRole('button', { name: '檢查這組輸出' }))
     expect(screen.getByRole('status')).toHaveTextContent('這組參數無法安全完成')
   })
+
+  it('keeps nested table exploration isolated from the saved for configuration', () => {
+    renderLab()
+    setLabNumber(/起始值/, 3)
+    const before = JSON.parse(
+      window.localStorage.getItem(PROGRESS_STORAGE_KEY) ?? '{}',
+    ).lessons['loops-for'].savedState
+    const nested = screen.getByRole('region', {
+      name: /一個迴圈走過每一列/,
+    })
+
+    fireEvent.change(within(nested).getByRole('spinbutton', {
+      name: /外層上限 a/,
+    }), {
+      target: { value: '4' },
+    })
+
+    const after = JSON.parse(
+      window.localStorage.getItem(PROGRESS_STORAGE_KEY) ?? '{}',
+    ).lessons['loops-for'].savedState
+    expect(after).toEqual(before)
+    expect(within(nested).getByRole('table', {
+      name: '4 × 9 乘法表，已完成 0 格',
+    })).toBeInTheDocument()
+  })
 })
 
 describe('ForLoopLabPage challenges and local progress', () => {

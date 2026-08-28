@@ -43,6 +43,8 @@ describe('two-level course catalog', () => {
       path: '/learn/loops/for',
       moduleNumber: 3,
       lessonNumber: 1,
+      estimatedMinutes: 25,
+      concepts: expect.arrayContaining(['巢狀迴圈']),
       prerequisiteLessonIds: ['variables-basics'],
     })
   })
