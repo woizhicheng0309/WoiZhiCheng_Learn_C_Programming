@@ -25,6 +25,7 @@ export {
 
 export * from './variables'
 export * from './conditionals'
+export * from './functions'
 
 export {
   MULTIPLICATION_TABLE_LIMITS,

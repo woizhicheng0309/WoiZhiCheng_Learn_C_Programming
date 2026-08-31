@@ -296,6 +296,26 @@ describe('App hash routes and keyboard semantics', () => {
     expect(window.location.hash).toBe('#/learn/loops/for')
   })
 
+  it('opens the functions lesson route and applies its document title', async () => {
+    window.location.hash = '#/learn/functions/basics'
+    render(
+      <ProgressProvider>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </ProgressProvider>,
+    )
+
+    await waitFor(() => {
+      expect(window.location.hash).toBe('#/learn/functions/basics')
+      expect(document.title).toContain('函式、參數與回傳值')
+    })
+    expect(screen.getByRole('heading', {
+      name: /把工作交給函式.*再把答案帶回 main/,
+    })).toBeInTheDocument()
+    expect(screen.getByRole('spinbutton', { name: 'x 的值' })).toHaveValue(4)
+  })
+
   it('redirects an unknown hash route to the landing page', async () => {
     window.location.hash = '#/missing-page'
     render(

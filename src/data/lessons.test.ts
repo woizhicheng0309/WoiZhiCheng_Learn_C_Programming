@@ -9,6 +9,7 @@ import {
   isLessonId,
 } from './lessons'
 import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
+import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
 
 describe('two-level course catalog', () => {
   it('orders topics and nests lessons under their owner', () => {
@@ -23,7 +24,9 @@ describe('two-level course catalog', () => {
     expect(getLessonsByTopicId('variables').map((lesson) => lesson.id)).toEqual([
       'variables-basics',
     ])
-    expect(getLessonsByTopicId('functions')).toEqual([])
+    expect(getLessonsByTopicId('functions').map((lesson) => lesson.id)).toEqual([
+      'functions-basics',
+    ])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -31,6 +34,7 @@ describe('two-level course catalog', () => {
       'variables-basics',
       'conditionals-if-else',
       'loops-for',
+      'functions-basics',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -59,9 +63,26 @@ describe('two-level course catalog', () => {
     expect(lesson && isLessonAvailable(lesson)).toBe(true)
   })
 
+  it('opens the functions lesson after the for-loop lesson', () => {
+    const lesson = getLessonById('functions-basics')
+    expect(lesson).toMatchObject({
+      topicId: 'functions',
+      moduleNumber: 4,
+      lessonNumber: 1,
+      order: 4,
+      title: '函式、參數與回傳值',
+      status: 'available',
+      path: '/learn/functions/basics',
+      prerequisiteLessonIds: ['loops-for'],
+      requiredChallengeIds: FUNCTION_CHALLENGE_IDS,
+    })
+    expect(lesson && isLessonAvailable(lesson)).toBe(true)
+  })
+
   it('provides safe topic and lesson lookups', () => {
     expect(getTopicById('pointers')?.englishTitle).toBe('Pointers')
     expect(isLessonId('variables-basics')).toBe(true)
+    expect(isLessonId('functions-basics')).toBe(true)
     expect(isLessonId('variables')).toBe(false)
     expect(isLessonId(null)).toBe(false)
   })

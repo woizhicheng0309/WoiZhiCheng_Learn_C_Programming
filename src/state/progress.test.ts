@@ -1,8 +1,14 @@
-import { DEFAULT_CONDITIONAL_CONFIG, DEFAULT_LOOP_CONFIG } from '../domain'
+import {
+  DEFAULT_CONDITIONAL_CONFIG,
+  DEFAULT_FUNCTION_CONFIG,
+  DEFAULT_LOOP_CONFIG,
+  FUNCTION_LIMITS,
+} from '../domain'
 import { CHALLENGE_IDS } from '../data/challenges'
 import { VARIABLE_BASICS_CHALLENGE_IDS } from '../data/lessons'
 import {
   DEFAULT_CONDITIONAL_STATE,
+  DEFAULT_FUNCTION_STATE,
   DEFAULT_VARIABLE_BASICS_STATE,
   LEGACY_PROGRESS_STORAGE_KEY,
   PROGRESS_STORAGE_KEY,
@@ -15,6 +21,7 @@ import {
   getLessonProgress,
   getLessonProgressStatus,
   isForLoopLessonCompleted,
+  isFunctionSavedState,
   isLessonCompleted,
   isProgressV1,
   isProgressV2,
@@ -49,6 +56,9 @@ describe('Progress V2 storage and migration', () => {
       .toEqual(DEFAULT_LOOP_CONFIG)
     expect(createDefaultLessonProgress('conditionals-if-else').savedState)
       .toEqual(DEFAULT_CONDITIONAL_STATE)
+    expect(createDefaultLessonProgress('functions-basics').savedState)
+      .toEqual(DEFAULT_FUNCTION_STATE)
+    expect(DEFAULT_FUNCTION_STATE).toEqual(DEFAULT_FUNCTION_CONFIG)
   })
 
   it('round-trips valid V2 progress through the versioned key', () => {
@@ -69,6 +79,20 @@ describe('Progress V2 storage and migration', () => {
     expect(saveProgress(progress)).toBe(true)
     expect(loadProgress()).toEqual(progress)
     expect(loadProgress()).not.toBe(progress)
+  })
+
+  it('round-trips function parameters without changing the V2 schema', () => {
+    const progress = createDefaultProgress()
+    progress.lessons['functions-basics'] = {
+      guidedRunCompleted: true,
+      completedChallengeIds: ['predict-return-value'],
+      savedState: { x: 8, y: -2 },
+    }
+    progress.lastVisitedLessonId = 'functions-basics'
+
+    expect(saveProgress(progress)).toBe(true)
+    expect(loadProgress()).toEqual(progress)
+    expect(loadProgress().version).toBe(2)
   })
 
   it('resets only a damaged lesson while preserving valid lessons', () => {
@@ -95,6 +119,33 @@ describe('Progress V2 storage and migration', () => {
       createDefaultLessonProgress('loops-for'),
     )
     expect(loaded.lastVisitedLessonId).toBe('loops-for')
+  })
+
+  it('resets invalid function state without contaminating legacy loop progress', () => {
+    const loopProgress = {
+      guidedRunCompleted: true,
+      completedChallengeIds: ['zero-to-four'],
+      savedState: { start: 2, end: 10, comparator: '<=', step: 2 },
+    }
+    window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify({
+      version: 2,
+      lessons: {
+        'loops-for': loopProgress,
+        'functions-basics': {
+          guidedRunCompleted: true,
+          completedChallengeIds: ['predict-return-value'],
+          savedState: { x: Number.MAX_SAFE_INTEGER, y: 1.5 },
+        },
+      },
+      lastVisitedLessonId: 'functions-basics',
+    }))
+
+    const loaded = loadProgress()
+    expect(loaded.lessons['loops-for']).toEqual(loopProgress)
+    expect(loaded.lessons['functions-basics']).toEqual(
+      createDefaultLessonProgress('functions-basics'),
+    )
+    expect(loaded.lastVisitedLessonId).toBe('functions-basics')
   })
 
   it('falls back for malformed top-level V2 data', () => {
@@ -185,6 +236,19 @@ describe('Progress V2 storage and migration', () => {
       ...DEFAULT_CONDITIONAL_CONFIG,
       score: 100.5,
     })).toBe(false)
+    expect(isFunctionSavedState(DEFAULT_FUNCTION_CONFIG)).toBe(true)
+    expect(isFunctionSavedState({
+      ...DEFAULT_FUNCTION_CONFIG,
+      x: FUNCTION_LIMITS.x.max + 1,
+    })).toBe(false)
+    expect(isFunctionSavedState({
+      ...DEFAULT_FUNCTION_CONFIG,
+      y: 1.5,
+    })).toBe(false)
+    expect(isFunctionSavedState({
+      ...DEFAULT_FUNCTION_CONFIG,
+      x: Number.POSITIVE_INFINITY,
+    })).toBe(false)
 
     const progress = createDefaultProgress()
     const loop = createDefaultLessonProgress('loops-for')
@@ -263,10 +327,10 @@ describe('progress selectors', () => {
       .toBe('not-started')
     expect(getCourseProgress(progress)).toEqual({
       completedLessons: 2,
-      totalLessons: 3,
+      totalLessons: 4,
       completedChallenges: 6,
-      totalChallenges: 9,
-      percentage: 67,
+      totalChallenges: 12,
+      percentage: 50,
     })
   })
 

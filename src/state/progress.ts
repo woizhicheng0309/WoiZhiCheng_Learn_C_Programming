@@ -3,10 +3,12 @@ import {
   CONDITIONAL_LIMITS,
   CONDITIONAL_LOGICAL_OPERATORS,
   DEFAULT_CONDITIONAL_CONFIG,
+  DEFAULT_FUNCTION_CONFIG,
   DEFAULT_LOOP_CONFIG,
+  FUNCTION_LIMITS,
   validateLoopConfig,
 } from '../domain'
-import type { ConditionalConfig, LoopConfig } from '../domain'
+import type { ConditionalConfig, FunctionConfig, LoopConfig } from '../domain'
 import {
   LESSONS,
   getLessonById,
@@ -47,6 +49,11 @@ export interface ConditionalSavedState extends JsonObject {
   score: number
   attendance: number
   logicalOperator: ConditionalConfig['logicalOperator']
+}
+
+export interface FunctionSavedState extends JsonObject {
+  x: FunctionConfig['x']
+  y: FunctionConfig['y']
 }
 
 export interface LessonProgress {
@@ -97,6 +104,10 @@ export const DEFAULT_CONDITIONAL_STATE: Readonly<ConditionalSavedState> = {
   ...DEFAULT_CONDITIONAL_CONFIG,
 }
 
+export const DEFAULT_FUNCTION_STATE: Readonly<FunctionSavedState> = {
+  ...DEFAULT_FUNCTION_CONFIG,
+}
+
 export function createDefaultProgress(): ProgressV2 {
   return {
     version: PROGRESS_VERSION,
@@ -117,6 +128,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'variables-basics') return { ...DEFAULT_VARIABLE_BASICS_STATE }
   if (id === 'conditionals-if-else') return { ...DEFAULT_CONDITIONAL_STATE }
   if (id === 'loops-for') return { ...DEFAULT_LOOP_CONFIG }
+  if (id === 'functions-basics') return { ...DEFAULT_FUNCTION_STATE }
   return null
 }
 
@@ -192,6 +204,24 @@ export function isConditionalSavedState(
   )
 }
 
+export function isFunctionSavedState(
+  value: unknown,
+): value is FunctionSavedState {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+
+  const state = value as Record<string, unknown>
+  return (
+    isFiniteNumber(state.x) &&
+    Number.isInteger(state.x) &&
+    state.x >= FUNCTION_LIMITS.x.min &&
+    state.x <= FUNCTION_LIMITS.x.max &&
+    isFiniteNumber(state.y) &&
+    Number.isInteger(state.y) &&
+    state.y >= FUNCTION_LIMITS.y.min &&
+    state.y <= FUNCTION_LIMITS.y.max
+  )
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
@@ -199,6 +229,7 @@ export function isSavedStateForLesson(
   if (id === 'variables-basics') return isVariableBasicsSavedState(value)
   if (id === 'conditionals-if-else') return isConditionalSavedState(value)
   if (id === 'loops-for') return isLoopConfig(value)
+  if (id === 'functions-basics') return isFunctionSavedState(value)
   return value === null
 }
 

@@ -1,6 +1,7 @@
 import { CHALLENGE_IDS } from './challenges'
 import { VARIABLE_CHALLENGE_IDS } from './variableChallenges'
 import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
+import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
 
 export const TOPIC_IDS = [
   'variables',
@@ -17,6 +18,7 @@ export const LESSON_IDS = [
   'variables-basics',
   'conditionals-if-else',
   'loops-for',
+  'functions-basics',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -102,6 +104,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 25,
     prerequisiteLessonIds: ['variables-basics'],
     requiredChallengeIds: CHALLENGE_IDS,
+  },
+  {
+    id: 'functions-basics',
+    topicId: 'functions',
+    moduleNumber: 4,
+    lessonNumber: 1,
+    order: 4,
+    title: '函式、參數與回傳值',
+    englishTitle: 'Functions, Parameters & Return Values',
+    description: '把重複工作封裝成函式，追蹤引數如何傳入參數，以及回傳值如何回到呼叫端。',
+    concepts: ['函式宣告', '參數與引數', '回傳值', '區域變數'],
+    status: 'available',
+    path: '/learn/functions/basics',
+    estimatedMinutes: 22,
+    prerequisiteLessonIds: ['loops-for'],
+    requiredChallengeIds: FUNCTION_CHALLENGE_IDS,
   },
 ]
 

@@ -73,7 +73,7 @@ describe('landing page variable preview', () => {
 })
 
 describe('two-level course map', () => {
-  it('shows topic and lesson status while leaving for available without a lock', () => {
+  it('shows every available topic and lesson without locks', () => {
     renderWithProgress(<LearnPage />)
 
     expect(screen.getByRole('heading', { name: '變數與運算', level: 2 }))
@@ -82,6 +82,9 @@ describe('two-level course map', () => {
       .toHaveAttribute('href', '/learn/variables/basics')
     expect(screen.getByRole('link', { name: /for 迴圈，未開始/ }))
       .toHaveAttribute('href', '/learn/loops/for')
+    expect(screen.getByRole('link', { name: /函式、參數與回傳值，未開始/ }))
+      .toHaveAttribute('href', '/learn/functions/basics')
+    expect(screen.getByText('建議先備：for 迴圈')).toBeInTheDocument()
     expect(screen.getAllByText('建議先備：程式骨架、變數與運算'))
       .toHaveLength(2)
   })
