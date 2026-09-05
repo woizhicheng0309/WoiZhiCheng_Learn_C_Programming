@@ -316,6 +316,26 @@ describe('App hash routes and keyboard semantics', () => {
     expect(screen.getByRole('spinbutton', { name: 'x 的值' })).toHaveValue(4)
   })
 
+  it('opens the arrays lesson route and applies its document title', async () => {
+    window.location.hash = '#/learn/arrays/basics'
+    render(
+      <ProgressProvider>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </ProgressProvider>,
+    )
+
+    await waitFor(() => {
+      expect(window.location.hash).toBe('#/learn/arrays/basics')
+      expect(document.title).toContain('陣列、索引與字串')
+    })
+    expect(screen.getByRole('heading', {
+      name: /把一排資料放進陣列.*從 index 0 找到每一格/,
+    })).toBeInTheDocument()
+    expect(screen.getByRole('spinbutton', { name: 'index 的值' })).toHaveValue(2)
+  })
+
   it('redirects an unknown hash route to the landing page', async () => {
     window.location.hash = '#/missing-page'
     render(

@@ -10,6 +10,7 @@ import {
 } from './lessons'
 import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
 import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
+import { ARRAY_CHALLENGE_IDS } from './arrayChallenges'
 
 describe('two-level course catalog', () => {
   it('orders topics and nests lessons under their owner', () => {
@@ -27,6 +28,9 @@ describe('two-level course catalog', () => {
     expect(getLessonsByTopicId('functions').map((lesson) => lesson.id)).toEqual([
       'functions-basics',
     ])
+    expect(getLessonsByTopicId('arrays-and-strings').map((lesson) => lesson.id)).toEqual([
+      'arrays-basics',
+    ])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -35,6 +39,7 @@ describe('two-level course catalog', () => {
       'conditionals-if-else',
       'loops-for',
       'functions-basics',
+      'arrays-basics',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -79,10 +84,28 @@ describe('two-level course catalog', () => {
     expect(lesson && isLessonAvailable(lesson)).toBe(true)
   })
 
+  it('opens the arrays lesson after functions with three required challenges', () => {
+    const lesson = getLessonById('arrays-basics')
+    expect(lesson).toMatchObject({
+      topicId: 'arrays-and-strings',
+      moduleNumber: 5,
+      lessonNumber: 1,
+      order: 5,
+      title: '陣列、索引與字串',
+      status: 'available',
+      path: '/learn/arrays/basics',
+      estimatedMinutes: 24,
+      prerequisiteLessonIds: ['functions-basics'],
+      requiredChallengeIds: ARRAY_CHALLENGE_IDS,
+    })
+    expect(lesson && isLessonAvailable(lesson)).toBe(true)
+  })
+
   it('provides safe topic and lesson lookups', () => {
     expect(getTopicById('pointers')?.englishTitle).toBe('Pointers')
     expect(isLessonId('variables-basics')).toBe(true)
     expect(isLessonId('functions-basics')).toBe(true)
+    expect(isLessonId('arrays-basics')).toBe(true)
     expect(isLessonId('variables')).toBe(false)
     expect(isLessonId(null)).toBe(false)
   })

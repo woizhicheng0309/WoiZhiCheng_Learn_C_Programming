@@ -1,5 +1,6 @@
 import {
   COMPARATORS,
+  DEFAULT_ARRAY_CONFIG,
   CONDITIONAL_LIMITS,
   CONDITIONAL_LOGICAL_OPERATORS,
   DEFAULT_CONDITIONAL_CONFIG,
@@ -7,8 +8,14 @@ import {
   DEFAULT_LOOP_CONFIG,
   FUNCTION_LIMITS,
   validateLoopConfig,
+  validateArrayConfig,
 } from '../domain'
-import type { ConditionalConfig, FunctionConfig, LoopConfig } from '../domain'
+import type {
+  ArrayConfig,
+  ConditionalConfig,
+  FunctionConfig,
+  LoopConfig,
+} from '../domain'
 import {
   LESSONS,
   getLessonById,
@@ -54,6 +61,11 @@ export interface ConditionalSavedState extends JsonObject {
 export interface FunctionSavedState extends JsonObject {
   x: FunctionConfig['x']
   y: FunctionConfig['y']
+}
+
+export interface ArraySavedState extends JsonObject {
+  index: ArrayConfig['index']
+  newValue: ArrayConfig['newValue']
 }
 
 export interface LessonProgress {
@@ -108,6 +120,10 @@ export const DEFAULT_FUNCTION_STATE: Readonly<FunctionSavedState> = {
   ...DEFAULT_FUNCTION_CONFIG,
 }
 
+export const DEFAULT_ARRAY_STATE: Readonly<ArraySavedState> = {
+  ...DEFAULT_ARRAY_CONFIG,
+}
+
 export function createDefaultProgress(): ProgressV2 {
   return {
     version: PROGRESS_VERSION,
@@ -129,6 +145,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'conditionals-if-else') return { ...DEFAULT_CONDITIONAL_STATE }
   if (id === 'loops-for') return { ...DEFAULT_LOOP_CONFIG }
   if (id === 'functions-basics') return { ...DEFAULT_FUNCTION_STATE }
+  if (id === 'arrays-basics') return { ...DEFAULT_ARRAY_STATE }
   return null
 }
 
@@ -222,6 +239,22 @@ export function isFunctionSavedState(
   )
 }
 
+export function isArraySavedState(
+  value: unknown,
+): value is ArraySavedState {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+
+  const state = value as Record<string, unknown>
+  if (!isFiniteNumber(state.index) || !isFiniteNumber(state.newValue)) {
+    return false
+  }
+
+  return validateArrayConfig({
+    index: state.index,
+    newValue: state.newValue,
+  }).length === 0
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
@@ -230,6 +263,7 @@ export function isSavedStateForLesson(
   if (id === 'conditionals-if-else') return isConditionalSavedState(value)
   if (id === 'loops-for') return isLoopConfig(value)
   if (id === 'functions-basics') return isFunctionSavedState(value)
+  if (id === 'arrays-basics') return isArraySavedState(value)
   return value === null
 }
 

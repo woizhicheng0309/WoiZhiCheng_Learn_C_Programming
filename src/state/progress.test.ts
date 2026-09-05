@@ -1,5 +1,7 @@
 import {
   DEFAULT_CONDITIONAL_CONFIG,
+  DEFAULT_ARRAY_CONFIG,
+  ARRAY_LIMITS,
   DEFAULT_FUNCTION_CONFIG,
   DEFAULT_LOOP_CONFIG,
   FUNCTION_LIMITS,
@@ -8,6 +10,7 @@ import { CHALLENGE_IDS } from '../data/challenges'
 import { VARIABLE_BASICS_CHALLENGE_IDS } from '../data/lessons'
 import {
   DEFAULT_CONDITIONAL_STATE,
+  DEFAULT_ARRAY_STATE,
   DEFAULT_FUNCTION_STATE,
   DEFAULT_VARIABLE_BASICS_STATE,
   LEGACY_PROGRESS_STORAGE_KEY,
@@ -21,6 +24,7 @@ import {
   getLessonProgress,
   getLessonProgressStatus,
   isForLoopLessonCompleted,
+  isArraySavedState,
   isFunctionSavedState,
   isLessonCompleted,
   isProgressV1,
@@ -58,7 +62,10 @@ describe('Progress V2 storage and migration', () => {
       .toEqual(DEFAULT_CONDITIONAL_STATE)
     expect(createDefaultLessonProgress('functions-basics').savedState)
       .toEqual(DEFAULT_FUNCTION_STATE)
+    expect(createDefaultLessonProgress('arrays-basics').savedState)
+      .toEqual(DEFAULT_ARRAY_STATE)
     expect(DEFAULT_FUNCTION_STATE).toEqual(DEFAULT_FUNCTION_CONFIG)
+    expect(DEFAULT_ARRAY_STATE).toEqual(DEFAULT_ARRAY_CONFIG)
   })
 
   it('round-trips valid V2 progress through the versioned key', () => {
@@ -93,6 +100,21 @@ describe('Progress V2 storage and migration', () => {
     expect(saveProgress(progress)).toBe(true)
     expect(loadProgress()).toEqual(progress)
     expect(loadProgress().version).toBe(2)
+  })
+
+  it('round-trips a valid array index and write value in V2 progress', () => {
+    const progress = createDefaultProgress()
+    progress.lessons['arrays-basics'] = {
+      guidedRunCompleted: true,
+      completedChallengeIds: ['predict-index-read'],
+      savedState: { index: 4, newValue: -8 },
+    }
+    progress.lastVisitedLessonId = 'arrays-basics'
+
+    expect(saveProgress(progress)).toBe(true)
+    expect(loadProgress()).toEqual(progress)
+    expect(isArraySavedState(progress.lessons['arrays-basics']?.savedState))
+      .toBe(true)
   })
 
   it('resets only a damaged lesson while preserving valid lessons', () => {
@@ -249,6 +271,19 @@ describe('Progress V2 storage and migration', () => {
       ...DEFAULT_FUNCTION_CONFIG,
       x: Number.POSITIVE_INFINITY,
     })).toBe(false)
+    expect(isArraySavedState(DEFAULT_ARRAY_CONFIG)).toBe(true)
+    expect(isArraySavedState({
+      ...DEFAULT_ARRAY_CONFIG,
+      index: ARRAY_LIMITS.index.max + 1,
+    })).toBe(false)
+    expect(isArraySavedState({
+      ...DEFAULT_ARRAY_CONFIG,
+      newValue: 4.5,
+    })).toBe(false)
+    expect(isArraySavedState({
+      ...DEFAULT_ARRAY_CONFIG,
+      newValue: Number.NaN,
+    })).toBe(false)
 
     const progress = createDefaultProgress()
     const loop = createDefaultLessonProgress('loops-for')
@@ -327,10 +362,10 @@ describe('progress selectors', () => {
       .toBe('not-started')
     expect(getCourseProgress(progress)).toEqual({
       completedLessons: 2,
-      totalLessons: 4,
+      totalLessons: 5,
       completedChallenges: 6,
-      totalChallenges: 12,
-      percentage: 50,
+      totalChallenges: 15,
+      percentage: 40,
     })
   })
 

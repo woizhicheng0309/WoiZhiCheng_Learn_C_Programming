@@ -2,6 +2,7 @@ import { CHALLENGE_IDS } from './challenges'
 import { VARIABLE_CHALLENGE_IDS } from './variableChallenges'
 import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
 import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
+import { ARRAY_CHALLENGE_IDS } from './arrayChallenges'
 
 export const TOPIC_IDS = [
   'variables',
@@ -19,6 +20,7 @@ export const LESSON_IDS = [
   'conditionals-if-else',
   'loops-for',
   'functions-basics',
+  'arrays-basics',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -120,6 +122,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 22,
     prerequisiteLessonIds: ['loops-for'],
     requiredChallengeIds: FUNCTION_CHALLENGE_IDS,
+  },
+  {
+    id: 'arrays-basics',
+    topicId: 'arrays-and-strings',
+    moduleNumber: 5,
+    lessonNumber: 1,
+    order: 5,
+    title: '陣列、索引與字串',
+    englishTitle: 'Arrays, Indexes & Strings',
+    description: '用連續記憶格理解陣列索引、元素讀寫與越界風險，再看懂字串結尾的空字元。',
+    concepts: ['陣列宣告', '索引讀寫', '越界存取', "字串與 '\\0'"],
+    status: 'available',
+    path: '/learn/arrays/basics',
+    estimatedMinutes: 24,
+    prerequisiteLessonIds: ['functions-basics'],
+    requiredChallengeIds: ARRAY_CHALLENGE_IDS,
   },
 ]
 

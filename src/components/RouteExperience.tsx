@@ -10,6 +10,7 @@ const routeTitles: Record<string, string> = {
   '/learn/conditionals/if-else': `if 與 else｜${SITE_TITLE}`,
   '/learn/loops/for': `for 迴圈實驗室｜${SITE_TITLE}`,
   '/learn/functions/basics': `函式、參數與回傳值｜${SITE_TITLE}`,
+  '/learn/arrays/basics': `陣列、索引與字串｜${SITE_TITLE}`,
 }
 
 export function RouteExperience() {
