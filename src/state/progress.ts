@@ -5,6 +5,7 @@ import {
   DEFAULT_SWAP_CONFIG,
   DEFAULT_TRAVERSAL_CONFIG,
   DEFAULT_STRING_POINTER_CONFIG,
+  DEFAULT_WHILE_CONFIG,
   CONDITIONAL_LIMITS,
   CONDITIONAL_LOGICAL_OPERATORS,
   DEFAULT_CONDITIONAL_CONFIG,
@@ -17,6 +18,7 @@ import {
   validateSwapConfig,
   validateTraversalConfig,
   validateStringPointerConfig,
+  validateWhileConfig,
 } from '../domain'
 import type {
   ArrayConfig,
@@ -27,6 +29,7 @@ import type {
   SwapConfig,
   TraversalConfig,
   StringPointerConfig,
+  WhileConfig,
 } from '../domain'
 import {
   LESSONS,
@@ -103,6 +106,14 @@ export interface StringPointerSavedState extends JsonObject {
   stopAt: StringPointerConfig['stopAt']
 }
 
+export interface WhileSavedState extends JsonObject {
+  mode: WhileConfig['mode']
+  start: WhileConfig['start']
+  end: WhileConfig['end']
+  comparator: WhileConfig['comparator']
+  step: WhileConfig['step']
+}
+
 export interface LessonProgress {
   guidedRunCompleted: boolean
   completedChallengeIds: string[]
@@ -175,6 +186,10 @@ export const DEFAULT_STRING_POINTER_STATE: Readonly<StringPointerSavedState> = {
   ...DEFAULT_STRING_POINTER_CONFIG,
 }
 
+export const DEFAULT_WHILE_STATE: Readonly<WhileSavedState> = {
+  ...DEFAULT_WHILE_CONFIG,
+}
+
 export function createDefaultProgress(): ProgressV2 {
   return {
     version: PROGRESS_VERSION,
@@ -195,6 +210,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'variables-basics') return { ...DEFAULT_VARIABLE_BASICS_STATE }
   if (id === 'conditionals-if-else') return { ...DEFAULT_CONDITIONAL_STATE }
   if (id === 'loops-for') return { ...DEFAULT_LOOP_CONFIG }
+  if (id === 'loops-while-do-while') return { ...DEFAULT_WHILE_STATE }
   if (id === 'functions-basics') return { ...DEFAULT_FUNCTION_STATE }
   if (id === 'arrays-basics') return { ...DEFAULT_ARRAY_STATE }
   if (id === 'pointers-basics') return { ...DEFAULT_POINTER_STATE }
@@ -363,6 +379,27 @@ export function isStringPointerSavedState(value: unknown): value is StringPointe
   return validateStringPointerConfig({ sample: state.sample, stopAt: state.stopAt }).length === 0
 }
 
+export function isWhileSavedState(value: unknown): value is WhileSavedState {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  const state = value as Record<string, unknown>
+  if (
+    !isFiniteNumber(state.start)
+    || !isFiniteNumber(state.end)
+    || !isFiniteNumber(state.step)
+    || (state.mode !== 'while' && state.mode !== 'do-while')
+    || typeof state.comparator !== 'string'
+    || !COMPARATORS.includes(state.comparator as WhileConfig['comparator'])
+  ) return false
+
+  return validateWhileConfig({
+    mode: state.mode,
+    start: state.start,
+    end: state.end,
+    comparator: state.comparator as WhileConfig['comparator'],
+    step: state.step,
+  }).length === 0
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
@@ -370,6 +407,7 @@ export function isSavedStateForLesson(
   if (id === 'variables-basics') return isVariableBasicsSavedState(value)
   if (id === 'conditionals-if-else') return isConditionalSavedState(value)
   if (id === 'loops-for') return isLoopConfig(value)
+  if (id === 'loops-while-do-while') return isWhileSavedState(value)
   if (id === 'functions-basics') return isFunctionSavedState(value)
   if (id === 'arrays-basics') return isArraySavedState(value)
   if (id === 'pointers-basics') return isPointerSavedState(value)

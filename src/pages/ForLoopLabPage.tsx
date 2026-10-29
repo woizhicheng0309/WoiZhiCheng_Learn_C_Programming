@@ -790,8 +790,8 @@ export function ForLoopLabPage() {
                 <h2>做得很好，你已完成 for 迴圈單元！</h2>
                 <p>你已能控制起點、條件與步進方向，並預測迴圈會產生的輸出。</p>
               </div>
-              <Link className="button button-light" to="/learn">
-                回到課程地圖 <ChevronRight size={17} aria-hidden="true" />
+              <Link className="button button-light" to="/learn/loops/while-do-while">
+                下一課：while 與 do…while <ChevronRight size={17} aria-hidden="true" />
               </Link>
             </motion.div>
           )}

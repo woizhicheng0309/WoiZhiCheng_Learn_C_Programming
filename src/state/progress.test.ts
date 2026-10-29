@@ -8,6 +8,7 @@ import {
   DEFAULT_SWAP_CONFIG,
   DEFAULT_TRAVERSAL_CONFIG,
   DEFAULT_STRING_POINTER_CONFIG,
+  DEFAULT_WHILE_CONFIG,
   FUNCTION_LIMITS,
 } from '../domain'
 import { CHALLENGE_IDS } from '../data/challenges'
@@ -16,6 +17,7 @@ import { POINTER_CHALLENGE_IDS } from '../data/pointerChallenges'
 import { SWAP_CHALLENGE_IDS } from '../data/swapChallenges'
 import { TRAVERSAL_CHALLENGE_IDS } from '../data/traversalChallenges'
 import { STRING_POINTER_CHALLENGE_IDS } from '../data/stringPointerChallenges'
+import { WHILE_CHALLENGE_IDS } from '../data/whileChallenges'
 import {
   DEFAULT_CONDITIONAL_STATE,
   DEFAULT_ARRAY_STATE,
@@ -24,6 +26,7 @@ import {
   DEFAULT_SWAP_STATE,
   DEFAULT_TRAVERSAL_STATE,
   DEFAULT_STRING_POINTER_STATE,
+  DEFAULT_WHILE_STATE,
   DEFAULT_VARIABLE_BASICS_STATE,
   LEGACY_PROGRESS_STORAGE_KEY,
   PROGRESS_STORAGE_KEY,
@@ -42,6 +45,7 @@ import {
   isSwapSavedState,
   isTraversalSavedState,
   isStringPointerSavedState,
+  isWhileSavedState,
   isLessonCompleted,
   isProgressV1,
   isProgressV2,
@@ -74,6 +78,8 @@ describe('Progress V2 storage and migration', () => {
       .toEqual(DEFAULT_VARIABLE_BASICS_STATE)
     expect(createDefaultLessonProgress('loops-for').savedState)
       .toEqual(DEFAULT_LOOP_CONFIG)
+    expect(createDefaultLessonProgress('loops-while-do-while').savedState)
+      .toEqual(DEFAULT_WHILE_STATE)
     expect(createDefaultLessonProgress('conditionals-if-else').savedState)
       .toEqual(DEFAULT_CONDITIONAL_STATE)
     expect(createDefaultLessonProgress('functions-basics').savedState)
@@ -94,6 +100,7 @@ describe('Progress V2 storage and migration', () => {
     expect(DEFAULT_SWAP_STATE).toEqual(DEFAULT_SWAP_CONFIG)
     expect(DEFAULT_TRAVERSAL_STATE).toEqual(DEFAULT_TRAVERSAL_CONFIG)
     expect(DEFAULT_STRING_POINTER_STATE).toEqual(DEFAULT_STRING_POINTER_CONFIG)
+    expect(DEFAULT_WHILE_STATE).toEqual(DEFAULT_WHILE_CONFIG)
   })
 
   it('round-trips valid V2 progress through the versioned key', () => {
@@ -386,6 +393,68 @@ describe('Progress V2 storage and migration', () => {
     expect(isProgressV2(loaded)).toBe(true)
   })
 
+  it.each(['while', 'do-while'])('round-trips %s settings and a zero step independently of for progress', (mode) => {
+    const progress = createDefaultProgress()
+    progress.lessons['loops-for'] = {
+      guidedRunCompleted: true,
+      completedChallengeIds: ['zero-to-four'],
+      savedState: { ...DEFAULT_LOOP_CONFIG },
+    }
+    progress.lessons['loops-while-do-while'] = {
+      guidedRunCompleted: true,
+      completedChallengeIds: [...WHILE_CHALLENGE_IDS],
+      savedState: { ...DEFAULT_WHILE_CONFIG, mode, step: 0 },
+    }
+    progress.lastVisitedLessonId = 'loops-while-do-while'
+
+    expect(saveProgress(progress)).toBe(true)
+    const loaded = loadProgress()
+    expect(loaded).toEqual(progress)
+    expect(loaded.version).toBe(2)
+    expect(isLessonCompleted(loaded, 'loops-while-do-while')).toBe(true)
+    expect(isLessonCompleted(loaded, 'loops-for')).toBe(false)
+    expect(getContinueLearningPath(loaded)).toBe('/learn/loops/while-do-while')
+  })
+
+  it.each([
+    { ...DEFAULT_WHILE_CONFIG, mode: 'for' },
+    { ...DEFAULT_WHILE_CONFIG, comparator: '!=' },
+    { ...DEFAULT_WHILE_CONFIG, start: 21 },
+    { ...DEFAULT_WHILE_CONFIG, end: -21 },
+    { ...DEFAULT_WHILE_CONFIG, step: 6 },
+    { ...DEFAULT_WHILE_CONFIG, step: 0.5 },
+    { ...DEFAULT_WHILE_CONFIG, start: '0' },
+    { ...DEFAULT_WHILE_CONFIG, end: null },
+    { start: 0, end: 3, comparator: '<', step: 1 },
+  ])('normalizes malformed while settings while preserving for progress: %j', (savedState) => {
+    const loopProgress = {
+      guidedRunCompleted: true,
+      completedChallengeIds: ['zero-to-four'],
+      savedState: { ...DEFAULT_LOOP_CONFIG },
+    }
+    window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify({
+      version: 2,
+      lessons: {
+        'loops-for': loopProgress,
+        'loops-while-do-while': {
+          guidedRunCompleted: true,
+          completedChallengeIds: ['predict-while-zero'],
+          savedState,
+        },
+      },
+      lastVisitedLessonId: 'loops-while-do-while',
+    }))
+
+    expect(isWhileSavedState(savedState)).toBe(false)
+    const loaded = loadProgress()
+    expect(loaded.lessons['loops-for']).toEqual(loopProgress)
+    expect(loaded.lessons['loops-while-do-while']).toEqual(
+      createDefaultLessonProgress('loops-while-do-while'),
+    )
+    expect(loaded.lastVisitedLessonId).toBe('loops-while-do-while')
+    expect(isProgressV2(loaded)).toBe(true)
+  })
+
   it('resets only a damaged lesson while preserving valid lessons', () => {
     window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify({
       version: 2,
@@ -582,6 +651,20 @@ describe('Progress V2 storage and migration', () => {
     }
     expect(isTraversalSavedState({ ...DEFAULT_TRAVERSAL_CONFIG, mode: 'invalid' }))
       .toBe(false)
+    expect(isWhileSavedState(DEFAULT_WHILE_CONFIG)).toBe(true)
+    for (const comparator of ['<', '<=', '>', '>=']) {
+      expect(isWhileSavedState({ ...DEFAULT_WHILE_CONFIG, comparator })).toBe(true)
+    }
+    for (const step of [-5, 0, 5]) {
+      expect(isWhileSavedState({ ...DEFAULT_WHILE_CONFIG, start: -20, end: 20, step }))
+        .toBe(true)
+    }
+    for (const field of ['start', 'end', 'step']) {
+      for (const value of [Number.NaN, Number.POSITIVE_INFINITY, 1.5]) {
+        expect(isWhileSavedState({ ...DEFAULT_WHILE_CONFIG, [field]: value }))
+          .toBe(false)
+      }
+    }
 
     const progress = createDefaultProgress()
     const loop = createDefaultLessonProgress('loops-for')
@@ -660,10 +743,10 @@ describe('progress selectors', () => {
       .toBe('not-started')
     expect(getCourseProgress(progress)).toEqual({
       completedLessons: 2,
-      totalLessons: 9,
+      totalLessons: 10,
       completedChallenges: 6,
-      totalChallenges: 27,
-      percentage: 22,
+      totalChallenges: 30,
+      percentage: 20,
     })
   })
 

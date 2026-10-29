@@ -4,6 +4,7 @@ import { SiteFooter, SiteHeader } from './components/SiteChrome'
 import { HomePage } from './pages/HomePage'
 import { LearnPage } from './pages/LearnPage'
 import { ForLoopLabPage } from './pages/ForLoopLabPage'
+import { WhileLoopLessonPage } from './pages/WhileLoopLessonPage'
 import { VariablesBasicsPage } from './pages/VariablesBasicsPage'
 import { ConditionalsLessonPage } from './pages/ConditionalsLessonPage'
 import { FunctionLessonPage } from './pages/FunctionLessonPage'
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/learn/variables/basics" element={<VariablesBasicsPage />} />
           <Route path="/learn/conditionals/if-else" element={<ConditionalsLessonPage />} />
           <Route path="/learn/loops/for" element={<ForLoopLabPage />} />
+          <Route path="/learn/loops/while-do-while" element={<WhileLoopLessonPage />} />
           <Route path="/learn/functions/basics" element={<FunctionLessonPage />} />
           <Route path="/learn/arrays/basics" element={<ArrayLessonPage />} />
           <Route path="/learn/pointers/basics" element={<PointerLessonPage />} />

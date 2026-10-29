@@ -31,6 +31,7 @@ export * from './pointers'
 export * from './swap'
 export * from './traversal'
 export * from './stringPointers'
+export * from './whileLoops'
 
 export {
   MULTIPLICATION_TABLE_LIMITS,
