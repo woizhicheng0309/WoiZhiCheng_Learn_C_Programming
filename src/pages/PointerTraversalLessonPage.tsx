@@ -222,6 +222,6 @@ export function PointerTraversalLessonPage() {
         {feedback[challenge.id] && <p className={`functions-challenge-feedback ${feedback[challenge.id]?.solved ? 'is-success' : 'is-hint'}`} role="status">{feedback[challenge.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>最後一格在 [4]，尾後位置在 + 5。</h2><p>索引與指標可以走過同一排資料。每次只讀取合法元素，讓 p++ 在元素之間移動，並在尾後位置停下。</p><div><Link className="button button-secondary" to="/learn/pointers/swap"><ArrowLeft size={17} aria-hidden="true" />上一課：指標參數與交換變數</Link><Link className="button button-primary" to="/learn">回到課程地圖 <ArrowRight size={17} aria-hidden="true" /></Link></div></section>
+    <section className="pointers-recap page-width"><h2>最後一格在 [4]，尾後位置在 + 5。</h2><p>索引與指標可以走過同一排資料。每次只讀取合法元素，讓 p++ 在元素之間移動，並在尾後位置停下。</p><div><Link className="button button-secondary" to="/learn/pointers/swap"><ArrowLeft size={17} aria-hidden="true" />上一課：指標參數與交換變數</Link><Link className="button button-primary" to="/learn/pointers/strings">下一課：字串與字元指標 <ArrowRight size={17} aria-hidden="true" /></Link></div></section>
   </div>
 }

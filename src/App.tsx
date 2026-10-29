@@ -11,6 +11,7 @@ import { ArrayLessonPage } from './pages/ArrayLessonPage'
 import { PointerLessonPage } from './pages/PointerLessonPage'
 import { PointerSwapLessonPage } from './pages/PointerSwapLessonPage'
 import { PointerTraversalLessonPage } from './pages/PointerTraversalLessonPage'
+import { StringPointerLessonPage } from './pages/StringPointerLessonPage'
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/learn/pointers/basics" element={<PointerLessonPage />} />
           <Route path="/learn/pointers/swap" element={<PointerSwapLessonPage />} />
           <Route path="/learn/pointers/traversal" element={<PointerTraversalLessonPage />} />
+          <Route path="/learn/pointers/strings" element={<StringPointerLessonPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

@@ -6,6 +6,7 @@ import { ARRAY_CHALLENGE_IDS } from './arrayChallenges'
 import { POINTER_CHALLENGE_IDS } from './pointerChallenges'
 import { SWAP_CHALLENGE_IDS } from './swapChallenges'
 import { TRAVERSAL_CHALLENGE_IDS } from './traversalChallenges'
+import { STRING_POINTER_CHALLENGE_IDS } from './stringPointerChallenges'
 
 export const TOPIC_IDS = [
   'variables',
@@ -27,6 +28,7 @@ export const LESSON_IDS = [
   'pointers-basics',
   'pointers-swap',
   'pointers-traversal',
+  'pointers-strings',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -192,6 +194,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 25,
     prerequisiteLessonIds: ['arrays-basics', 'pointers-basics', 'loops-for'],
     requiredChallengeIds: TRAVERSAL_CHALLENGE_IDS,
+  },
+  {
+    id: 'pointers-strings',
+    topicId: 'pointers',
+    moduleNumber: 6,
+    lessonNumber: 4,
+    order: 9,
+    title: '字串與字元指標',
+    englishTitle: 'Strings & Character Pointers',
+    description: '逐字走訪字元陣列，分辨字元 0 與空字元，觀察內嵌結尾字元如何影響輸出與長度。',
+    concepts: ['char 指標', '字串結尾空字元', '字元 0 與空字元', '逐字計算長度'],
+    status: 'available',
+    path: '/learn/pointers/strings',
+    estimatedMinutes: 25,
+    prerequisiteLessonIds: ['arrays-basics', 'pointers-traversal'],
+    requiredChallengeIds: STRING_POINTER_CHALLENGE_IDS,
   },
 ]
 

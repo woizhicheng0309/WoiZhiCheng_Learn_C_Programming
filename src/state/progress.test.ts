@@ -7,6 +7,7 @@ import {
   DEFAULT_POINTER_CONFIG,
   DEFAULT_SWAP_CONFIG,
   DEFAULT_TRAVERSAL_CONFIG,
+  DEFAULT_STRING_POINTER_CONFIG,
   FUNCTION_LIMITS,
 } from '../domain'
 import { CHALLENGE_IDS } from '../data/challenges'
@@ -14,6 +15,7 @@ import { VARIABLE_BASICS_CHALLENGE_IDS } from '../data/lessons'
 import { POINTER_CHALLENGE_IDS } from '../data/pointerChallenges'
 import { SWAP_CHALLENGE_IDS } from '../data/swapChallenges'
 import { TRAVERSAL_CHALLENGE_IDS } from '../data/traversalChallenges'
+import { STRING_POINTER_CHALLENGE_IDS } from '../data/stringPointerChallenges'
 import {
   DEFAULT_CONDITIONAL_STATE,
   DEFAULT_ARRAY_STATE,
@@ -21,6 +23,7 @@ import {
   DEFAULT_POINTER_STATE,
   DEFAULT_SWAP_STATE,
   DEFAULT_TRAVERSAL_STATE,
+  DEFAULT_STRING_POINTER_STATE,
   DEFAULT_VARIABLE_BASICS_STATE,
   LEGACY_PROGRESS_STORAGE_KEY,
   PROGRESS_STORAGE_KEY,
@@ -38,6 +41,7 @@ import {
   isPointerSavedState,
   isSwapSavedState,
   isTraversalSavedState,
+  isStringPointerSavedState,
   isLessonCompleted,
   isProgressV1,
   isProgressV2,
@@ -82,11 +86,14 @@ describe('Progress V2 storage and migration', () => {
       .toEqual(DEFAULT_SWAP_STATE)
     expect(createDefaultLessonProgress('pointers-traversal').savedState)
       .toEqual(DEFAULT_TRAVERSAL_STATE)
+    expect(createDefaultLessonProgress('pointers-strings').savedState)
+      .toEqual(DEFAULT_STRING_POINTER_STATE)
     expect(DEFAULT_FUNCTION_STATE).toEqual(DEFAULT_FUNCTION_CONFIG)
     expect(DEFAULT_ARRAY_STATE).toEqual(DEFAULT_ARRAY_CONFIG)
     expect(DEFAULT_POINTER_STATE).toEqual(DEFAULT_POINTER_CONFIG)
     expect(DEFAULT_SWAP_STATE).toEqual(DEFAULT_SWAP_CONFIG)
     expect(DEFAULT_TRAVERSAL_STATE).toEqual(DEFAULT_TRAVERSAL_CONFIG)
+    expect(DEFAULT_STRING_POINTER_STATE).toEqual(DEFAULT_STRING_POINTER_CONFIG)
   })
 
   it('round-trips valid V2 progress through the versioned key', () => {
@@ -309,6 +316,73 @@ describe('Progress V2 storage and migration', () => {
       createDefaultLessonProgress('pointers-traversal'),
     )
     expect(loaded.lastVisitedLessonId).toBe('pointers-traversal')
+    expect(isProgressV2(loaded)).toBe(true)
+  })
+
+  it.each([
+    { sample: 'word', stopAt: 'nul' },
+    { sample: 'digit-zero', stopAt: 'nul' },
+    { sample: 'embedded-nul', stopAt: 'nul' },
+    { sample: 'word', stopAt: 'digit-zero' },
+    { sample: 'digit-zero', stopAt: 'digit-zero' },
+    { sample: 'embedded-nul', stopAt: 'digit-zero' },
+  ])('round-trips string presets, including safety-stop settings, independently: %j', (savedState) => {
+    const progress = createDefaultProgress()
+    progress.lessons['pointers-traversal'] = {
+      guidedRunCompleted: true,
+      completedChallengeIds: ['predict-pointer-offset'],
+      savedState: { count: 6, mode: 'pointer' },
+    }
+    progress.lessons['pointers-strings'] = {
+      guidedRunCompleted: true,
+      completedChallengeIds: [...STRING_POINTER_CHALLENGE_IDS],
+      savedState,
+    }
+    progress.lastVisitedLessonId = 'pointers-strings'
+
+    expect(isStringPointerSavedState(savedState)).toBe(true)
+    expect(saveProgress(progress)).toBe(true)
+    const loaded = loadProgress()
+    expect(loaded).toEqual(progress)
+    expect(loaded.version).toBe(2)
+    expect(isLessonCompleted(loaded, 'pointers-strings')).toBe(true)
+    expect(isLessonCompleted(loaded, 'pointers-traversal')).toBe(false)
+    expect(getContinueLearningPath(loaded)).toBe('/learn/pointers/strings')
+  })
+
+  it.each([
+    { sample: 'unknown', stopAt: 'nul' },
+    { sample: 'word', stopAt: 'unknown' },
+    { sample: 'word' },
+    { stopAt: 'nul' },
+    { sample: null, stopAt: 'nul' },
+    { sample: 'word', stopAt: false },
+  ])('normalizes malformed string state while preserving traversal progress: %j', (savedState) => {
+    const traversalProgress = {
+      guidedRunCompleted: true,
+      completedChallengeIds: ['predict-pointer-offset'],
+      savedState: { count: 5, mode: 'pointer' },
+    }
+    window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify({
+      version: 2,
+      lessons: {
+        'pointers-traversal': traversalProgress,
+        'pointers-strings': {
+          guidedRunCompleted: true,
+          completedChallengeIds: ['predict-digit-zero-length'],
+          savedState,
+        },
+      },
+      lastVisitedLessonId: 'pointers-strings',
+    }))
+
+    expect(isStringPointerSavedState(savedState)).toBe(false)
+    const loaded = loadProgress()
+    expect(loaded.lessons['pointers-traversal']).toEqual(traversalProgress)
+    expect(loaded.lessons['pointers-strings']).toEqual(
+      createDefaultLessonProgress('pointers-strings'),
+    )
+    expect(loaded.lastVisitedLessonId).toBe('pointers-strings')
     expect(isProgressV2(loaded)).toBe(true)
   })
 
@@ -586,10 +660,10 @@ describe('progress selectors', () => {
       .toBe('not-started')
     expect(getCourseProgress(progress)).toEqual({
       completedLessons: 2,
-      totalLessons: 8,
+      totalLessons: 9,
       completedChallenges: 6,
-      totalChallenges: 24,
-      percentage: 25,
+      totalChallenges: 27,
+      percentage: 22,
     })
   })
 

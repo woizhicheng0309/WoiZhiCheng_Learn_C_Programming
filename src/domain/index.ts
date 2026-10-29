@@ -30,6 +30,7 @@ export * from './arrays'
 export * from './pointers'
 export * from './swap'
 export * from './traversal'
+export * from './stringPointers'
 
 export {
   MULTIPLICATION_TABLE_LIMITS,

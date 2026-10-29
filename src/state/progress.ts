@@ -4,6 +4,7 @@ import {
   DEFAULT_POINTER_CONFIG,
   DEFAULT_SWAP_CONFIG,
   DEFAULT_TRAVERSAL_CONFIG,
+  DEFAULT_STRING_POINTER_CONFIG,
   CONDITIONAL_LIMITS,
   CONDITIONAL_LOGICAL_OPERATORS,
   DEFAULT_CONDITIONAL_CONFIG,
@@ -15,6 +16,7 @@ import {
   validatePointerConfig,
   validateSwapConfig,
   validateTraversalConfig,
+  validateStringPointerConfig,
 } from '../domain'
 import type {
   ArrayConfig,
@@ -24,6 +26,7 @@ import type {
   PointerConfig,
   SwapConfig,
   TraversalConfig,
+  StringPointerConfig,
 } from '../domain'
 import {
   LESSONS,
@@ -95,6 +98,11 @@ export interface TraversalSavedState extends JsonObject {
   mode: TraversalConfig['mode']
 }
 
+export interface StringPointerSavedState extends JsonObject {
+  sample: StringPointerConfig['sample']
+  stopAt: StringPointerConfig['stopAt']
+}
+
 export interface LessonProgress {
   guidedRunCompleted: boolean
   completedChallengeIds: string[]
@@ -163,6 +171,10 @@ export const DEFAULT_TRAVERSAL_STATE: Readonly<TraversalSavedState> = {
   ...DEFAULT_TRAVERSAL_CONFIG,
 }
 
+export const DEFAULT_STRING_POINTER_STATE: Readonly<StringPointerSavedState> = {
+  ...DEFAULT_STRING_POINTER_CONFIG,
+}
+
 export function createDefaultProgress(): ProgressV2 {
   return {
     version: PROGRESS_VERSION,
@@ -188,6 +200,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'pointers-basics') return { ...DEFAULT_POINTER_STATE }
   if (id === 'pointers-swap') return { ...DEFAULT_SWAP_STATE }
   if (id === 'pointers-traversal') return { ...DEFAULT_TRAVERSAL_STATE }
+  if (id === 'pointers-strings') return { ...DEFAULT_STRING_POINTER_STATE }
   return null
 }
 
@@ -339,6 +352,17 @@ export function isTraversalSavedState(value: unknown): value is TraversalSavedSt
   return validateTraversalConfig({ count: state.count, mode: state.mode }).length === 0
 }
 
+export function isStringPointerSavedState(value: unknown): value is StringPointerSavedState {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  const state = value as Record<string, unknown>
+  if (
+    (state.sample !== 'word' && state.sample !== 'digit-zero' && state.sample !== 'embedded-nul')
+    || (state.stopAt !== 'nul' && state.stopAt !== 'digit-zero')
+  ) return false
+
+  return validateStringPointerConfig({ sample: state.sample, stopAt: state.stopAt }).length === 0
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
@@ -351,6 +375,7 @@ export function isSavedStateForLesson(
   if (id === 'pointers-basics') return isPointerSavedState(value)
   if (id === 'pointers-swap') return isSwapSavedState(value)
   if (id === 'pointers-traversal') return isTraversalSavedState(value)
+  if (id === 'pointers-strings') return isStringPointerSavedState(value)
   return value === null
 }
 
