@@ -1047,7 +1047,7 @@ export function ArrayLessonPage() {
                   <h2>你已完成陣列、索引與字串。</h2>
                   <p>你能追蹤元素讀寫、辨識合法索引，也知道 C 字串為什麼需要 <code>'\0'</code>。</p>
                 </div>
-                <Link className="button button-light" to="/learn">回到課程地圖</Link>
+                <Link className="button button-light" to="/learn/pointers/basics">下一章：指標、位址與間接存取 <ArrowRight size={16} aria-hidden="true" /></Link>
               </div>
             )}
           </div>

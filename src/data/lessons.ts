@@ -3,6 +3,7 @@ import { VARIABLE_CHALLENGE_IDS } from './variableChallenges'
 import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
 import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
 import { ARRAY_CHALLENGE_IDS } from './arrayChallenges'
+import { POINTER_CHALLENGE_IDS } from './pointerChallenges'
 
 export const TOPIC_IDS = [
   'variables',
@@ -21,6 +22,7 @@ export const LESSON_IDS = [
   'loops-for',
   'functions-basics',
   'arrays-basics',
+  'pointers-basics',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -138,6 +140,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 24,
     prerequisiteLessonIds: ['functions-basics'],
     requiredChallengeIds: ARRAY_CHALLENGE_IDS,
+  },
+  {
+    id: 'pointers-basics',
+    topicId: 'pointers',
+    moduleNumber: 6,
+    lessonNumber: 1,
+    order: 6,
+    title: '指標、位址與間接存取',
+    englishTitle: 'Pointers, Addresses & Indirection',
+    description: '看見指標如何儲存位址，透過解參照讀寫原變數，並辨識 NULL 存取風險。',
+    concepts: ['取址運算子 &', '解參照 *', '間接讀寫', 'NULL 指標'],
+    status: 'available',
+    path: '/learn/pointers/basics',
+    estimatedMinutes: 24,
+    prerequisiteLessonIds: ['arrays-basics'],
+    requiredChallengeIds: POINTER_CHALLENGE_IDS,
   },
 ]
 

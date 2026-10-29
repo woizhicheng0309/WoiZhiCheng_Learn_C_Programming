@@ -8,6 +8,7 @@ import { VariablesBasicsPage } from './pages/VariablesBasicsPage'
 import { ConditionalsLessonPage } from './pages/ConditionalsLessonPage'
 import { FunctionLessonPage } from './pages/FunctionLessonPage'
 import { ArrayLessonPage } from './pages/ArrayLessonPage'
+import { PointerLessonPage } from './pages/PointerLessonPage'
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/learn/loops/for" element={<ForLoopLabPage />} />
           <Route path="/learn/functions/basics" element={<FunctionLessonPage />} />
           <Route path="/learn/arrays/basics" element={<ArrayLessonPage />} />
+          <Route path="/learn/pointers/basics" element={<PointerLessonPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

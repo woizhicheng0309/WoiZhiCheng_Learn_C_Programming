@@ -11,6 +11,7 @@ import {
 import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
 import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
 import { ARRAY_CHALLENGE_IDS } from './arrayChallenges'
+import { POINTER_CHALLENGE_IDS } from './pointerChallenges'
 
 describe('two-level course catalog', () => {
   it('orders topics and nests lessons under their owner', () => {
@@ -31,6 +32,9 @@ describe('two-level course catalog', () => {
     expect(getLessonsByTopicId('arrays-and-strings').map((lesson) => lesson.id)).toEqual([
       'arrays-basics',
     ])
+    expect(getLessonsByTopicId('pointers').map((lesson) => lesson.id)).toEqual([
+      'pointers-basics',
+    ])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -40,6 +44,7 @@ describe('two-level course catalog', () => {
       'loops-for',
       'functions-basics',
       'arrays-basics',
+      'pointers-basics',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -101,11 +106,29 @@ describe('two-level course catalog', () => {
     expect(lesson && isLessonAvailable(lesson)).toBe(true)
   })
 
+  it('opens pointers after arrays with three required challenges', () => {
+    const lesson = getLessonById('pointers-basics')
+    expect(lesson).toMatchObject({
+      topicId: 'pointers',
+      moduleNumber: 6,
+      lessonNumber: 1,
+      order: 6,
+      title: '指標、位址與間接存取',
+      status: 'available',
+      path: '/learn/pointers/basics',
+      estimatedMinutes: 24,
+      prerequisiteLessonIds: ['arrays-basics'],
+      requiredChallengeIds: POINTER_CHALLENGE_IDS,
+    })
+    expect(lesson && isLessonAvailable(lesson)).toBe(true)
+  })
+
   it('provides safe topic and lesson lookups', () => {
     expect(getTopicById('pointers')?.englishTitle).toBe('Pointers')
     expect(isLessonId('variables-basics')).toBe(true)
     expect(isLessonId('functions-basics')).toBe(true)
     expect(isLessonId('arrays-basics')).toBe(true)
+    expect(isLessonId('pointers-basics')).toBe(true)
     expect(isLessonId('variables')).toBe(false)
     expect(isLessonId(null)).toBe(false)
   })

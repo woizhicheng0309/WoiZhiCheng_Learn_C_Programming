@@ -1,6 +1,7 @@
 import {
   COMPARATORS,
   DEFAULT_ARRAY_CONFIG,
+  DEFAULT_POINTER_CONFIG,
   CONDITIONAL_LIMITS,
   CONDITIONAL_LOGICAL_OPERATORS,
   DEFAULT_CONDITIONAL_CONFIG,
@@ -9,12 +10,14 @@ import {
   FUNCTION_LIMITS,
   validateLoopConfig,
   validateArrayConfig,
+  validatePointerConfig,
 } from '../domain'
 import type {
   ArrayConfig,
   ConditionalConfig,
   FunctionConfig,
   LoopConfig,
+  PointerConfig,
 } from '../domain'
 import {
   LESSONS,
@@ -66,6 +69,13 @@ export interface FunctionSavedState extends JsonObject {
 export interface ArraySavedState extends JsonObject {
   index: ArrayConfig['index']
   newValue: ArrayConfig['newValue']
+}
+
+export interface PointerSavedState extends JsonObject {
+  x: PointerConfig['x']
+  y: PointerConfig['y']
+  newValue: PointerConfig['newValue']
+  target: PointerConfig['target']
 }
 
 export interface LessonProgress {
@@ -124,6 +134,10 @@ export const DEFAULT_ARRAY_STATE: Readonly<ArraySavedState> = {
   ...DEFAULT_ARRAY_CONFIG,
 }
 
+export const DEFAULT_POINTER_STATE: Readonly<PointerSavedState> = {
+  ...DEFAULT_POINTER_CONFIG,
+}
+
 export function createDefaultProgress(): ProgressV2 {
   return {
     version: PROGRESS_VERSION,
@@ -146,6 +160,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'loops-for') return { ...DEFAULT_LOOP_CONFIG }
   if (id === 'functions-basics') return { ...DEFAULT_FUNCTION_STATE }
   if (id === 'arrays-basics') return { ...DEFAULT_ARRAY_STATE }
+  if (id === 'pointers-basics') return { ...DEFAULT_POINTER_STATE }
   return null
 }
 
@@ -255,6 +270,25 @@ export function isArraySavedState(
   }).length === 0
 }
 
+export function isPointerSavedState(value: unknown): value is PointerSavedState {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+
+  const state = value as Record<string, unknown>
+  if (
+    !isFiniteNumber(state.x)
+    || !isFiniteNumber(state.y)
+    || !isFiniteNumber(state.newValue)
+    || (state.target !== 'x' && state.target !== 'y' && state.target !== 'null')
+  ) return false
+
+  return validatePointerConfig({
+    x: state.x,
+    y: state.y,
+    newValue: state.newValue,
+    target: state.target,
+  }).length === 0
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
@@ -264,6 +298,7 @@ export function isSavedStateForLesson(
   if (id === 'loops-for') return isLoopConfig(value)
   if (id === 'functions-basics') return isFunctionSavedState(value)
   if (id === 'arrays-basics') return isArraySavedState(value)
+  if (id === 'pointers-basics') return isPointerSavedState(value)
   return value === null
 }
 
