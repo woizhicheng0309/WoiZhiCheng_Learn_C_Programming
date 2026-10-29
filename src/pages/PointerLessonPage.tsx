@@ -117,6 +117,7 @@ export function PointerLessonPage() {
   const savedKey = JSON.stringify(readConfig(progress.lessons[LESSON_ID]?.savedState))
   const hasLesson = progress.lessons[LESSON_ID] !== undefined
   const syncRef = useRef({ savedKey, guided: lessonProgress.guidedRunCompleted, hasLesson, visited: progress.lastVisitedLessonId })
+  const resettingProgressRef = useRef(false)
   const simulation = useMemo(() => simulatePointerProgram(config), [config])
   const configKey = JSON.stringify(config)
   const player = useTracePlayer({ frames: simulation.frames, speed, config: configKey })
@@ -131,9 +132,10 @@ export function PointerLessonPage() {
   useEffect(() => {
     const previous = syncRef.current
     const cleared = (previous.hasLesson && !hasLesson)
-      || (previous.visited === LESSON_ID && progress.lastVisitedLessonId === null)
+      || (previous.visited !== null && progress.lastVisitedLessonId === null)
     syncRef.current = { savedKey, guided: lessonProgress.guidedRunCompleted, hasLesson, visited: progress.lastVisitedLessonId }
-    if (previous.savedKey !== savedKey || cleared) {
+    resettingProgressRef.current = previous.savedKey !== savedKey || cleared
+    if (resettingProgressRef.current) {
       const savedConfig = readConfig(JSON.parse(savedKey))
       setConfig(savedConfig)
       setPrediction('')
@@ -150,8 +152,8 @@ export function PointerLessonPage() {
     }
   }, [savedKey, lessonProgress.guidedRunCompleted, hasLesson, progress.lastVisitedLessonId, resetPlayer])
   useEffect(() => {
-    if (unlocked && player.atEnd && frame.phase === 'done') markGuidedRunCompleted(LESSON_ID)
-  }, [unlocked, player.atEnd, frame.phase, markGuidedRunCompleted])
+    if (unlocked && player.atEnd && frame.phase === 'done' && progress.lastVisitedLessonId !== null && !resettingProgressRef.current) markGuidedRunCompleted(LESSON_ID)
+  }, [unlocked, player.atEnd, frame.phase, progress.lastVisitedLessonId, markGuidedRunCompleted])
 
   const changeConfig = (next: PointerConfig) => {
     setConfig(next)
@@ -307,7 +309,7 @@ export function PointerLessonPage() {
         <h2>帶走三件事：位址、目標、值。</h2>
         <p><code>p = &amp;x</code> 改變指向；<code>*p = 12</code> 改變目標的值。只有指向有效物件時，才能透過指標存取它。</p>
         <div><Link className="button button-secondary" to="/learn/arrays/basics"><ArrowLeft size={17} aria-hidden="true" />上一課：陣列與字串</Link>
-          <Link className="button button-primary" to="/learn">回到課程地圖 <ArrowRight size={17} aria-hidden="true" /></Link></div>
+          <Link className="button button-primary" to="/learn/pointers/swap">下一課：指標參數與交換變數 <ArrowRight size={17} aria-hidden="true" /></Link></div>
       </section>
     </div>
   )

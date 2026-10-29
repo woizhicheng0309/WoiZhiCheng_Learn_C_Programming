@@ -12,6 +12,7 @@ import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
 import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
 import { ARRAY_CHALLENGE_IDS } from './arrayChallenges'
 import { POINTER_CHALLENGE_IDS } from './pointerChallenges'
+import { SWAP_CHALLENGE_IDS } from './swapChallenges'
 
 describe('two-level course catalog', () => {
   it('orders topics and nests lessons under their owner', () => {
@@ -34,6 +35,7 @@ describe('two-level course catalog', () => {
     ])
     expect(getLessonsByTopicId('pointers').map((lesson) => lesson.id)).toEqual([
       'pointers-basics',
+      'pointers-swap',
     ])
   })
 
@@ -45,6 +47,7 @@ describe('two-level course catalog', () => {
       'functions-basics',
       'arrays-basics',
       'pointers-basics',
+      'pointers-swap',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -123,12 +126,30 @@ describe('two-level course catalog', () => {
     expect(lesson && isLessonAvailable(lesson)).toBe(true)
   })
 
+  it('connects functions and pointers in a second pointers lesson', () => {
+    const lesson = getLessonById('pointers-swap')
+    expect(lesson).toMatchObject({
+      topicId: 'pointers',
+      moduleNumber: 6,
+      lessonNumber: 2,
+      order: 7,
+      title: '指標參數與交換變數',
+      status: 'available',
+      path: '/learn/pointers/swap',
+      estimatedMinutes: 25,
+      prerequisiteLessonIds: ['functions-basics', 'pointers-basics'],
+      requiredChallengeIds: SWAP_CHALLENGE_IDS,
+    })
+    expect(lesson && isLessonAvailable(lesson)).toBe(true)
+  })
+
   it('provides safe topic and lesson lookups', () => {
     expect(getTopicById('pointers')?.englishTitle).toBe('Pointers')
     expect(isLessonId('variables-basics')).toBe(true)
     expect(isLessonId('functions-basics')).toBe(true)
     expect(isLessonId('arrays-basics')).toBe(true)
     expect(isLessonId('pointers-basics')).toBe(true)
+    expect(isLessonId('pointers-swap')).toBe(true)
     expect(isLessonId('variables')).toBe(false)
     expect(isLessonId(null)).toBe(false)
   })

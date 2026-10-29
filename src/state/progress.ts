@@ -2,6 +2,7 @@ import {
   COMPARATORS,
   DEFAULT_ARRAY_CONFIG,
   DEFAULT_POINTER_CONFIG,
+  DEFAULT_SWAP_CONFIG,
   CONDITIONAL_LIMITS,
   CONDITIONAL_LOGICAL_OPERATORS,
   DEFAULT_CONDITIONAL_CONFIG,
@@ -11,6 +12,7 @@ import {
   validateLoopConfig,
   validateArrayConfig,
   validatePointerConfig,
+  validateSwapConfig,
 } from '../domain'
 import type {
   ArrayConfig,
@@ -18,6 +20,7 @@ import type {
   FunctionConfig,
   LoopConfig,
   PointerConfig,
+  SwapConfig,
 } from '../domain'
 import {
   LESSONS,
@@ -76,6 +79,12 @@ export interface PointerSavedState extends JsonObject {
   y: PointerConfig['y']
   newValue: PointerConfig['newValue']
   target: PointerConfig['target']
+}
+
+export interface SwapSavedState extends JsonObject {
+  x: SwapConfig['x']
+  y: SwapConfig['y']
+  mode: SwapConfig['mode']
 }
 
 export interface LessonProgress {
@@ -138,6 +147,10 @@ export const DEFAULT_POINTER_STATE: Readonly<PointerSavedState> = {
   ...DEFAULT_POINTER_CONFIG,
 }
 
+export const DEFAULT_SWAP_STATE: Readonly<SwapSavedState> = {
+  ...DEFAULT_SWAP_CONFIG,
+}
+
 export function createDefaultProgress(): ProgressV2 {
   return {
     version: PROGRESS_VERSION,
@@ -161,6 +174,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'functions-basics') return { ...DEFAULT_FUNCTION_STATE }
   if (id === 'arrays-basics') return { ...DEFAULT_ARRAY_STATE }
   if (id === 'pointers-basics') return { ...DEFAULT_POINTER_STATE }
+  if (id === 'pointers-swap') return { ...DEFAULT_SWAP_STATE }
   return null
 }
 
@@ -289,6 +303,18 @@ export function isPointerSavedState(value: unknown): value is PointerSavedState 
   }).length === 0
 }
 
+export function isSwapSavedState(value: unknown): value is SwapSavedState {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  const state = value as Record<string, unknown>
+  if (
+    !isFiniteNumber(state.x)
+    || !isFiniteNumber(state.y)
+    || (state.mode !== 'value' && state.mode !== 'pointer')
+  ) return false
+
+  return validateSwapConfig({ x: state.x, y: state.y, mode: state.mode }).length === 0
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
@@ -299,6 +325,7 @@ export function isSavedStateForLesson(
   if (id === 'functions-basics') return isFunctionSavedState(value)
   if (id === 'arrays-basics') return isArraySavedState(value)
   if (id === 'pointers-basics') return isPointerSavedState(value)
+  if (id === 'pointers-swap') return isSwapSavedState(value)
   return value === null
 }
 

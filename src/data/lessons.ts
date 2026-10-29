@@ -4,6 +4,7 @@ import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
 import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
 import { ARRAY_CHALLENGE_IDS } from './arrayChallenges'
 import { POINTER_CHALLENGE_IDS } from './pointerChallenges'
+import { SWAP_CHALLENGE_IDS } from './swapChallenges'
 
 export const TOPIC_IDS = [
   'variables',
@@ -23,6 +24,7 @@ export const LESSON_IDS = [
   'functions-basics',
   'arrays-basics',
   'pointers-basics',
+  'pointers-swap',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -156,6 +158,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 24,
     prerequisiteLessonIds: ['arrays-basics'],
     requiredChallengeIds: POINTER_CHALLENGE_IDS,
+  },
+  {
+    id: 'pointers-swap',
+    topicId: 'pointers',
+    moduleNumber: 6,
+    lessonNumber: 2,
+    order: 7,
+    title: '指標參數與交換變數',
+    englishTitle: 'Pointer Parameters & Swapping Variables',
+    description: '比較交換區域副本與透過指標改寫原變數，逐步理解參數傳值與暫存變數的作用。',
+    concepts: ['參數傳值', '位址的副本', '指標參數', '暫存變數 temp'],
+    status: 'available',
+    path: '/learn/pointers/swap',
+    estimatedMinutes: 25,
+    prerequisiteLessonIds: ['functions-basics', 'pointers-basics'],
+    requiredChallengeIds: SWAP_CHALLENGE_IDS,
   },
 ]
 

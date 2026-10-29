@@ -1,3 +1,4 @@
+import { StrictMode } from 'react'
 import { act, fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { POINTER_CHALLENGE_IDS } from '../data/pointerChallenges'
@@ -7,7 +8,7 @@ import { PROGRESS_STORAGE_KEY, type ProgressV2 } from '../state'
 import { PointerLessonPage } from './PointerLessonPage'
 
 function renderLesson() {
-  return render(<ProgressProvider><MemoryRouter><PointerLessonPage /></MemoryRouter></ProgressProvider>)
+  return render(<StrictMode><ProgressProvider><MemoryRouter><PointerLessonPage /></MemoryRouter></ProgressProvider></StrictMode>)
 }
 function setNumber(label: string, value: number) {
   fireEvent.change(screen.getByRole('spinbutton', { name: label }), { target: { value: String(value) } })
@@ -199,5 +200,34 @@ describe('PointerLessonPage challenge progress', () => {
     expect(screen.getByRole('spinbutton', { name: '我預測 selected 會收到' })).toHaveValue(null)
     expect(screen.queryByRole('button', { name: '指標執行：執行下一步' })).not.toBeInTheDocument()
     expect(screen.queryByText(/你猜 5，實際讀到 5/)).not.toBeInTheDocument()
+  })
+
+  it('does not recreate completed guided progress while reacting to an external clear', () => {
+    renderLesson()
+    predict()
+    step(7)
+    expect(savedProgress().lessons['pointers-basics']?.guidedRunCompleted).toBe(true)
+    window.localStorage.removeItem(PROGRESS_STORAGE_KEY)
+    act(() => { window.dispatchEvent(new StorageEvent('storage', { key: PROGRESS_STORAGE_KEY })) })
+    expect(window.localStorage.getItem(PROGRESS_STORAGE_KEY)).toBeNull()
+    expect(screen.getByLabelText('C 程式碼，目前執行第 3 行')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '指標執行：執行下一步' })).not.toBeInTheDocument()
+  })
+
+  it('still completes this run when another tab visits a different lesson', () => {
+    renderLesson()
+    predict()
+    step(3)
+    window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify({ ...savedProgress(), lastVisitedLessonId: 'loops-for' }))
+    act(() => { window.dispatchEvent(new StorageEvent('storage', { key: PROGRESS_STORAGE_KEY })) })
+    expect(screen.getByLabelText('C 程式碼，目前執行第 7 行')).toBeInTheDocument()
+    step(4)
+    expect(savedProgress().lessons['pointers-basics']?.guidedRunCompleted).toBe(true)
+    expect(savedProgress().lastVisitedLessonId).toBe('loops-for')
+    window.localStorage.removeItem(PROGRESS_STORAGE_KEY)
+    act(() => { window.dispatchEvent(new StorageEvent('storage', { key: PROGRESS_STORAGE_KEY })) })
+    expect(window.localStorage.getItem(PROGRESS_STORAGE_KEY)).toBeNull()
+    expect(screen.getByLabelText('C 程式碼，目前執行第 3 行')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '指標執行：執行下一步' })).not.toBeInTheDocument()
   })
 })

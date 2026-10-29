@@ -5,16 +5,19 @@ import {
   DEFAULT_FUNCTION_CONFIG,
   DEFAULT_LOOP_CONFIG,
   DEFAULT_POINTER_CONFIG,
+  DEFAULT_SWAP_CONFIG,
   FUNCTION_LIMITS,
 } from '../domain'
 import { CHALLENGE_IDS } from '../data/challenges'
 import { VARIABLE_BASICS_CHALLENGE_IDS } from '../data/lessons'
 import { POINTER_CHALLENGE_IDS } from '../data/pointerChallenges'
+import { SWAP_CHALLENGE_IDS } from '../data/swapChallenges'
 import {
   DEFAULT_CONDITIONAL_STATE,
   DEFAULT_ARRAY_STATE,
   DEFAULT_FUNCTION_STATE,
   DEFAULT_POINTER_STATE,
+  DEFAULT_SWAP_STATE,
   DEFAULT_VARIABLE_BASICS_STATE,
   LEGACY_PROGRESS_STORAGE_KEY,
   PROGRESS_STORAGE_KEY,
@@ -30,6 +33,7 @@ import {
   isArraySavedState,
   isFunctionSavedState,
   isPointerSavedState,
+  isSwapSavedState,
   isLessonCompleted,
   isProgressV1,
   isProgressV2,
@@ -70,9 +74,12 @@ describe('Progress V2 storage and migration', () => {
       .toEqual(DEFAULT_ARRAY_STATE)
     expect(createDefaultLessonProgress('pointers-basics').savedState)
       .toEqual(DEFAULT_POINTER_STATE)
+    expect(createDefaultLessonProgress('pointers-swap').savedState)
+      .toEqual(DEFAULT_SWAP_STATE)
     expect(DEFAULT_FUNCTION_STATE).toEqual(DEFAULT_FUNCTION_CONFIG)
     expect(DEFAULT_ARRAY_STATE).toEqual(DEFAULT_ARRAY_CONFIG)
     expect(DEFAULT_POINTER_STATE).toEqual(DEFAULT_POINTER_CONFIG)
+    expect(DEFAULT_SWAP_STATE).toEqual(DEFAULT_SWAP_CONFIG)
   })
 
   it('round-trips valid V2 progress through the versioned key', () => {
@@ -178,6 +185,63 @@ describe('Progress V2 storage and migration', () => {
       createDefaultLessonProgress('pointers-basics'),
     )
     expect(loaded.lastVisitedLessonId).toBe('pointers-basics')
+    expect(isProgressV2(loaded)).toBe(true)
+  })
+
+  it('round-trips swap mode and challenges independently of pointer basics', () => {
+    const progress = createDefaultProgress()
+    progress.lessons['pointers-basics'] = {
+      guidedRunCompleted: true,
+      completedChallengeIds: ['predict-pointer-read'],
+      savedState: { x: 5, y: 9, newValue: 12, target: 'x' },
+    }
+    progress.lessons['pointers-swap'] = {
+      guidedRunCompleted: true,
+      completedChallengeIds: [...SWAP_CHALLENGE_IDS],
+      savedState: { x: -4, y: 9, mode: 'pointer' },
+    }
+    progress.lastVisitedLessonId = 'pointers-swap'
+
+    expect(saveProgress(progress)).toBe(true)
+    const loaded = loadProgress()
+    expect(loaded).toEqual(progress)
+    expect(loaded.version).toBe(2)
+    expect(isLessonCompleted(loaded, 'pointers-swap')).toBe(true)
+    expect(isLessonCompleted(loaded, 'pointers-basics')).toBe(false)
+    expect(getContinueLearningPath(loaded)).toBe('/learn/pointers/swap')
+  })
+
+  it.each([
+    { x: 5, y: 9, mode: 'reference' },
+    { x: 5.5, y: 9, mode: 'value' },
+    { x: 5, y: '9', mode: 'value' },
+    { x: 5, y: null, mode: 'pointer' },
+    { x: Number.MAX_SAFE_INTEGER, y: 9, mode: 'pointer' },
+  ])('normalizes malformed swap state while preserving pointer basics: %j', (savedState) => {
+    const pointerProgress = {
+      guidedRunCompleted: true,
+      completedChallengeIds: ['predict-pointer-read'],
+      savedState: { x: 5, y: 9, newValue: 12, target: 'x' },
+    }
+    window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify({
+      version: 2,
+      lessons: {
+        'pointers-basics': pointerProgress,
+        'pointers-swap': {
+          guidedRunCompleted: true,
+          completedChallengeIds: ['predict-value-swap'],
+          savedState,
+        },
+      },
+      lastVisitedLessonId: 'pointers-swap',
+    }))
+
+    const loaded = loadProgress()
+    expect(loaded.lessons['pointers-basics']).toEqual(pointerProgress)
+    expect(loaded.lessons['pointers-swap']).toEqual(
+      createDefaultLessonProgress('pointers-swap'),
+    )
+    expect(loaded.lastVisitedLessonId).toBe('pointers-swap')
     expect(isProgressV2(loaded)).toBe(true)
   })
 
@@ -361,6 +425,12 @@ describe('Progress V2 storage and migration', () => {
       ...DEFAULT_POINTER_CONFIG,
       newValue: 4.5,
     })).toBe(false)
+    expect(isSwapSavedState(DEFAULT_SWAP_CONFIG)).toBe(true)
+    expect(isSwapSavedState({ ...DEFAULT_SWAP_CONFIG, mode: 'pointer' })).toBe(true)
+    expect(isSwapSavedState({ ...DEFAULT_SWAP_CONFIG, mode: 'reference' })).toBe(false)
+    for (const x of [Number.NaN, Number.POSITIVE_INFINITY, 4.5, Number.MAX_SAFE_INTEGER]) {
+      expect(isSwapSavedState({ ...DEFAULT_SWAP_CONFIG, x })).toBe(false)
+    }
 
     const progress = createDefaultProgress()
     const loop = createDefaultLessonProgress('loops-for')
@@ -439,10 +509,10 @@ describe('progress selectors', () => {
       .toBe('not-started')
     expect(getCourseProgress(progress)).toEqual({
       completedLessons: 2,
-      totalLessons: 6,
+      totalLessons: 7,
       completedChallenges: 6,
-      totalChallenges: 18,
-      percentage: 33,
+      totalChallenges: 21,
+      percentage: 29,
     })
   })
 

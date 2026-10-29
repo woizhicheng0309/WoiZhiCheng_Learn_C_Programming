@@ -356,6 +356,26 @@ describe('App hash routes and keyboard semantics', () => {
       .toHaveAttribute('aria-current', 'page')
   })
 
+  it('opens the second pointer lesson directly with its own title', async () => {
+    window.location.hash = '#/learn/pointers/swap'
+    render(
+      <ProgressProvider>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </ProgressProvider>,
+    )
+
+    await waitFor(() => {
+      expect(window.location.hash).toBe('#/learn/pointers/swap')
+      expect(document.title).toContain('指標參數與交換變數')
+    })
+    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    const primaryNav = screen.getByRole('navigation', { name: '主要導覽' })
+    expect(within(primaryNav).getByRole('link', { name: '課程地圖' }))
+      .toHaveAttribute('aria-current', 'page')
+  })
+
   it('redirects an unknown hash route to the landing page', async () => {
     window.location.hash = '#/missing-page'
     render(

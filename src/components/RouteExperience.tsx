@@ -12,6 +12,7 @@ const routeTitles: Record<string, string> = {
   '/learn/functions/basics': `函式、參數與回傳值｜${SITE_TITLE}`,
   '/learn/arrays/basics': `陣列、索引與字串｜${SITE_TITLE}`,
   '/learn/pointers/basics': `指標、位址與間接存取｜${SITE_TITLE}`,
+  '/learn/pointers/swap': `指標參數與交換變數｜${SITE_TITLE}`,
 }
 
 export function RouteExperience() {
