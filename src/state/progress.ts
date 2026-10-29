@@ -3,6 +3,7 @@ import {
   DEFAULT_ARRAY_CONFIG,
   DEFAULT_POINTER_CONFIG,
   DEFAULT_SWAP_CONFIG,
+  DEFAULT_TRAVERSAL_CONFIG,
   CONDITIONAL_LIMITS,
   CONDITIONAL_LOGICAL_OPERATORS,
   DEFAULT_CONDITIONAL_CONFIG,
@@ -13,6 +14,7 @@ import {
   validateArrayConfig,
   validatePointerConfig,
   validateSwapConfig,
+  validateTraversalConfig,
 } from '../domain'
 import type {
   ArrayConfig,
@@ -21,6 +23,7 @@ import type {
   LoopConfig,
   PointerConfig,
   SwapConfig,
+  TraversalConfig,
 } from '../domain'
 import {
   LESSONS,
@@ -87,6 +90,11 @@ export interface SwapSavedState extends JsonObject {
   mode: SwapConfig['mode']
 }
 
+export interface TraversalSavedState extends JsonObject {
+  count: TraversalConfig['count']
+  mode: TraversalConfig['mode']
+}
+
 export interface LessonProgress {
   guidedRunCompleted: boolean
   completedChallengeIds: string[]
@@ -151,6 +159,10 @@ export const DEFAULT_SWAP_STATE: Readonly<SwapSavedState> = {
   ...DEFAULT_SWAP_CONFIG,
 }
 
+export const DEFAULT_TRAVERSAL_STATE: Readonly<TraversalSavedState> = {
+  ...DEFAULT_TRAVERSAL_CONFIG,
+}
+
 export function createDefaultProgress(): ProgressV2 {
   return {
     version: PROGRESS_VERSION,
@@ -175,6 +187,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'arrays-basics') return { ...DEFAULT_ARRAY_STATE }
   if (id === 'pointers-basics') return { ...DEFAULT_POINTER_STATE }
   if (id === 'pointers-swap') return { ...DEFAULT_SWAP_STATE }
+  if (id === 'pointers-traversal') return { ...DEFAULT_TRAVERSAL_STATE }
   return null
 }
 
@@ -315,6 +328,17 @@ export function isSwapSavedState(value: unknown): value is SwapSavedState {
   return validateSwapConfig({ x: state.x, y: state.y, mode: state.mode }).length === 0
 }
 
+export function isTraversalSavedState(value: unknown): value is TraversalSavedState {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  const state = value as Record<string, unknown>
+  if (
+    !isFiniteNumber(state.count)
+    || (state.mode !== 'index' && state.mode !== 'pointer')
+  ) return false
+
+  return validateTraversalConfig({ count: state.count, mode: state.mode }).length === 0
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
@@ -326,6 +350,7 @@ export function isSavedStateForLesson(
   if (id === 'arrays-basics') return isArraySavedState(value)
   if (id === 'pointers-basics') return isPointerSavedState(value)
   if (id === 'pointers-swap') return isSwapSavedState(value)
+  if (id === 'pointers-traversal') return isTraversalSavedState(value)
   return value === null
 }
 

@@ -13,6 +13,7 @@ import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
 import { ARRAY_CHALLENGE_IDS } from './arrayChallenges'
 import { POINTER_CHALLENGE_IDS } from './pointerChallenges'
 import { SWAP_CHALLENGE_IDS } from './swapChallenges'
+import { TRAVERSAL_CHALLENGE_IDS } from './traversalChallenges'
 
 describe('two-level course catalog', () => {
   it('orders topics and nests lessons under their owner', () => {
@@ -36,6 +37,7 @@ describe('two-level course catalog', () => {
     expect(getLessonsByTopicId('pointers').map((lesson) => lesson.id)).toEqual([
       'pointers-basics',
       'pointers-swap',
+      'pointers-traversal',
     ])
   })
 
@@ -48,6 +50,7 @@ describe('two-level course catalog', () => {
       'arrays-basics',
       'pointers-basics',
       'pointers-swap',
+      'pointers-traversal',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -143,6 +146,23 @@ describe('two-level course catalog', () => {
     expect(lesson && isLessonAvailable(lesson)).toBe(true)
   })
 
+  it('connects arrays and loops in a third pointers lesson', () => {
+    const lesson = getLessonById('pointers-traversal')
+    expect(lesson).toMatchObject({
+      topicId: 'pointers',
+      moduleNumber: 6,
+      lessonNumber: 3,
+      order: 8,
+      title: '陣列與指標走訪',
+      status: 'available',
+      path: '/learn/pointers/traversal',
+      estimatedMinutes: 25,
+      prerequisiteLessonIds: ['arrays-basics', 'pointers-basics', 'loops-for'],
+      requiredChallengeIds: TRAVERSAL_CHALLENGE_IDS,
+    })
+    expect(lesson && isLessonAvailable(lesson)).toBe(true)
+  })
+
   it('provides safe topic and lesson lookups', () => {
     expect(getTopicById('pointers')?.englishTitle).toBe('Pointers')
     expect(isLessonId('variables-basics')).toBe(true)
@@ -150,6 +170,7 @@ describe('two-level course catalog', () => {
     expect(isLessonId('arrays-basics')).toBe(true)
     expect(isLessonId('pointers-basics')).toBe(true)
     expect(isLessonId('pointers-swap')).toBe(true)
+    expect(isLessonId('pointers-traversal')).toBe(true)
     expect(isLessonId('variables')).toBe(false)
     expect(isLessonId(null)).toBe(false)
   })

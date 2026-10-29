@@ -29,6 +29,7 @@ export * from './functions'
 export * from './arrays'
 export * from './pointers'
 export * from './swap'
+export * from './traversal'
 
 export {
   MULTIPLICATION_TABLE_LIMITS,

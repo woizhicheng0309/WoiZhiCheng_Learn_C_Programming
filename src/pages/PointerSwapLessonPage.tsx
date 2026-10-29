@@ -232,7 +232,7 @@ export function PointerSwapLessonPage() {
       </ChallengePanel>
     </section>
     <section className="pointers-recap page-width"><h2>C 以值傳遞，位址也會被複製。</h2><p>整數副本只能改變區域參數；位址副本讓不同指標找到同一個物件。交換時先保存原值，才能在覆寫後把它放回另一格。</p>
-      <div><Link className="button button-secondary" to="/learn/pointers/basics"><ArrowLeft size={17} aria-hidden="true" />上一課：指標、位址與間接存取</Link><Link className="button button-primary" to="/learn">回到課程地圖 <ArrowRight size={17} aria-hidden="true" /></Link></div>
+      <div><Link className="button button-secondary" to="/learn/pointers/basics"><ArrowLeft size={17} aria-hidden="true" />上一課：指標、位址與間接存取</Link><Link className="button button-primary" to="/learn/pointers/traversal">下一課：陣列與指標走訪 <ArrowRight size={17} aria-hidden="true" /></Link></div>
     </section>
   </div>
 }

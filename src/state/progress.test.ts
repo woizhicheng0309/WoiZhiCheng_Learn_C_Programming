@@ -6,18 +6,21 @@ import {
   DEFAULT_LOOP_CONFIG,
   DEFAULT_POINTER_CONFIG,
   DEFAULT_SWAP_CONFIG,
+  DEFAULT_TRAVERSAL_CONFIG,
   FUNCTION_LIMITS,
 } from '../domain'
 import { CHALLENGE_IDS } from '../data/challenges'
 import { VARIABLE_BASICS_CHALLENGE_IDS } from '../data/lessons'
 import { POINTER_CHALLENGE_IDS } from '../data/pointerChallenges'
 import { SWAP_CHALLENGE_IDS } from '../data/swapChallenges'
+import { TRAVERSAL_CHALLENGE_IDS } from '../data/traversalChallenges'
 import {
   DEFAULT_CONDITIONAL_STATE,
   DEFAULT_ARRAY_STATE,
   DEFAULT_FUNCTION_STATE,
   DEFAULT_POINTER_STATE,
   DEFAULT_SWAP_STATE,
+  DEFAULT_TRAVERSAL_STATE,
   DEFAULT_VARIABLE_BASICS_STATE,
   LEGACY_PROGRESS_STORAGE_KEY,
   PROGRESS_STORAGE_KEY,
@@ -34,6 +37,7 @@ import {
   isFunctionSavedState,
   isPointerSavedState,
   isSwapSavedState,
+  isTraversalSavedState,
   isLessonCompleted,
   isProgressV1,
   isProgressV2,
@@ -76,10 +80,13 @@ describe('Progress V2 storage and migration', () => {
       .toEqual(DEFAULT_POINTER_STATE)
     expect(createDefaultLessonProgress('pointers-swap').savedState)
       .toEqual(DEFAULT_SWAP_STATE)
+    expect(createDefaultLessonProgress('pointers-traversal').savedState)
+      .toEqual(DEFAULT_TRAVERSAL_STATE)
     expect(DEFAULT_FUNCTION_STATE).toEqual(DEFAULT_FUNCTION_CONFIG)
     expect(DEFAULT_ARRAY_STATE).toEqual(DEFAULT_ARRAY_CONFIG)
     expect(DEFAULT_POINTER_STATE).toEqual(DEFAULT_POINTER_CONFIG)
     expect(DEFAULT_SWAP_STATE).toEqual(DEFAULT_SWAP_CONFIG)
+    expect(DEFAULT_TRAVERSAL_STATE).toEqual(DEFAULT_TRAVERSAL_CONFIG)
   })
 
   it('round-trips valid V2 progress through the versioned key', () => {
@@ -242,6 +249,66 @@ describe('Progress V2 storage and migration', () => {
       createDefaultLessonProgress('pointers-swap'),
     )
     expect(loaded.lastVisitedLessonId).toBe('pointers-swap')
+    expect(isProgressV2(loaded)).toBe(true)
+  })
+
+  it.each(['index', 'pointer'])('round-trips the one-past safety scenario in %s mode without changing swap progress', (mode) => {
+    const progress = createDefaultProgress()
+    progress.lessons['pointers-swap'] = {
+      guidedRunCompleted: true,
+      completedChallengeIds: ['predict-value-swap'],
+      savedState: { x: -4, y: 9, mode: 'pointer' },
+    }
+    progress.lessons['pointers-traversal'] = {
+      guidedRunCompleted: true,
+      completedChallengeIds: [...TRAVERSAL_CHALLENGE_IDS],
+      savedState: { count: 6, mode },
+    }
+    progress.lastVisitedLessonId = 'pointers-traversal'
+
+    expect(saveProgress(progress)).toBe(true)
+    const loaded = loadProgress()
+    expect(loaded).toEqual(progress)
+    expect(loaded.version).toBe(2)
+    expect(isLessonCompleted(loaded, 'pointers-traversal')).toBe(true)
+    expect(isLessonCompleted(loaded, 'pointers-swap')).toBe(false)
+    expect(getContinueLearningPath(loaded)).toBe('/learn/pointers/traversal')
+    expect(isTraversalSavedState(loaded.lessons['pointers-traversal']?.savedState))
+      .toBe(true)
+  })
+
+  it.each([
+    { count: -1, mode: 'pointer' },
+    { count: 7, mode: 'pointer' },
+    { count: 2.5, mode: 'pointer' },
+    { count: '5', mode: 'pointer' },
+    { count: null, mode: 'pointer' },
+    { count: 5, mode: 'invalid' },
+  ])('normalizes malformed traversal state while preserving swap progress: %j', (savedState) => {
+    const swapProgress = {
+      guidedRunCompleted: true,
+      completedChallengeIds: ['predict-value-swap'],
+      savedState: { x: 5, y: 9, mode: 'value' },
+    }
+    window.localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify({
+      version: 2,
+      lessons: {
+        'pointers-swap': swapProgress,
+        'pointers-traversal': {
+          guidedRunCompleted: true,
+          completedChallengeIds: ['predict-pointer-offset'],
+          savedState,
+        },
+      },
+      lastVisitedLessonId: 'pointers-traversal',
+    }))
+
+    const loaded = loadProgress()
+    expect(loaded.lessons['pointers-swap']).toEqual(swapProgress)
+    expect(loaded.lessons['pointers-traversal']).toEqual(
+      createDefaultLessonProgress('pointers-traversal'),
+    )
+    expect(loaded.lastVisitedLessonId).toBe('pointers-traversal')
     expect(isProgressV2(loaded)).toBe(true)
   })
 
@@ -431,6 +498,16 @@ describe('Progress V2 storage and migration', () => {
     for (const x of [Number.NaN, Number.POSITIVE_INFINITY, 4.5, Number.MAX_SAFE_INTEGER]) {
       expect(isSwapSavedState({ ...DEFAULT_SWAP_CONFIG, x })).toBe(false)
     }
+    expect(isTraversalSavedState(DEFAULT_TRAVERSAL_CONFIG)).toBe(true)
+    expect(isTraversalSavedState({ ...DEFAULT_TRAVERSAL_CONFIG, mode: 'index' }))
+      .toBe(true)
+    expect(isTraversalSavedState({ ...DEFAULT_TRAVERSAL_CONFIG, count: 0 })).toBe(true)
+    expect(isTraversalSavedState({ ...DEFAULT_TRAVERSAL_CONFIG, count: 6 })).toBe(true)
+    for (const count of [Number.NaN, Number.POSITIVE_INFINITY, -1, 2.5, 7]) {
+      expect(isTraversalSavedState({ ...DEFAULT_TRAVERSAL_CONFIG, count })).toBe(false)
+    }
+    expect(isTraversalSavedState({ ...DEFAULT_TRAVERSAL_CONFIG, mode: 'invalid' }))
+      .toBe(false)
 
     const progress = createDefaultProgress()
     const loop = createDefaultLessonProgress('loops-for')
@@ -509,10 +586,10 @@ describe('progress selectors', () => {
       .toBe('not-started')
     expect(getCourseProgress(progress)).toEqual({
       completedLessons: 2,
-      totalLessons: 7,
+      totalLessons: 8,
       completedChallenges: 6,
-      totalChallenges: 21,
-      percentage: 29,
+      totalChallenges: 24,
+      percentage: 25,
     })
   })
 

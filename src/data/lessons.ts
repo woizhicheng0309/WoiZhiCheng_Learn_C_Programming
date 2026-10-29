@@ -5,6 +5,7 @@ import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
 import { ARRAY_CHALLENGE_IDS } from './arrayChallenges'
 import { POINTER_CHALLENGE_IDS } from './pointerChallenges'
 import { SWAP_CHALLENGE_IDS } from './swapChallenges'
+import { TRAVERSAL_CHALLENGE_IDS } from './traversalChallenges'
 
 export const TOPIC_IDS = [
   'variables',
@@ -25,6 +26,7 @@ export const LESSON_IDS = [
   'arrays-basics',
   'pointers-basics',
   'pointers-swap',
+  'pointers-traversal',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -174,6 +176,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 25,
     prerequisiteLessonIds: ['functions-basics', 'pointers-basics'],
     requiredChallengeIds: SWAP_CHALLENGE_IDS,
+  },
+  {
+    id: 'pointers-traversal',
+    topicId: 'pointers',
+    moduleNumber: 6,
+    lessonNumber: 3,
+    order: 8,
+    title: '陣列與指標走訪',
+    englishTitle: 'Arrays & Pointer Traversal',
+    description: '比較索引與指標如何走過同一組陣列，理解指標步進，以及陣列尾端位址能形成但不能讀取的界線。',
+    concepts: ['陣列索引與解參照', '指標步進', '逐項走訪', '尾端下一格位址'],
+    status: 'available',
+    path: '/learn/pointers/traversal',
+    estimatedMinutes: 25,
+    prerequisiteLessonIds: ['arrays-basics', 'pointers-basics', 'loops-for'],
+    requiredChallengeIds: TRAVERSAL_CHALLENGE_IDS,
   },
 ]
 
