@@ -154,6 +154,6 @@ export function WhileLoopLessonPage() {
         {feedback[challenge.id] && <p className={`functions-challenge-feedback ${feedback[challenge.id]?.solved ? 'is-success' : 'is-hint'}`} role="status">{feedback[challenge.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2><span className="while-clause">判斷的時機，</span><span className="while-clause">決定第一步。</span></h2><p>while 先判斷，do…while 先做一次。每次更新後再比較目前的 i，用實際流程確認迴圈何時結束。</p><div><Link className="button button-secondary" to="/learn/loops/for"><ArrowLeft size={17} aria-hidden="true" />上一課：for 迴圈</Link><Link className="button button-primary" to="/learn/functions/basics">下一課：函式 <ArrowRight size={17} aria-hidden="true" /></Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2><span className="while-clause">判斷的時機，</span><span className="while-clause">決定第一步。</span></h2><p>while 先判斷，do…while 先做一次。每次更新後再比較目前的 i，用實際流程確認迴圈何時結束。</p><div><Link className="button button-secondary" to="/learn/loops/for"><ArrowLeft size={17} aria-hidden="true" />上一課：for 迴圈</Link><Link className="button button-primary" to="/learn/loops/break-continue">下一課：break 與 continue <ArrowRight size={17} aria-hidden="true" /></Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

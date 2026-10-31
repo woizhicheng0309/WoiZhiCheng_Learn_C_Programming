@@ -10,6 +10,7 @@ import {
 } from './lessons'
 import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
 import { WHILE_CHALLENGE_IDS } from './whileChallenges'
+import { LOOP_CONTROL_CHALLENGE_IDS } from './loopControlChallenges'
 import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
 import { ARRAY_CHALLENGE_IDS } from './arrayChallenges'
 import { POINTER_CHALLENGE_IDS } from './pointerChallenges'
@@ -33,6 +34,7 @@ describe('two-level course catalog', () => {
     expect(getLessonsByTopicId('loops').map((lesson) => lesson.id)).toEqual([
       'loops-for',
       'loops-while-do-while',
+      'loops-break-continue',
     ])
     expect(getLessonsByTopicId('functions').map((lesson) => lesson.id)).toEqual([
       'functions-basics',
@@ -54,6 +56,7 @@ describe('two-level course catalog', () => {
       'conditionals-if-else',
       'loops-for',
       'loops-while-do-while',
+      'loops-break-continue',
       'functions-basics',
       'arrays-basics',
       'pointers-basics',
@@ -105,13 +108,30 @@ describe('two-level course catalog', () => {
     expect(lesson && isLessonAvailable(lesson)).toBe(true)
   })
 
+  it('adds break and continue as the third loops lesson', () => {
+    const lesson = getLessonById('loops-break-continue')
+    expect(lesson).toMatchObject({
+      topicId: 'loops',
+      moduleNumber: 3,
+      lessonNumber: 3,
+      order: 5,
+      title: 'break 與 continue',
+      status: 'available',
+      path: '/learn/loops/break-continue',
+      estimatedMinutes: 22,
+      prerequisiteLessonIds: ['loops-for', 'loops-while-do-while'],
+      requiredChallengeIds: LOOP_CONTROL_CHALLENGE_IDS,
+    })
+    expect(lesson && isLessonAvailable(lesson)).toBe(true)
+  })
+
   it('opens the functions lesson after the loops lessons', () => {
     const lesson = getLessonById('functions-basics')
     expect(lesson).toMatchObject({
       topicId: 'functions',
       moduleNumber: 4,
       lessonNumber: 1,
-      order: 5,
+      order: 6,
       title: '函式、參數與回傳值',
       status: 'available',
       path: '/learn/functions/basics',
@@ -127,7 +147,7 @@ describe('two-level course catalog', () => {
       topicId: 'arrays-and-strings',
       moduleNumber: 5,
       lessonNumber: 1,
-      order: 6,
+      order: 7,
       title: '陣列、索引與字串',
       status: 'available',
       path: '/learn/arrays/basics',
@@ -144,7 +164,7 @@ describe('two-level course catalog', () => {
       topicId: 'pointers',
       moduleNumber: 6,
       lessonNumber: 1,
-      order: 7,
+      order: 8,
       title: '指標、位址與間接存取',
       status: 'available',
       path: '/learn/pointers/basics',
@@ -161,7 +181,7 @@ describe('two-level course catalog', () => {
       topicId: 'pointers',
       moduleNumber: 6,
       lessonNumber: 2,
-      order: 8,
+      order: 9,
       title: '指標參數與交換變數',
       status: 'available',
       path: '/learn/pointers/swap',
@@ -178,7 +198,7 @@ describe('two-level course catalog', () => {
       topicId: 'pointers',
       moduleNumber: 6,
       lessonNumber: 3,
-      order: 9,
+      order: 10,
       title: '陣列與指標走訪',
       status: 'available',
       path: '/learn/pointers/traversal',
@@ -195,7 +215,7 @@ describe('two-level course catalog', () => {
       topicId: 'pointers',
       moduleNumber: 6,
       lessonNumber: 4,
-      order: 10,
+      order: 11,
       title: '字串與字元指標',
       status: 'available',
       path: '/learn/pointers/strings',
@@ -210,6 +230,7 @@ describe('two-level course catalog', () => {
     expect(getTopicById('pointers')?.englishTitle).toBe('Pointers')
     expect(isLessonId('variables-basics')).toBe(true)
     expect(isLessonId('loops-while-do-while')).toBe(true)
+    expect(isLessonId('loops-break-continue')).toBe(true)
     expect(isLessonId('functions-basics')).toBe(true)
     expect(isLessonId('arrays-basics')).toBe(true)
     expect(isLessonId('pointers-basics')).toBe(true)

@@ -6,6 +6,7 @@ import {
   DEFAULT_TRAVERSAL_CONFIG,
   DEFAULT_STRING_POINTER_CONFIG,
   DEFAULT_WHILE_CONFIG,
+  DEFAULT_LOOP_CONTROL_CONFIG,
   CONDITIONAL_LIMITS,
   CONDITIONAL_LOGICAL_OPERATORS,
   DEFAULT_CONDITIONAL_CONFIG,
@@ -19,6 +20,7 @@ import {
   validateTraversalConfig,
   validateStringPointerConfig,
   validateWhileConfig,
+  validateLoopControlConfig,
 } from '../domain'
 import type {
   ArrayConfig,
@@ -30,6 +32,7 @@ import type {
   TraversalConfig,
   StringPointerConfig,
   WhileConfig,
+  LoopControlConfig,
 } from '../domain'
 import {
   LESSONS,
@@ -114,6 +117,12 @@ export interface WhileSavedState extends JsonObject {
   step: WhileConfig['step']
 }
 
+export interface LoopControlSavedState extends JsonObject {
+  mode: LoopControlConfig['mode']
+  end: LoopControlConfig['end']
+  trigger: LoopControlConfig['trigger']
+}
+
 export interface LessonProgress {
   guidedRunCompleted: boolean
   completedChallengeIds: string[]
@@ -190,6 +199,10 @@ export const DEFAULT_WHILE_STATE: Readonly<WhileSavedState> = {
   ...DEFAULT_WHILE_CONFIG,
 }
 
+export const DEFAULT_LOOP_CONTROL_STATE: Readonly<LoopControlSavedState> = {
+  ...DEFAULT_LOOP_CONTROL_CONFIG,
+}
+
 export function createDefaultProgress(): ProgressV2 {
   return {
     version: PROGRESS_VERSION,
@@ -211,6 +224,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'conditionals-if-else') return { ...DEFAULT_CONDITIONAL_STATE }
   if (id === 'loops-for') return { ...DEFAULT_LOOP_CONFIG }
   if (id === 'loops-while-do-while') return { ...DEFAULT_WHILE_STATE }
+  if (id === 'loops-break-continue') return { ...DEFAULT_LOOP_CONTROL_STATE }
   if (id === 'functions-basics') return { ...DEFAULT_FUNCTION_STATE }
   if (id === 'arrays-basics') return { ...DEFAULT_ARRAY_STATE }
   if (id === 'pointers-basics') return { ...DEFAULT_POINTER_STATE }
@@ -400,6 +414,22 @@ export function isWhileSavedState(value: unknown): value is WhileSavedState {
   }).length === 0
 }
 
+export function isLoopControlSavedState(value: unknown): value is LoopControlSavedState {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  const state = value as Record<string, unknown>
+  if (
+    !isFiniteNumber(state.end)
+    || !isFiniteNumber(state.trigger)
+    || (state.mode !== 'break' && state.mode !== 'continue')
+  ) return false
+
+  return validateLoopControlConfig({
+    mode: state.mode,
+    end: state.end,
+    trigger: state.trigger,
+  }).length === 0
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
@@ -408,6 +438,7 @@ export function isSavedStateForLesson(
   if (id === 'conditionals-if-else') return isConditionalSavedState(value)
   if (id === 'loops-for') return isLoopConfig(value)
   if (id === 'loops-while-do-while') return isWhileSavedState(value)
+  if (id === 'loops-break-continue') return isLoopControlSavedState(value)
   if (id === 'functions-basics') return isFunctionSavedState(value)
   if (id === 'arrays-basics') return isArraySavedState(value)
   if (id === 'pointers-basics') return isPointerSavedState(value)
