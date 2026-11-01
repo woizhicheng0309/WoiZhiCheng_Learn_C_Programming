@@ -7,6 +7,7 @@
 ## 特色
 
 - 「程式骨架、變數與運算」單元：預測 `int`／`double` 算式、觀察 `x`、`y`、`result` 記憶盒，並練習宣告、賦值與整數除法。
+- 「switch、case 與 break」單元：觀察入口匹配、default 與省略 break 的 fall-through 流程。
 - 「條件判斷」單元：比較分數與出席率，逐步觀察 `if`／`else`、`&&`／`||` 與短路如何決定分支。
 - `for` 迴圈實驗室：調整起始值、終止值、比較運算子與步進值，追蹤到最後一次條件為 `false` 的判斷。
 - 「while 與 do…while」單元：切換先判斷與後判斷的流程，觀察起始條件為假時的零次／一次執行差別，並辨識沒有更新變數的迴圈風險。
@@ -23,7 +24,7 @@
 - 主動辨識 `step = 0`、步進方向錯誤與超過 100 次迭代等風險，不會執行任意 C 程式碼。
 - 每個已開放單元各有三道挑戰；進度使用版本化資料保存在瀏覽器，舊版 `for` 進度會自動遷移。
 - 支援鍵盤操作、清楚焦點、手機版介面與「減少動態效果」系統設定。
-- 課程地圖依「主題 → 單元」呈現變數、條件、迴圈、函式、陣列與字串、指標；目前開放十一個單元，共三十三道挑戰。
+- 課程地圖依「主題 → 單元」呈現變數、條件、迴圈、函式、陣列與字串、指標；目前開放十二個單元，共三十六道挑戰。
 
 ## 網站路由
 
@@ -35,6 +36,7 @@
 | 課程地圖 | `/#/learn` |
 | 程式骨架、變數與運算 | `/#/learn/variables/basics` |
 | `if` 與 `else` | `/#/learn/conditionals/if-else` |
+| switch、case 與 break | `/#/learn/conditionals/switch` |
 | `for` 迴圈實驗室 | `/#/learn/loops/for` |
 | while 與 do…while | `/#/learn/loops/while-do-while` |
 | break 與 continue | `/#/learn/loops/break-continue` |

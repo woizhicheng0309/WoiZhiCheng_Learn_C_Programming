@@ -1,3 +1,4 @@
+import { DEFAULT_SWITCH_CONFIG, validateSwitchConfig, type SwitchConfig } from '../domain/switchBranching'
 import {
   COMPARATORS,
   DEFAULT_ARRAY_CONFIG,
@@ -222,6 +223,7 @@ export function createDefaultLessonProgress(id: LessonId): LessonProgress {
 export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'variables-basics') return { ...DEFAULT_VARIABLE_BASICS_STATE }
   if (id === 'conditionals-if-else') return { ...DEFAULT_CONDITIONAL_STATE }
+  if (id === 'conditionals-switch') return { ...DEFAULT_SWITCH_CONFIG }
   if (id === 'loops-for') return { ...DEFAULT_LOOP_CONFIG }
   if (id === 'loops-while-do-while') return { ...DEFAULT_WHILE_STATE }
   if (id === 'loops-break-continue') return { ...DEFAULT_LOOP_CONTROL_STATE }
@@ -430,12 +432,19 @@ export function isLoopControlSavedState(value: unknown): value is LoopControlSav
   }).length === 0
 }
 
+export function isSwitchSavedState(value: unknown): value is JsonObject & SwitchConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  const config = value as SwitchConfig
+  return validateSwitchConfig(config).length === 0
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
 ): value is JsonObject | null {
   if (id === 'variables-basics') return isVariableBasicsSavedState(value)
   if (id === 'conditionals-if-else') return isConditionalSavedState(value)
+  if (id === 'conditionals-switch') return isSwitchSavedState(value)
   if (id === 'loops-for') return isLoopConfig(value)
   if (id === 'loops-while-do-while') return isWhileSavedState(value)
   if (id === 'loops-break-continue') return isLoopControlSavedState(value)

@@ -15,6 +15,8 @@ import { PointerSwapLessonPage } from './pages/PointerSwapLessonPage'
 import { PointerTraversalLessonPage } from './pages/PointerTraversalLessonPage'
 import { StringPointerLessonPage } from './pages/StringPointerLessonPage'
 
+import { SwitchLessonPage } from './pages/SwitchLessonPage'
+
 export default function App() {
   return (
     <div className="site-frame">
@@ -27,6 +29,7 @@ export default function App() {
           <Route path="/learn" element={<LearnPage />} />
           <Route path="/learn/variables/basics" element={<VariablesBasicsPage />} />
           <Route path="/learn/conditionals/if-else" element={<ConditionalsLessonPage />} />
+          <Route path="/learn/conditionals/switch" element={<SwitchLessonPage />} />
           <Route path="/learn/loops/for" element={<ForLoopLabPage />} />
           <Route path="/learn/loops/while-do-while" element={<WhileLoopLessonPage />} />
           <Route path="/learn/loops/break-continue" element={<LoopControlLessonPage />} />
