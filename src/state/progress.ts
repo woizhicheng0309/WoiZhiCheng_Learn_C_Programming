@@ -1,3 +1,4 @@
+import { DEFAULT_RECURSION_CONFIG, validateRecursionConfig, type RecursionConfig } from '../domain/recursion'
 import { DEFAULT_SWITCH_CONFIG, validateSwitchConfig, type SwitchConfig } from '../domain/switchBranching'
 import {
   COMPARATORS,
@@ -228,6 +229,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'loops-while-do-while') return { ...DEFAULT_WHILE_STATE }
   if (id === 'loops-break-continue') return { ...DEFAULT_LOOP_CONTROL_STATE }
   if (id === 'functions-basics') return { ...DEFAULT_FUNCTION_STATE }
+  if (id === 'functions-recursion') return { ...DEFAULT_RECURSION_CONFIG }
   if (id === 'arrays-basics') return { ...DEFAULT_ARRAY_STATE }
   if (id === 'pointers-basics') return { ...DEFAULT_POINTER_STATE }
   if (id === 'pointers-swap') return { ...DEFAULT_SWAP_STATE }
@@ -438,6 +440,11 @@ export function isSwitchSavedState(value: unknown): value is JsonObject & Switch
   return validateSwitchConfig(config).length === 0
 }
 
+export function isRecursionSavedState(value: unknown): value is JsonObject & RecursionConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateRecursionConfig(value as RecursionConfig).length === 0
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
@@ -449,6 +456,7 @@ export function isSavedStateForLesson(
   if (id === 'loops-while-do-while') return isWhileSavedState(value)
   if (id === 'loops-break-continue') return isLoopControlSavedState(value)
   if (id === 'functions-basics') return isFunctionSavedState(value)
+  if (id === 'functions-recursion') return isRecursionSavedState(value)
   if (id === 'arrays-basics') return isArraySavedState(value)
   if (id === 'pointers-basics') return isPointerSavedState(value)
   if (id === 'pointers-swap') return isSwapSavedState(value)

@@ -1,0 +1,22 @@
+.recursion-page { --accent: #6b7096; --accent-dark: #474c77; --functions-teal-dark: #474c77; }
+.recursion-presets { display: grid; gap: 10px; margin: 22px 0; }
+.recursion-presets button { padding: 10px; min-height: 44px; border: 1px solid var(--line-strong); border-radius: 9px; background: var(--paper-light); cursor: pointer; }
+.recursion-page .pointers-controls > p { color: var(--ink-soft); font-size: .8rem; line-height: 1.9; }
+.recursion-execution { min-width: 0; padding: 22px; }
+.recursion-execution h2 { font-size: 1.3rem; }
+.recursion-execution > p { color: var(--ink-soft); font-size: .8rem; line-height: 1.8; }
+.recursion-stack { display: grid; gap: 12px; padding: 0; list-style: none; }
+.recursion-stack > li { min-width: 0; border: 1px solid var(--line-strong); padding: 16px; border-radius: 10px; background: var(--paper); }
+.recursion-stack > li[aria-current] { border: 2px solid #474c77; background: #ececf5; }
+.recursion-stack h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 12px; font: 700 1rem var(--mono); }
+.recursion-stack small { color: var(--ink-soft); font-size: .7rem; line-height: 1.7; }
+.recursion-stack dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; }
+.recursion-stack dl > div { min-width: 0; }
+.recursion-stack dt { font: .75rem var(--mono); color: var(--ink-soft); }
+.recursion-stack dd { margin: 6px 0 0; font: 700 1rem var(--mono); }
+.recursion-main { border: 1px solid var(--line-strong); padding: 16px; border-radius: 10px; }
+.recursion-main h3 { margin: 0; }
+.recursion-console { margin-top: 20px; padding: 18px; border-radius: 12px; background: var(--code); color: #f5eee5; }
+.recursion-console h3 { font-size: .85rem; }
+.recursion-console ol { padding-left: 22px; }
+@media (max-width: 600px) { .recursion-execution { padding: 16px; } }

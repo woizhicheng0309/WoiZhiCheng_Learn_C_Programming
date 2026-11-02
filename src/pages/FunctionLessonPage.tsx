@@ -949,6 +949,8 @@ export function FunctionLessonPage() {
           </div>
         </section>
 
+        <div className="page-width"><Link className="button button-primary" to="/learn/functions/recursion">下一課：遞迴與呼叫堆疊 <ChevronRight size={17} aria-hidden="true" /></Link></div>
+
         <section className="functions-progress-management">
           <div className="page-width">
             {!showClearConfirm ? (

@@ -17,6 +17,8 @@ import { StringPointerLessonPage } from './pages/StringPointerLessonPage'
 
 import { SwitchLessonPage } from './pages/SwitchLessonPage'
 
+import { RecursionLessonPage } from './pages/RecursionLessonPage'
+
 export default function App() {
   return (
     <div className="site-frame">
@@ -34,6 +36,7 @@ export default function App() {
           <Route path="/learn/loops/while-do-while" element={<WhileLoopLessonPage />} />
           <Route path="/learn/loops/break-continue" element={<LoopControlLessonPage />} />
           <Route path="/learn/functions/basics" element={<FunctionLessonPage />} />
+          <Route path="/learn/functions/recursion" element={<RecursionLessonPage />} />
           <Route path="/learn/arrays/basics" element={<ArrayLessonPage />} />
           <Route path="/learn/pointers/basics" element={<PointerLessonPage />} />
           <Route path="/learn/pointers/swap" element={<PointerSwapLessonPage />} />

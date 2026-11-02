@@ -13,6 +13,7 @@ const routeTitles: Record<string, string> = {
   '/learn/loops/while-do-while': `while 與 do…while｜${SITE_TITLE}`,
   '/learn/loops/break-continue': `break 與 continue｜${SITE_TITLE}`,
   '/learn/functions/basics': `函式、參數與回傳值｜${SITE_TITLE}`,
+  '/learn/functions/recursion': `遞迴與呼叫堆疊｜${SITE_TITLE}`,
   '/learn/arrays/basics': `陣列、索引與字串｜${SITE_TITLE}`,
   '/learn/pointers/basics': `指標、位址與間接存取｜${SITE_TITLE}`,
   '/learn/pointers/swap': `指標參數與交換變數｜${SITE_TITLE}`,

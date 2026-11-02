@@ -44,3 +44,4 @@ export {
   type NestedLoopSourcePart,
 } from './nestedLoopSimulator'
 export * from './switchBranching'
+export * from './recursion'
