@@ -1,0 +1,27 @@
+.matrix-page { --accent: #477d7b; --accent-dark: #285c5b; --functions-teal-dark: #285c5b; }
+.matrix-controls fieldset { display: grid; gap: 12px; padding: 16px; margin: 22px 0; border: 1px solid var(--line-strong); border-radius: 10px; }
+.matrix-controls fieldset label { display: flex; gap: 8px; align-items: center; min-height: 44px; font-size: .8rem; line-height: 1.8; }
+.matrix-controls p, .matrix-visited { color: var(--ink-soft); font-size: .8rem; line-height: 1.9; }
+.matrix-execution { min-width: 0; padding: 22px; }
+.matrix-execution h2 { font-size: 1.2rem; }
+.matrix-execution h3 { font-size: .9rem; line-height: 1.8; }
+.matrix-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 22px 0; }
+.matrix-grid > div { display: grid; gap: 12px; padding: 14px 8px; border: 1px solid var(--line-strong); border-radius: 9px; text-align: center; background: var(--paper); }
+.matrix-grid code { font-size: .75rem; }
+.matrix-grid strong { font: 700 1.6rem var(--mono); }
+.matrix-linear-scroll { min-width: 0; overflow-x: auto; border-radius: 9px; }
+.matrix-linear { display: grid; grid-template-columns: repeat(6, minmax(64px, 1fr)); gap: 4px; padding: 0 0 6px; margin: 0; list-style: none; }
+.matrix-linear li { display: grid; gap: 10px; padding: 12px 4px; border: 1px solid var(--line-strong); border-radius: 6px; text-align: center; }
+.matrix-linear small { font-size: .65rem; }
+.matrix-linear strong { font: 700 1.15rem var(--mono); }
+.matrix-grid > .is-active, .matrix-linear > .is-active { background: #d8ebe8; outline: 2px solid #285c5b; outline-offset: -2px; }
+.matrix-linear-scroll:focus-visible { outline: 3px solid #285c5b; outline-offset: 3px; }
+.matrix-state { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.matrix-state > div { padding: 12px; border: 1px solid var(--line); border-radius: 8px; }
+.matrix-state dt { font: .75rem var(--mono); }
+.matrix-state dd { margin: 12px 0 0; font: 700 1.2rem var(--mono); }
+.matrix-console { padding: 18px; border-radius: 12px; background: var(--code); color: #f5eee5; }
+.matrix-console ol { display: flex; flex-wrap: wrap; gap: 12px; padding: 0; list-style: none; }
+.matrix-console p { font: .9rem var(--mono); }
+.matrix-page .pointers-challenge-content input { max-width: 100%; width: 320px; min-height: 46px; padding: 10px; border: 1px solid var(--line-strong); border-radius: 9px; }
+@media (max-width: 600px) { .matrix-execution { padding: 16px; } .matrix-grid { gap: 7px; } .matrix-grid > div { padding-inline: 4px; } .matrix-state > div { padding: 10px; } }

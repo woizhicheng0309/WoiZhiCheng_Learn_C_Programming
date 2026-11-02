@@ -19,6 +19,8 @@ import { SwitchLessonPage } from './pages/SwitchLessonPage'
 
 import { RecursionLessonPage } from './pages/RecursionLessonPage'
 
+import { MatrixLessonPage } from './pages/MatrixLessonPage'
+
 export default function App() {
   return (
     <div className="site-frame">
@@ -38,6 +40,7 @@ export default function App() {
           <Route path="/learn/functions/basics" element={<FunctionLessonPage />} />
           <Route path="/learn/functions/recursion" element={<RecursionLessonPage />} />
           <Route path="/learn/arrays/basics" element={<ArrayLessonPage />} />
+          <Route path="/learn/arrays/matrices" element={<MatrixLessonPage />} />
           <Route path="/learn/pointers/basics" element={<PointerLessonPage />} />
           <Route path="/learn/pointers/swap" element={<PointerSwapLessonPage />} />
           <Route path="/learn/pointers/traversal" element={<PointerTraversalLessonPage />} />

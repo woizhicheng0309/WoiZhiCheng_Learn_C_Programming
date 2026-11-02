@@ -45,3 +45,4 @@ export {
 } from './nestedLoopSimulator'
 export * from './switchBranching'
 export * from './recursion'
+export * from './matrices'

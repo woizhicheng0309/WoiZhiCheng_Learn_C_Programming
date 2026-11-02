@@ -42,6 +42,7 @@ describe('two-level course catalog', () => {
     ])
     expect(getLessonsByTopicId('arrays-and-strings').map((lesson) => lesson.id)).toEqual([
       'arrays-basics',
+      'arrays-matrices',
     ])
     expect(getLessonsByTopicId('pointers').map((lesson) => lesson.id)).toEqual([
       'pointers-basics',
@@ -62,6 +63,7 @@ describe('two-level course catalog', () => {
       'functions-basics',
       'functions-recursion',
       'arrays-basics',
+      'arrays-matrices',
       'pointers-basics',
       'pointers-swap',
       'pointers-traversal',
@@ -167,7 +169,7 @@ describe('two-level course catalog', () => {
       topicId: 'pointers',
       moduleNumber: 6,
       lessonNumber: 1,
-      order: 10,
+      order: 11,
       title: '指標、位址與間接存取',
       status: 'available',
       path: '/learn/pointers/basics',
@@ -184,7 +186,7 @@ describe('two-level course catalog', () => {
       topicId: 'pointers',
       moduleNumber: 6,
       lessonNumber: 2,
-      order: 11,
+      order: 12,
       title: '指標參數與交換變數',
       status: 'available',
       path: '/learn/pointers/swap',
@@ -201,7 +203,7 @@ describe('two-level course catalog', () => {
       topicId: 'pointers',
       moduleNumber: 6,
       lessonNumber: 3,
-      order: 12,
+      order: 13,
       title: '陣列與指標走訪',
       status: 'available',
       path: '/learn/pointers/traversal',
@@ -218,7 +220,7 @@ describe('two-level course catalog', () => {
       topicId: 'pointers',
       moduleNumber: 6,
       lessonNumber: 4,
-      order: 13,
+      order: 14,
       title: '字串與字元指標',
       status: 'available',
       path: '/learn/pointers/strings',
