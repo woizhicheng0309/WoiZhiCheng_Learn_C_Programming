@@ -124,6 +124,6 @@ export function MatrixLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>兩種順序，都讀完同樣六格。</h2><p>逐列輸出 1、2、3、4、5、6；逐欄輸出 1、4、2、5、3、6。兩者總和都是 21，但 C 的存放順序始終逐列。每個索引都要各自檢查邊界，grid[0][3] 不等於合法的 grid[1][0]。</p>{count === 3 && <p role="status">你已完成二維陣列與巢狀走訪。</p>}<div><Link className="button button-secondary" to="/learn/arrays/basics">上一課：陣列基礎</Link><Link className="button button-primary" to="/learn/pointers/basics">下一課：指標基礎</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>兩種順序，都讀完同樣六格。</h2><p>逐列輸出 1、2、3、4、5、6；逐欄輸出 1、4、2、5、3、6。兩者總和都是 21，但 C 的存放順序始終逐列。每個索引都要各自檢查邊界，grid[0][3] 不等於合法的 grid[1][0]。</p>{count === 3 && <p role="status">你已完成二維陣列與巢狀走訪。</p>}<div><Link className="button button-secondary" to="/learn/arrays/basics">上一課：陣列基礎</Link><Link className="button button-primary" to="/learn/arrays/search">下一課：線性搜尋</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

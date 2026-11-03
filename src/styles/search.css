@@ -1,0 +1,25 @@
+.search-page { --accent: #6b7d4f; --accent-dark: #465b2c; --functions-teal-dark: #465b2c; }
+.search-controls fieldset { display: grid; gap: 12px; padding: 16px; margin: 22px 0; border: 1px solid var(--line-strong); border-radius: 10px; }
+.search-controls fieldset label { display: flex; gap: 8px; align-items: center; min-height: 44px; font-size: .8rem; line-height: 1.8; }
+.search-controls > p { color: var(--ink-soft); font-size: .8rem; line-height: 1.9; }
+.search-presets { display: grid; gap: 10px; }
+.search-presets button { min-height: 44px; padding: 10px; border: 1px solid var(--line-strong); border-radius: 9px; background: var(--paper-light); cursor: pointer; }
+.search-execution { min-width: 0; padding: 22px; }
+.search-execution h2 { font-size: 1.2rem; }
+.search-execution > p { font-size: .85rem; line-height: 1.9; }
+.search-memory-scroll { min-width: 0; overflow-x: auto; margin-block: 22px; border-radius: 9px; }
+.search-memory-scroll:focus-visible { outline: 3px solid #465b2c; outline-offset: 3px; }
+.search-memory { display: grid; grid-template-columns: repeat(5, minmax(72px, 1fr)); gap: 7px; list-style: none; margin: 0; padding: 3px 3px 9px; }
+.search-memory li { display: grid; gap: 12px; padding: 14px 5px; text-align: center; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--paper); }
+.search-memory strong { font: 700 1.7rem var(--mono); }
+.search-memory code { font-size: .8rem; }
+.search-memory small { min-height: 1.8em; font-size: .65rem; line-height: 1.8; }
+.search-memory .is-active { background: #e4ecd8; outline: 2px solid #465b2c; outline-offset: -2px; }
+.search-state { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.search-state > div { padding: 12px; border: 1px solid var(--line); border-radius: 8px; }
+.search-state dt { font: .75rem var(--mono); }
+.search-state dd { margin: 12px 0 0; font: 700 1.2rem var(--mono); }
+.search-console { padding: 18px; border-radius: 12px; background: var(--code); color: #f5eee5; }
+.search-console h3 { font-size: .85rem; }
+.search-console p { font: 1rem var(--mono); }
+@media (max-width: 600px) { .search-execution { padding: 16px; } .search-state > div { padding: 10px; } }

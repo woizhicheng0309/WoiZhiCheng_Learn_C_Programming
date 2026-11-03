@@ -46,3 +46,4 @@ export {
 export * from './switchBranching'
 export * from './recursion'
 export * from './matrices'
+export * from './search'

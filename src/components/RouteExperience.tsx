@@ -16,6 +16,7 @@ const routeTitles: Record<string, string> = {
   '/learn/functions/recursion': `遞迴與呼叫堆疊｜${SITE_TITLE}`,
   '/learn/arrays/basics': `陣列、索引與字串｜${SITE_TITLE}`,
   '/learn/arrays/matrices': `二維陣列與巢狀走訪｜${SITE_TITLE}`,
+  '/learn/arrays/search': `線性搜尋與提前結束｜${SITE_TITLE}`,
   '/learn/pointers/basics': `指標、位址與間接存取｜${SITE_TITLE}`,
   '/learn/pointers/swap': `指標參數與交換變數｜${SITE_TITLE}`,
   '/learn/pointers/traversal': `陣列與指標走訪｜${SITE_TITLE}`,

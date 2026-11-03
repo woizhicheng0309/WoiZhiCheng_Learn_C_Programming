@@ -1,3 +1,4 @@
+import { DEFAULT_SEARCH_CONFIG, validateSearchConfig, type SearchConfig } from '../domain/search'
 import { DEFAULT_MATRIX_CONFIG, validateMatrixConfig, type MatrixConfig } from '../domain/matrices'
 import { DEFAULT_RECURSION_CONFIG, validateRecursionConfig, type RecursionConfig } from '../domain/recursion'
 import { DEFAULT_SWITCH_CONFIG, validateSwitchConfig, type SwitchConfig } from '../domain/switchBranching'
@@ -233,6 +234,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'functions-recursion') return { ...DEFAULT_RECURSION_CONFIG }
   if (id === 'arrays-basics') return { ...DEFAULT_ARRAY_STATE }
   if (id === 'arrays-matrices') return { ...DEFAULT_MATRIX_CONFIG }
+  if (id === 'arrays-search') return { ...DEFAULT_SEARCH_CONFIG }
   if (id === 'pointers-basics') return { ...DEFAULT_POINTER_STATE }
   if (id === 'pointers-swap') return { ...DEFAULT_SWAP_STATE }
   if (id === 'pointers-traversal') return { ...DEFAULT_TRAVERSAL_STATE }
@@ -452,6 +454,11 @@ export function isMatrixSavedState(value: unknown): value is JsonObject & Matrix
   return validateMatrixConfig(value as MatrixConfig).length === 0
 }
 
+export function isSearchSavedState(value: unknown): value is JsonObject & SearchConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateSearchConfig(value as SearchConfig).length === 0
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
@@ -466,6 +473,7 @@ export function isSavedStateForLesson(
   if (id === 'functions-recursion') return isRecursionSavedState(value)
   if (id === 'arrays-basics') return isArraySavedState(value)
   if (id === 'arrays-matrices') return isMatrixSavedState(value)
+  if (id === 'arrays-search') return isSearchSavedState(value)
   if (id === 'pointers-basics') return isPointerSavedState(value)
   if (id === 'pointers-swap') return isSwapSavedState(value)
   if (id === 'pointers-traversal') return isTraversalSavedState(value)
