@@ -25,6 +25,8 @@ import { SearchLessonPage } from './pages/SearchLessonPage'
 
 import { BinarySearchLessonPage } from './pages/BinarySearchLessonPage'
 
+import { SelectionSortLessonPage } from './pages/SelectionSortLessonPage'
+
 export default function App() {
   return (
     <div className="site-frame">
@@ -47,6 +49,7 @@ export default function App() {
           <Route path="/learn/arrays/matrices" element={<MatrixLessonPage />} />
           <Route path="/learn/arrays/search" element={<SearchLessonPage />} />
           <Route path="/learn/arrays/binary-search" element={<BinarySearchLessonPage />} />
+          <Route path="/learn/arrays/selection-sort" element={<SelectionSortLessonPage />} />
           <Route path="/learn/pointers/basics" element={<PointerLessonPage />} />
           <Route path="/learn/pointers/swap" element={<PointerSwapLessonPage />} />
           <Route path="/learn/pointers/traversal" element={<PointerTraversalLessonPage />} />

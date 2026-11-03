@@ -122,6 +122,6 @@ export function BinarySearchLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>區間為空，就結束搜尋。</h2><p>每輪先判斷 left &lt;= right，才計算中點與存取元素。left &gt; right 代表沒有候選位置；n = 0 時一開始就是 [0, -1]。二分搜尋在有序資料中每輪排除約半數候選，所需輪數隨資料量呈對數成長。</p>{count === 3 && <p role="status">你已完成二分搜尋與區間縮小。</p>}<div><Link className="button button-secondary" to="/learn/arrays/search">上一課：線性搜尋</Link><Link className="button button-primary" to="/learn/pointers/basics">下一課：指標基礎</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>區間為空，就結束搜尋。</h2><p>每輪先判斷 left &lt;= right，才計算中點與存取元素。left &gt; right 代表沒有候選位置；n = 0 時一開始就是 [0, -1]。二分搜尋在有序資料中每輪排除約半數候選，所需輪數隨資料量呈對數成長。</p>{count === 3 && <p role="status">你已完成二分搜尋與區間縮小。</p>}<div><Link className="button button-secondary" to="/learn/arrays/search">上一課：線性搜尋</Link><Link className="button button-primary" to="/learn/arrays/selection-sort">下一課：選擇排序</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }
