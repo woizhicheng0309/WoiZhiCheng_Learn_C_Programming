@@ -115,6 +115,6 @@ export function SearchLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>是否提前結束，取決於你要找哪一筆。</h2><p>第一筆策略在命中後 break；最後一筆策略會走完陣列並覆寫 found。找不到時兩者都比較五格，保留 -1。這是線性搜尋：資料不必先排序，最壞情況需要逐格比較所有元素。</p>{count === 3 && <p role="status">你已完成線性搜尋與提前結束。</p>}<div><Link className="button button-secondary" to="/learn/arrays/matrices">上一課：二維陣列</Link><Link className="button button-primary" to="/learn/pointers/basics">下一課：指標基礎</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>是否提前結束，取決於你要找哪一筆。</h2><p>第一筆策略在命中後 break；最後一筆策略會走完陣列並覆寫 found。找不到時兩者都比較五格，保留 -1。這是線性搜尋：資料不必先排序，最壞情況需要逐格比較所有元素。</p>{count === 3 && <p role="status">你已完成線性搜尋與提前結束。</p>}<div><Link className="button button-secondary" to="/learn/arrays/matrices">上一課：二維陣列</Link><Link className="button button-primary" to="/learn/arrays/binary-search">下一課：二分搜尋</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

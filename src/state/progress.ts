@@ -1,3 +1,4 @@
+import { DEFAULT_BINARY_SEARCH_CONFIG, validateBinarySearchConfig, type BinarySearchConfig } from '../domain/binarySearch'
 import { DEFAULT_SEARCH_CONFIG, validateSearchConfig, type SearchConfig } from '../domain/search'
 import { DEFAULT_MATRIX_CONFIG, validateMatrixConfig, type MatrixConfig } from '../domain/matrices'
 import { DEFAULT_RECURSION_CONFIG, validateRecursionConfig, type RecursionConfig } from '../domain/recursion'
@@ -235,6 +236,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'arrays-basics') return { ...DEFAULT_ARRAY_STATE }
   if (id === 'arrays-matrices') return { ...DEFAULT_MATRIX_CONFIG }
   if (id === 'arrays-search') return { ...DEFAULT_SEARCH_CONFIG }
+  if (id === 'arrays-binary-search') return { ...DEFAULT_BINARY_SEARCH_CONFIG }
   if (id === 'pointers-basics') return { ...DEFAULT_POINTER_STATE }
   if (id === 'pointers-swap') return { ...DEFAULT_SWAP_STATE }
   if (id === 'pointers-traversal') return { ...DEFAULT_TRAVERSAL_STATE }
@@ -459,6 +461,11 @@ export function isSearchSavedState(value: unknown): value is JsonObject & Search
   return validateSearchConfig(value as SearchConfig).length === 0
 }
 
+export function isBinarySearchSavedState(value: unknown): value is JsonObject & BinarySearchConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateBinarySearchConfig(value as BinarySearchConfig).length === 0
+}
+
 export function isSavedStateForLesson(
   id: LessonId,
   value: unknown,
@@ -474,6 +481,7 @@ export function isSavedStateForLesson(
   if (id === 'arrays-basics') return isArraySavedState(value)
   if (id === 'arrays-matrices') return isMatrixSavedState(value)
   if (id === 'arrays-search') return isSearchSavedState(value)
+  if (id === 'arrays-binary-search') return isBinarySearchSavedState(value)
   if (id === 'pointers-basics') return isPointerSavedState(value)
   if (id === 'pointers-swap') return isSwapSavedState(value)
   if (id === 'pointers-traversal') return isTraversalSavedState(value)
