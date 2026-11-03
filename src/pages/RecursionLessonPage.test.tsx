@@ -74,7 +74,7 @@ it('completes three challenges and preserves them across reload', () => {
   fireEvent.click(screen.getByRole('tab', { name: /找出最先回傳/ }))
   number('你的答案', 1); fireEvent.click(screen.getByRole('button', { name: '檢查答案' }))
   expect(screen.getByText('你已完成遞迴與呼叫堆疊。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 17, totalChallenges: 51, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 18, totalChallenges: 54, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
 })

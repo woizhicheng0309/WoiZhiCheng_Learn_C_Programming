@@ -85,7 +85,7 @@ it('completes and restores all three challenges using keyboard tab navigation', 
   fireEvent.keyDown(screen.getByRole('tab', { name: /第一輪候選的位置/ }), { key: 'ArrowRight' }); solve('1 4 5 2 3')
   fireEvent.keyDown(screen.getByRole('tab', { name: /預測第一輪交換後/ }), { key: 'End' }); solve('10')
   expect(screen.getByText('你已完成選擇排序與交換。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 17, totalChallenges: 51, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 18, totalChallenges: 54, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
 })

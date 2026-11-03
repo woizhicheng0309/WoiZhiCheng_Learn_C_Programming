@@ -115,6 +115,6 @@ export function SelectionSortLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>已排序時，不交換也仍要比較。</h2><p>本課五格的選擇排序固定比較 4 + 3 + 2 + 1 = 10 次。每輪最多一次交換，best == i 時不交換；資料已排好也不會省略內層比較。一般 n 格資料需要 n(n − 1)/2 次元素比較，隨資料量呈平方成長。</p>{count === 3 && <p role="status">你已完成選擇排序與交換。</p>}<div><Link className="button button-secondary" to="/learn/arrays/binary-search">上一課：二分搜尋</Link><Link className="button button-primary" to="/learn/pointers/basics">下一課：指標基礎</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>已排序時，不交換也仍要比較。</h2><p>本課五格的選擇排序固定比較 4 + 3 + 2 + 1 = 10 次。每輪最多一次交換，best == i 時不交換；資料已排好也不會省略內層比較。一般 n 格資料需要 n(n − 1)/2 次元素比較，隨資料量呈平方成長。</p>{count === 3 && <p role="status">你已完成選擇排序與交換。</p>}<div><Link className="button button-secondary" to="/learn/arrays/binary-search">上一課：二分搜尋</Link><Link className="button button-primary" to="/learn/arrays/insertion-sort">下一課：插入排序</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

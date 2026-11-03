@@ -88,7 +88,7 @@ it('completes and restores three challenges and rejects damaged saved configurat
   fireEvent.click(screen.getByRole('tab', { name: /預測逐欄輸出/ })); solve('1 4 2 5 3 6')
   fireEvent.click(screen.getByRole('tab', { name: /計算元素偏移/ })); solve('4')
   expect(screen.getByText('你已完成二維陣列與巢狀走訪。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 17, totalChallenges: 51, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 18, totalChallenges: 54, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
   expect(isMatrixSavedState({ mode: 'row-first', targetRow: 1, targetColumn: 2 })).toBe(true)

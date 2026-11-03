@@ -1,0 +1,26 @@
+.insertion-page { --accent: #8b648c; --accent-dark: #623e68; --functions-teal-dark: #623e68; }
+.insertion-controls fieldset { display: grid; gap: 12px; padding: 16px; margin: 22px 0; border: 1px solid var(--line-strong); border-radius: 10px; }
+.insertion-controls fieldset label { display: flex; align-items: center; gap: 8px; min-height: 44px; font-size: .8rem; line-height: 1.8; }
+.insertion-controls > p, .insertion-note { color: var(--ink-soft); font-size: .8rem; line-height: 1.9; }
+.insertion-execution { min-width: 0; padding: 22px; }
+.insertion-execution h2 { font-size: 1.2rem; }
+.insertion-execution > p { line-height: 1.9; font-size: .85rem; }
+.insertion-memory-scroll { min-width: 0; overflow-x: auto; margin-block: 22px; border-radius: 9px; }
+.insertion-memory-scroll:focus-visible { outline: 3px solid #623e68; outline-offset: 3px; }
+.insertion-memory { display: grid; grid-template-columns: repeat(5, minmax(72px, 1fr)); gap: 7px; margin: 0; padding: 3px 3px 9px; list-style: none; }
+.insertion-memory li { display: grid; gap: 12px; padding: 14px 5px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--paper); text-align: center; }
+.insertion-memory code { font-size: .8rem; }
+.insertion-memory strong { font: 700 1.7rem var(--mono); }
+.insertion-memory small { font-size: .65rem; line-height: 1.8; }
+.insertion-memory .is-sorted { background: #e0ece4; }
+.insertion-memory .is-hole { border: 2px dashed #623e68; background: #f0e5f0; }
+.insertion-memory .is-active { outline: 3px solid #623e68; outline-offset: -3px; }
+.insertion-state { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.insertion-state > div { padding: 14px; border: 1px solid var(--line); border-radius: 8px; }
+.insertion-state dt { font: .75rem var(--mono); }
+.insertion-state dd { margin: 12px 0 0; font: 700 1.3rem var(--mono); }
+.insertion-console { padding: 18px; border-radius: 12px; background: var(--code); color: #f5eee5; }
+.insertion-console h3 { font-size: .85rem; }
+.insertion-console ol { display: flex; flex-wrap: wrap; gap: 12px; padding: 0; list-style: none; font: 1rem var(--mono); }
+.insertion-page .pointers-challenge-content input { max-width: 100%; width: 320px; min-height: 46px; padding: 10px; border: 1px solid var(--line-strong); border-radius: 9px; }
+@media (max-width: 600px) { .insertion-execution { padding: 16px; } }
