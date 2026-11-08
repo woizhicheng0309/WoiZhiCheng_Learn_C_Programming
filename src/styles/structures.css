@@ -1,0 +1,20 @@
+.structure-page { --accent: #826d9e; --accent-dark: #594675; --functions-teal-dark: #594675; }
+.structure-controls > p, .structure-execution > p { color: var(--ink-soft); font-size: .85rem; line-height: 1.9; }
+.structure-execution { min-width: 0; padding: 22px; }
+.structure-object { min-width: 0; padding: 18px; margin-bottom: 16px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--paper); }
+.structure-object h3 { font: 700 1rem var(--mono); }
+.structure-object h3 small { display: inline-block; margin-left: 12px; font: 400 .8rem var(--sans, sans-serif); }
+.structure-object > p { color: var(--ink-soft); font-size: .8rem; line-height: 1.8; }
+.structure-members { display: grid; gap: 10px; margin: 16px 0 0; }
+.structure-members > div { min-width: 0; padding: 14px; border: 1px solid var(--line); border-radius: 8px; }
+.structure-members dt { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; overflow-wrap: anywhere; font-size: .8rem; }
+.structure-members dt small { color: var(--ink-soft); font-family: var(--mono); }
+.structure-members dd { margin: 12px 0 0; font: 700 1.5rem var(--mono); }
+.structure-members > div > small { display: block; margin-top: 8px; color: var(--ink-soft); font-size: .7rem; }
+.structure-members .is-selected { background: #eee8f4; }
+.structure-object.is-active, .structure-members .is-active { outline: 3px solid #594675; outline-offset: -3px; }
+.structure-console { padding: 18px; border-radius: 12px; background: var(--code); color: #f5eee5; }
+.structure-console h3 { font-size: .85rem; }
+.structure-console ol { list-style: none; padding: 0; font: .8rem/1.9 var(--mono); overflow-wrap: anywhere; }
+.structure-page .pointers-challenge-content input { max-width: 100%; width: 320px; min-height: 46px; padding: 10px; border: 1px solid var(--line-strong); border-radius: 9px; }
+@media (max-width: 600px) { .structure-execution { padding: 16px; } }

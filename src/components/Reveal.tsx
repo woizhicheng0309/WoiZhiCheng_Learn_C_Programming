@@ -1,15 +1,17 @@
-import type { PropsWithChildren } from 'react'
+import type { CSSProperties, PropsWithChildren } from 'react'
 import { motion } from 'motion/react'
 
 type RevealProps = PropsWithChildren<{
   className?: string
   delay?: number
+  style?: CSSProperties
 }>
 
-export function Reveal({ children, className, delay = 0 }: RevealProps) {
+export function Reveal({ children, className, delay = 0, style }: RevealProps) {
   return (
     <motion.div
       className={className}
+      style={style}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.16 }}

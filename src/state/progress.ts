@@ -1,3 +1,4 @@
+import { DEFAULT_STRUCTURE_CONFIG, validateStructureConfig, type StructureConfig } from '../domain/structures'
 import { DEFAULT_CONST_POINTER_CONFIG, validateConstPointerConfig, type ConstPointerConfig } from '../domain/constPointers'
 import { DEFAULT_STRING_COMPARISON_CONFIG, validateStringComparisonConfig, type StringComparisonConfig } from '../domain/stringComparison'
 import { DEFAULT_ARRAY_PARAMETER_CONFIG, validateArrayParameterConfig, type ArrayParameterConfig } from '../domain/arrayParameters'
@@ -255,6 +256,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'pointers-strings') return { ...DEFAULT_STRING_POINTER_STATE }
   if (id === 'pointers-array-parameters') return { ...DEFAULT_ARRAY_PARAMETER_CONFIG }
   if (id === 'pointers-const') return { ...DEFAULT_CONST_POINTER_CONFIG }
+  if (id === 'structures-basics') return { ...DEFAULT_STRUCTURE_CONFIG }
   return null
 }
 
@@ -485,6 +487,11 @@ export function isSelectionSortSavedState(value: unknown): value is JsonObject &
   return validateSelectionSortConfig(value as SelectionSortConfig).length === 0
 }
 
+export function isStructureSavedState(value: unknown): value is JsonObject & StructureConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateStructureConfig(value as StructureConfig).length === 0
+}
+
 export function isConstPointerSavedState(value: unknown): value is JsonObject & ConstPointerConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateConstPointerConfig(value as ConstPointerConfig).length === 0
@@ -542,6 +549,7 @@ export function isSavedStateForLesson(
   if (id === 'pointers-strings') return isStringPointerSavedState(value)
   if (id === 'pointers-array-parameters') return isArrayParameterSavedState(value)
   if (id === 'pointers-const') return isConstPointerSavedState(value)
+  if (id === 'structures-basics') return isStructureSavedState(value)
   return value === null
 }
 

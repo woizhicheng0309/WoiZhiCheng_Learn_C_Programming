@@ -1,3 +1,4 @@
+import { STRUCTURE_CHALLENGE_IDS } from './structureChallenges'
 import { CONST_POINTER_CHALLENGE_IDS } from './constPointerChallenges'
 import { STRING_COMPARISON_CHALLENGE_IDS } from './stringComparisonChallenges'
 import { ARRAY_PARAMETER_CHALLENGE_IDS } from './arrayParameterChallenges'
@@ -29,6 +30,7 @@ export const TOPIC_IDS = [
   'functions',
   'arrays-and-strings',
   'pointers',
+  'structures',
 ] as const
 
 export type TopicId = (typeof TOPIC_IDS)[number]
@@ -57,6 +59,7 @@ export const LESSON_IDS = [
   'pointers-strings',
   'pointers-array-parameters',
   'pointers-const',
+  'structures-basics',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -455,6 +458,22 @@ const lessons: readonly LessonDefinition[] = [
     prerequisiteLessonIds: ['pointers-basics', 'pointers-array-parameters'],
     requiredChallengeIds: CONST_POINTER_CHALLENGE_IDS,
   },
+  {
+    id: 'structures-basics',
+    topicId: 'structures',
+    moduleNumber: 7,
+    lessonNumber: 1,
+    order: 24,
+    title: '結構與成員存取',
+    englishTitle: 'Structures & Member Access',
+    description: '用 struct 組合相關資料，比較初始化方式、點運算子與複製後各自獨立的成員值。',
+    concepts: ['struct 定義', '點運算子', '部分與指定初始化', '結構成員複製'],
+    status: 'available',
+    path: '/learn/structures/basics',
+    estimatedMinutes: 25,
+    prerequisiteLessonIds: ['variables-basics', 'arrays-basics'],
+    requiredChallengeIds: STRUCTURE_CHALLENGE_IDS,
+  },
 ]
 
 const topicMetadata: ReadonlyArray<Omit<TopicDefinition, 'lessons'>> = [
@@ -499,6 +518,13 @@ const topicMetadata: ReadonlyArray<Omit<TopicDefinition, 'lessons'>> = [
     title: '指標',
     englishTitle: 'Pointers',
     description: '從記憶體位址出發，建立 C 語言指標的基礎直覺。',
+  },
+  {
+    id: 'structures',
+    order: 7,
+    title: '結構與自訂型別',
+    englishTitle: 'Structures & Custom Types',
+    description: '將相關成員組合成自訂資料型態，學習成員存取、複製與資料分組。',
   },
 ]
 

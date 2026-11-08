@@ -117,6 +117,6 @@ export function ConstPointerLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>限制透過哪個名稱寫入，不是複製資料。</h2><p>本課 x、y 都是一般 int。即使 p 宣告為 const int *p，也能直接修改 x；p 仍指向 x 時，之後讀取 *p 就會得到新值。這和透過 *p 寫入是不同的操作。</p>{count === 3 && <p role="status">你已完成指標與 const。</p>}<div><Link className="button button-secondary" to="/learn/pointers/array-parameters">上一課：陣列作為函式參數</Link><Link className="button button-primary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>限制透過哪個名稱寫入，不是複製資料。</h2><p>本課 x、y 都是一般 int。即使 p 宣告為 const int *p，也能直接修改 x；p 仍指向 x 時，之後讀取 *p 就會得到新值。這和透過 *p 寫入是不同的操作。</p>{count === 3 && <p role="status">你已完成指標與 const。</p>}<div><Link className="button button-secondary" to="/learn/pointers/array-parameters">上一課：陣列作為函式參數</Link><Link className="button button-primary" to="/learn/structures/basics">下一章：結構與成員存取</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

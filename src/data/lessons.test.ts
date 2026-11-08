@@ -1,3 +1,4 @@
+import { STRUCTURE_CHALLENGE_IDS } from './structureChallenges'
 import {
   COURSE_TOPICS,
   LESSONS,
@@ -27,6 +28,7 @@ describe('two-level course catalog', () => {
       'functions',
       'arrays-and-strings',
       'pointers',
+      'structures',
     ])
     expect(getLessonsByTopicId('variables').map((lesson) => lesson.id)).toEqual([
       'variables-basics',
@@ -59,6 +61,7 @@ describe('two-level course catalog', () => {
       'pointers-array-parameters',
       'pointers-const',
     ])
+    expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics'])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -86,6 +89,7 @@ describe('two-level course catalog', () => {
       'pointers-strings',
       'pointers-array-parameters',
       'pointers-const',
+      'structures-basics',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -247,6 +251,17 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: STRING_POINTER_CHALLENGE_IDS,
     })
     expect(lesson && isLessonAvailable(lesson)).toBe(true)
+  })
+
+  it('opens chapter seven with a member-access lesson and its own required challenges', () => {
+    expect(getTopicById('structures')).toMatchObject({ order: 7, title: '結構與自訂型別' })
+    expect(getLessonById('structures-basics')).toMatchObject({
+      topicId: 'structures', moduleNumber: 7, lessonNumber: 1, order: 24,
+      path: '/learn/structures/basics', status: 'available',
+      prerequisiteLessonIds: ['variables-basics', 'arrays-basics'],
+      requiredChallengeIds: STRUCTURE_CHALLENGE_IDS,
+    })
+    expect(isLessonId('structures-basics')).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {
