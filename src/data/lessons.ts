@@ -1,3 +1,4 @@
+import { INTEGER_PARSING_CHALLENGE_IDS } from './integerParsingChallenges'
 import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
 import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
 import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
@@ -74,6 +75,7 @@ export const LESSON_IDS = [
   'memory-reallocation',
   'files-reading',
   'files-characters',
+  'files-integer-parsing',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -583,6 +585,15 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 30,
     prerequisiteLessonIds: ['files-reading', 'loops-break-continue', 'conditionals-if-else'],
     requiredChallengeIds: FILE_CHARACTER_CHALLENGE_IDS,
+  },
+  {
+    id: 'files-integer-parsing', topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 3, order: 31,
+    title: 'strtol 數字解析與輸入驗證', englishTitle: 'strtol & Input Validation',
+    description: '追蹤十進位轉換、end 停止位置、ERANGE 與尾端規則，分辨零值和沒有數字。',
+    concepts: ['strtol 與 endptr', 'errno 與 ERANGE', 'long 範圍', '完整輸入驗證'],
+    status: 'available', path: '/learn/files/integer-parsing', estimatedMinutes: 30,
+    prerequisiteLessonIds: ['files-reading', 'pointers-strings', 'conditionals-if-else'],
+    requiredChallengeIds: INTEGER_PARSING_CHALLENGE_IDS,
   },
 ]
 

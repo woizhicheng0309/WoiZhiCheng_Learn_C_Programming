@@ -1,3 +1,4 @@
+import { INTEGER_PARSING_CHALLENGE_IDS } from './integerParsingChallenges'
 import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
 import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
 import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
@@ -71,7 +72,7 @@ describe('two-level course catalog', () => {
     ])
     expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics', 'structures-arrays', 'structures-pointers'])
     expect(getLessonsByTopicId('dynamic-memory').map(lesson => lesson.id)).toEqual(['memory-allocation', 'memory-reallocation'])
-    expect(getLessonsByTopicId('files-and-input').map(lesson => lesson.id)).toEqual(['files-reading', 'files-characters'])
+    expect(getLessonsByTopicId('files-and-input').map(lesson => lesson.id)).toEqual(['files-reading', 'files-characters', 'files-integer-parsing'])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -106,6 +107,7 @@ describe('two-level course catalog', () => {
       'memory-reallocation',
       'files-reading',
       'files-characters',
+      'files-integer-parsing',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -340,6 +342,16 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: FILE_CHARACTER_CHALLENGE_IDS,
     })
     expect(isLessonId('files-characters')).toBe(true)
+  })
+
+  it('adds integer parsing with explicit range and complete-input validation', () => {
+    expect(getLessonById('files-integer-parsing')).toMatchObject({
+      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 3, order: 31,
+      path: '/learn/files/integer-parsing', status: 'available',
+      prerequisiteLessonIds: ['files-reading', 'pointers-strings', 'conditionals-if-else'],
+      requiredChallengeIds: INTEGER_PARSING_CHALLENGE_IDS,
+    })
+    expect(isLessonId('files-integer-parsing')).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {

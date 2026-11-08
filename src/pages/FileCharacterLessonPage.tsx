@@ -133,6 +133,6 @@ export function FileCharacterLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>EOF 是回傳訊號，0 與 255 是本課的有效資料。</h2><p>fgetc 回傳 EOF 時，也可能是讀取錯誤，要在串流仍有效時保存 ferror。提早 break 則不會自動把剩餘資料讀完，也不會自動設定 EOF。最後檢查 fclose 並解除串流關聯。</p><p>語意依據：<a href="https://www.sigbus.info/n1570#7.21.7.1" target="_blank" rel="noreferrer">C11 工作草案 N1570：fgetc 與 EOF</a>。</p>{count === 3 && <p role="status">你已完成 fgetc 逐字讀取與 EOF。</p>}<div><Link className="button button-secondary" to="/learn/files/reading">上一課：檔案開啟與 fgets 讀取</Link><Link className="button button-primary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>EOF 是回傳訊號，0 與 255 是本課的有效資料。</h2><p>fgetc 回傳 EOF 時，也可能是讀取錯誤，要在串流仍有效時保存 ferror。提早 break 則不會自動把剩餘資料讀完，也不會自動設定 EOF。最後檢查 fclose 並解除串流關聯。</p><p>語意依據：<a href="https://www.sigbus.info/n1570#7.21.7.1" target="_blank" rel="noreferrer">C11 工作草案 N1570：fgetc 與 EOF</a>。</p>{count === 3 && <p role="status">你已完成 fgetc 逐字讀取與 EOF。</p>}<div><Link className="button button-secondary" to="/learn/files/reading">上一課：檔案開啟與 fgets 讀取</Link><Link className="button button-primary" to="/learn/files/integer-parsing">下一課：strtol 數字解析與輸入驗證</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

@@ -21,6 +21,18 @@ beforeEach(() => {
 })
 afterEach(() => vi.unstubAllGlobals())
 
+it('opens integer parsing from the map and connects it to character input', async () => {
+  render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
+  const group = await screen.findByRole('region', { name: '檔案與文字輸入' })
+  fireEvent.click(within(group).getByRole('link', { name: /strtol 數字解析與輸入驗證，未開始/ }))
+  const heading = await screen.findByRole('heading', { level: 1, name: /先轉換數字/ })
+  await waitFor(() => expect(heading).toHaveFocus())
+  expect(document.title).toContain('strtol 數字解析與輸入驗證')
+  fireEvent.click(screen.getByRole('link', { name: '上一課：fgetc 逐字讀取與 EOF' }))
+  await screen.findByRole('heading', { level: 1, name: /用 int 接住回傳值/ })
+  expect(screen.getByRole('link', { name: '下一課：strtol 數字解析與輸入驗證' })).toHaveAttribute('href', '/learn/files/integer-parsing')
+})
+
 it('shows all nine available topics on the home ribbon with a dynamic column count', () => {
   render(<ProgressProvider><MemoryRouter><HomePage /></MemoryRouter></ProgressProvider>)
   const ribbon = document.querySelector<HTMLElement>('.topic-ribbon')!

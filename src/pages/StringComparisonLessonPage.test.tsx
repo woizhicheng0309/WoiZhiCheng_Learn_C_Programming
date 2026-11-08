@@ -106,7 +106,7 @@ it('completes keyboard challenges and restores saved sample and direction', () =
   fireEvent.keyDown(screen.getByRole('tab', { name: /找到第一個不同位置/ }), { key: 'ArrowRight' }); solve('-1')
   fireEvent.keyDown(screen.getByRole('tab', { name: /前綴如何比較/ }), { key: 'End' }); solve('2')
   expect(screen.getByText('你已完成字串比較與 strcmp。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 30, totalChallenges: 90, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 31, totalChallenges: 93, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
   expect(screen.getByRole('combobox', { name: '比較範例' })).toHaveValue('prefix')

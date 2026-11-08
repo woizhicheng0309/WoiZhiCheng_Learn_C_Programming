@@ -42,6 +42,8 @@ const ReallocationLessonPage = lazy(() => import('./pages/ReallocationLessonPage
 const FileReadingLessonPage = lazy(() => import('./pages/FileReadingLessonPage').then(module => ({ default: module.FileReadingLessonPage })))
 const FileCharacterLessonPage = lazy(() => import('./pages/FileCharacterLessonPage').then(module => ({ default: module.FileCharacterLessonPage })))
 
+const IntegerParsingLessonPage = lazy(() => import('./pages/IntegerParsingLessonPage').then(module => ({ default: module.IntegerParsingLessonPage })))
+
 export default function App() {
   const { pathname } = useLocation()
   return (
@@ -85,6 +87,7 @@ export default function App() {
               <Route path="/learn/memory/reallocation" element={<ReallocationLessonPage />} />
               <Route path="/learn/files/reading" element={<FileReadingLessonPage />} />
               <Route path="/learn/files/characters" element={<FileCharacterLessonPage />} />
+              <Route path="/learn/files/integer-parsing" element={<IntegerParsingLessonPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

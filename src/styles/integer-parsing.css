@@ -1,0 +1,33 @@
+.integer-parsing-page .allocation-controls textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 5rem;
+  resize: vertical;
+  padding: .7rem;
+  border: 1px solid var(--line);
+  border-radius: .5rem;
+  background: var(--paper-light);
+  color: inherit;
+  font: inherit;
+}
+
+.integer-parsing-page .allocation-controls textarea:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.integer-parsing-page .allocation-variables dd,
+.integer-parsing-page .integer-range,
+.integer-parsing-page .allocation-controls code {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.integer-parsing-page .file-input-tokens {
+  flex-wrap: wrap;
+}
+
+.integer-parsing-page .file-input-tokens .is-current {
+  outline: 3px solid var(--accent-dark);
+  outline-offset: -3px;
+}

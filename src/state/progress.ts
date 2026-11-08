@@ -1,3 +1,4 @@
+import { DEFAULT_INTEGER_PARSING_CONFIG, validateIntegerParsingConfig, type IntegerParsingConfig } from '../domain/integerParsing'
 import { DEFAULT_FILE_CHARACTER_CONFIG, validateFileCharacterConfig, type FileCharacterConfig } from '../domain/fileCharacters'
 import { DEFAULT_FILE_READING_CONFIG, validateFileReadingConfig, type FileReadingConfig } from '../domain/fileReading'
 import { DEFAULT_REALLOCATION_CONFIG, validateReallocationConfig, type ReallocationConfig } from '../domain/reallocation'
@@ -269,6 +270,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'memory-reallocation') return { ...DEFAULT_REALLOCATION_CONFIG }
   if (id === 'files-reading') return { ...DEFAULT_FILE_READING_CONFIG }
   if (id === 'files-characters') return { ...DEFAULT_FILE_CHARACTER_CONFIG }
+  if (id === 'files-integer-parsing') return { ...DEFAULT_INTEGER_PARSING_CONFIG }
   return null
 }
 
@@ -499,6 +501,11 @@ export function isSelectionSortSavedState(value: unknown): value is JsonObject &
   return validateSelectionSortConfig(value as SelectionSortConfig).length === 0
 }
 
+export function isIntegerParsingSavedState(value: unknown): value is JsonObject & IntegerParsingConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateIntegerParsingConfig(value as IntegerParsingConfig).length === 0
+}
+
 export function isFileCharacterSavedState(value: unknown): value is JsonObject & FileCharacterConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateFileCharacterConfig(value as FileCharacterConfig).length === 0
@@ -598,6 +605,7 @@ export function isSavedStateForLesson(
   if (id === 'memory-reallocation') return isReallocationSavedState(value)
   if (id === 'files-reading') return isFileReadingSavedState(value)
   if (id === 'files-characters') return isFileCharacterSavedState(value)
+  if (id === 'files-integer-parsing') return isIntegerParsingSavedState(value)
   return value === null
 }
 

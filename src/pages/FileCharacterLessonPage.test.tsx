@@ -161,7 +161,7 @@ it('completes independent keyboard challenges and restores all three saved contr
   fireEvent.keyDown(screen.getByRole('tab', { name: /先保留完整回傳值/ }), { key: 'ArrowRight' }); solve('4 1')
   fireEvent.keyDown(screen.getByRole('tab', { name: /資料零值也要處理/ }), { key: 'End' }); solve('2 0')
   expect(screen.getByText('你已完成 fgetc 逐字讀取與 EOF。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 30, totalChallenges: 90, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 31, totalChallenges: 93, completedChallenges: 3 })
   expect(loadProgress().lessons['files-characters']?.guidedRunCompleted).toBe(false)
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
