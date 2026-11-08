@@ -310,7 +310,7 @@ describe('App hash routes and keyboard semantics', () => {
       expect(window.location.hash).toBe('#/learn/functions/basics')
       expect(document.title).toContain('函式、參數與回傳值')
     })
-    expect(screen.getByRole('heading', {
+    expect(await screen.findByRole('heading', {
       name: /把工作交給函式.*再把答案帶回 main/,
     })).toBeInTheDocument()
     expect(screen.getByRole('spinbutton', { name: 'x 的值' })).toHaveValue(4)
@@ -330,7 +330,7 @@ describe('App hash routes and keyboard semantics', () => {
       expect(window.location.hash).toBe('#/learn/arrays/basics')
       expect(document.title).toContain('陣列、索引與字串')
     })
-    expect(screen.getByRole('heading', {
+    expect(await screen.findByRole('heading', {
       name: /把一排資料放進陣列.*從 index 0 找到每一格/,
     })).toBeInTheDocument()
     expect(screen.getByRole('spinbutton', { name: 'index 的值' })).toHaveValue(2)
@@ -350,7 +350,7 @@ describe('App hash routes and keyboard semantics', () => {
       expect(window.location.hash).toBe('#/learn/pointers/basics')
       expect(document.title).toContain('指標、位址與間接存取')
     })
-    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument()
     const primaryNav = screen.getByRole('navigation', { name: '主要導覽' })
     expect(within(primaryNav).getByRole('link', { name: '課程地圖' }))
       .toHaveAttribute('aria-current', 'page')
@@ -370,7 +370,7 @@ describe('App hash routes and keyboard semantics', () => {
       expect(window.location.hash).toBe('#/learn/pointers/swap')
       expect(document.title).toContain('指標參數與交換變數')
     })
-    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument()
     const primaryNav = screen.getByRole('navigation', { name: '主要導覽' })
     expect(within(primaryNav).getByRole('link', { name: '課程地圖' }))
       .toHaveAttribute('aria-current', 'page')
@@ -390,7 +390,7 @@ describe('App hash routes and keyboard semantics', () => {
       expect(window.location.hash).toBe('#/learn/pointers/traversal')
       expect(document.title).toContain('陣列與指標走訪')
     })
-    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument()
     const primaryNav = screen.getByRole('navigation', { name: '主要導覽' })
     expect(within(primaryNav).getByRole('link', { name: '課程地圖' }))
       .toHaveAttribute('aria-current', 'page')
@@ -410,7 +410,7 @@ describe('App hash routes and keyboard semantics', () => {
       expect(window.location.hash).toBe('#/learn/pointers/strings')
       expect(document.title).toContain('字串與字元指標')
     })
-    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument()
     const primaryNav = screen.getByRole('navigation', { name: '主要導覽' })
     expect(within(primaryNav).getByRole('link', { name: '課程地圖' }))
       .toHaveAttribute('aria-current', 'page')
@@ -430,7 +430,7 @@ describe('App hash routes and keyboard semantics', () => {
       expect(window.location.hash).toBe('#/learn/loops/while-do-while')
       expect(document.title).toContain('while 與 do…while')
     })
-    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument()
     const primaryNav = screen.getByRole('navigation', { name: '主要導覽' })
     expect(within(primaryNav).getByRole('link', { name: '課程地圖' }))
       .toHaveAttribute('aria-current', 'page')
@@ -450,7 +450,7 @@ describe('App hash routes and keyboard semantics', () => {
       expect(window.location.hash).toBe('#/learn/loops/break-continue')
       expect(document.title).toContain('break 與 continue')
     })
-    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1 })).toBeInTheDocument()
     const primaryNav = screen.getByRole('navigation', { name: '主要導覽' })
     expect(within(primaryNav).getByRole('link', { name: '課程地圖' }))
       .toHaveAttribute('aria-current', 'page')

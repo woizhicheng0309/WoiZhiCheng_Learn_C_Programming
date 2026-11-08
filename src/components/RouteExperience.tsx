@@ -40,14 +40,28 @@ export function RouteExperience() {
       return
     }
 
-    const focusHeading = window.requestAnimationFrame(() => {
-      const heading = document.querySelector<HTMLElement>('#main-content h1')
-      if (!heading) return
-      heading.tabIndex = -1
-      heading.focus({ preventScroll: true })
-    })
+    const main = document.getElementById('main-content')
+    if (!main) return
+    let focusFrame: number | null = null
+    const observer = new MutationObserver(() => scheduleFocus())
+    const scheduleFocus = () => {
+      if (focusFrame !== null || !main.querySelector('h1')) return
+      focusFrame = window.requestAnimationFrame(() => {
+        focusFrame = null
+        const heading = main.querySelector<HTMLElement>('h1')
+        if (!heading) return
+        heading.tabIndex = -1
+        heading.focus({ preventScroll: true })
+        observer.disconnect()
+      })
+    }
+    observer.observe(main, { childList: true, subtree: true })
+    scheduleFocus()
 
-    return () => window.cancelAnimationFrame(focusHeading)
+    return () => {
+      observer.disconnect()
+      if (focusFrame !== null) window.cancelAnimationFrame(focusFrame)
+    }
   }, [pathname])
 
   return null

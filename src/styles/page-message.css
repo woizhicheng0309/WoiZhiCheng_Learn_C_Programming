@@ -1,0 +1,5 @@
+.page-message { padding-block: 72px; min-height: 45vh; }
+.page-message h1 { font: 700 clamp(1.8rem, 5vw, 3rem) var(--serif); }
+.page-message > p { max-width: 620px; color: var(--ink-soft); line-height: 1.9; }
+.page-message__actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+@media (max-width: 600px) { .page-message__actions .button { width: 100%; justify-content: center; } }
