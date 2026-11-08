@@ -1,3 +1,4 @@
+import { BubbleSortLessonPage } from './pages/BubbleSortLessonPage'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { RouteExperience } from './components/RouteExperience'
 import { SiteFooter, SiteHeader } from './components/SiteChrome'
@@ -53,6 +54,7 @@ export default function App() {
           <Route path="/learn/arrays/binary-search" element={<BinarySearchLessonPage />} />
           <Route path="/learn/arrays/selection-sort" element={<SelectionSortLessonPage />} />
           <Route path="/learn/arrays/insertion-sort" element={<InsertionSortLessonPage />} />
+          <Route path="/learn/arrays/bubble-sort" element={<BubbleSortLessonPage />} />
           <Route path="/learn/pointers/basics" element={<PointerLessonPage />} />
           <Route path="/learn/pointers/swap" element={<PointerSwapLessonPage />} />
           <Route path="/learn/pointers/traversal" element={<PointerTraversalLessonPage />} />

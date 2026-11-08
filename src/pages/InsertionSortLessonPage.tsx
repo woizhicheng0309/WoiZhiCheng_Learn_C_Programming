@@ -124,6 +124,6 @@ export function InsertionSortLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>資料越接近有序，通常需要越少右移。</h2><p>本課已升冪排序的五格做升冪插入排序時，比較 4 次、右移 0 次；反向排列則比較 10 次、右移 10 次。一般 n 格資料，已排序時需要 n − 1 次元素比較，最壞情況的比較與右移次數隨資料量呈平方成長。</p>{count === 3 && <p role="status">你已完成插入排序與右移。</p>}<div><Link className="button button-secondary" to="/learn/arrays/selection-sort">上一課：選擇排序</Link><Link className="button button-primary" to="/learn/pointers/basics">下一課：指標基礎</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>資料越接近有序，通常需要越少右移。</h2><p>本課已升冪排序的五格做升冪插入排序時，比較 4 次、右移 0 次；反向排列則比較 10 次、右移 10 次。一般 n 格資料，已排序時需要 n − 1 次元素比較，最壞情況的比較與右移次數隨資料量呈平方成長。</p>{count === 3 && <p role="status">你已完成插入排序與右移。</p>}<div><Link className="button button-secondary" to="/learn/arrays/selection-sort">上一課：選擇排序</Link><Link className="button button-primary" to="/learn/arrays/bubble-sort">下一課：氣泡排序</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

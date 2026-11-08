@@ -1,0 +1,27 @@
+.bubble-sort-page { --accent: #9b7045; --accent-dark: #714b26; --functions-teal-dark: #714b26; }
+.bubble-sort-controls fieldset { display: grid; gap: 12px; padding: 16px; margin: 22px 0; border: 1px solid var(--line-strong); border-radius: 10px; }
+.bubble-sort-controls fieldset label { display: flex; align-items: center; gap: 8px; min-height: 44px; font-size: .8rem; line-height: 1.8; }
+.bubble-sort-controls > p, .bubble-sort-count-note { color: var(--ink-soft); font-size: .8rem; line-height: 1.9; }
+.bubble-sort-execution { min-width: 0; padding: 22px; }
+.bubble-sort-execution h2 { font-size: 1.2rem; }
+.bubble-sort-execution > p { font-size: .85rem; line-height: 1.9; }
+.bubble-sort-memory-scroll { min-width: 0; overflow-x: auto; margin-block: 22px; border-radius: 9px; }
+.bubble-sort-memory-scroll:focus-visible { outline: 3px solid #714b26; outline-offset: 3px; }
+.bubble-sort-memory { display: grid; grid-template-columns: repeat(5, minmax(72px, 1fr)); gap: 7px; margin: 0; padding: 3px 3px 9px; list-style: none; }
+.bubble-sort-memory li { display: grid; gap: 12px; padding: 14px 5px; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--paper); text-align: center; }
+.bubble-sort-memory code { font-size: .8rem; }
+.bubble-sort-memory strong { font: 700 1.7rem var(--mono); }
+.bubble-sort-memory small { font-size: .65rem; line-height: 1.8; }
+.bubble-sort-memory .is-sorted { background: #e0ece4; }
+.bubble-sort-memory .is-active { outline: 3px solid #714b26; outline-offset: -3px; }
+.bubble-sort-state { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.bubble-sort-state > div { padding: 14px; border: 1px solid var(--line); border-radius: 8px; }
+.bubble-sort-state dt { font: .75rem var(--mono); }
+.bubble-sort-state dd { margin: 12px 0 0; font: 700 1.3rem var(--mono); }
+.bubble-sort-console { padding: 18px; border-radius: 12px; background: var(--code); color: #f5eee5; }
+.bubble-sort-console h3 { font-size: .85rem; }
+.bubble-sort-console ol { display: flex; flex-wrap: wrap; gap: 12px; padding: 0; list-style: none; font: 1rem var(--mono); }
+.bubble-sort-page .pointers-challenge-content input { max-width: 100%; width: 320px; min-height: 46px; padding: 10px; border: 1px solid var(--line-strong); border-radius: 9px; }
+@media (max-width: 600px) { .bubble-sort-execution { padding: 16px; } }
+.bubble-sort-controls .bubble-sort-toggle { display: flex; align-items: center; gap: 10px; margin-block: 20px; min-height: 44px; line-height: 1.8; }
+.bubble-sort-toggle input { flex: 0 0 auto; }
