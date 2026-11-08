@@ -134,6 +134,6 @@ export function StringCopyLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>先確認容量，再複製完整結尾。</h2><p>字元 '0' 是內容，空字元 <code>{"'\\0'"}</code> 才是結尾。空字串長度是 0，仍需要一格結尾空字元。內嵌空字元後的資料仍屬於來源陣列，但不屬於 strlen 算出的字串內容。</p><p>本課只使用已知有結尾的來源陣列。一般使用 strlen 前，也必須確保來源含有可合法讀取的結尾空字元。</p>{count === 3 && <p role="status">你已完成字串長度與安全複製。</p>}<div><Link className="button button-secondary" to="/learn/arrays/bubble-sort">上一課：氣泡排序</Link><Link className="button button-primary" to="/learn/pointers/basics">下一課：指標基礎</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>先確認容量，再複製完整結尾。</h2><p>字元 '0' 是內容，空字元 <code>{"'\\0'"}</code> 才是結尾。空字串長度是 0，仍需要一格結尾空字元。內嵌空字元後的資料仍屬於來源陣列，但不屬於 strlen 算出的字串內容。</p><p>本課只使用已知有結尾的來源陣列。一般使用 strlen 前，也必須確保來源含有可合法讀取的結尾空字元。</p>{count === 3 && <p role="status">你已完成字串長度與安全複製。</p>}<div><Link className="button button-secondary" to="/learn/arrays/bubble-sort">上一課：氣泡排序</Link><Link className="button button-primary" to="/learn/arrays/string-comparison">下一課：字串比較</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

@@ -30,6 +30,8 @@ const StringCopyLessonPage = lazy(() => import('./pages/StringCopyLessonPage').t
 
 const ArrayParameterLessonPage = lazy(() => import('./pages/ArrayParameterLessonPage').then(module => ({ default: module.ArrayParameterLessonPage })))
 
+const StringComparisonLessonPage = lazy(() => import('./pages/StringComparisonLessonPage').then(module => ({ default: module.StringComparisonLessonPage })))
+
 export default function App() {
   const { pathname } = useLocation()
   return (
@@ -59,6 +61,7 @@ export default function App() {
               <Route path="/learn/arrays/insertion-sort" element={<InsertionSortLessonPage />} />
               <Route path="/learn/arrays/bubble-sort" element={<BubbleSortLessonPage />} />
               <Route path="/learn/arrays/string-copy" element={<StringCopyLessonPage />} />
+              <Route path="/learn/arrays/string-comparison" element={<StringComparisonLessonPage />} />
               <Route path="/learn/pointers/basics" element={<PointerLessonPage />} />
               <Route path="/learn/pointers/swap" element={<PointerSwapLessonPage />} />
               <Route path="/learn/pointers/traversal" element={<PointerTraversalLessonPage />} />

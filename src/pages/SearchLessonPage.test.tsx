@@ -81,7 +81,7 @@ it('completes all three challenges, including the negative sentinel, and restore
   fireEvent.keyDown(screen.getByRole('tab', { name: /第一筆相符的索引/ }), { key: 'ArrowRight' }); solve(3)
   fireEvent.keyDown(screen.getByRole('tab', { name: /最後一筆相符的索引/ }), { key: 'End' }); solve(-1)
   expect(screen.getByText('你已完成線性搜尋與提前結束。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 21, totalChallenges: 63, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 22, totalChallenges: 66, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
 })
