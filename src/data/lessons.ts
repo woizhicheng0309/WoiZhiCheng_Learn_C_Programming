@@ -1,3 +1,4 @@
+import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
 import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
 import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
 import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
@@ -72,6 +73,7 @@ export const LESSON_IDS = [
   'memory-allocation',
   'memory-reallocation',
   'files-reading',
+  'files-characters',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -565,6 +567,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 30,
     prerequisiteLessonIds: ['arrays-string-copy', 'pointers-basics', 'loops-while-do-while'],
     requiredChallengeIds: FILE_READING_CHALLENGE_IDS,
+  },
+  {
+    id: 'files-characters',
+    topicId: 'files-and-input',
+    moduleNumber: 9,
+    lessonNumber: 2,
+    order: 30,
+    title: 'fgetc 逐字讀取與 EOF',
+    englishTitle: 'Character Input & EOF',
+    description: '用 int 保存 fgetc 的資料與結束值，追蹤零值、高位元組、數字統計與換行提早停止。',
+    concepts: ['int 回傳值', 'unsigned char 轉 int', 'EOF 與資料零值', '讀取與處理的界線'],
+    status: 'available',
+    path: '/learn/files/characters',
+    estimatedMinutes: 30,
+    prerequisiteLessonIds: ['files-reading', 'loops-break-continue', 'conditionals-if-else'],
+    requiredChallengeIds: FILE_CHARACTER_CHALLENGE_IDS,
   },
 ]
 

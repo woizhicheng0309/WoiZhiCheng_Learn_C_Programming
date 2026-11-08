@@ -1,3 +1,4 @@
+import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
 import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
 import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
 import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
@@ -70,7 +71,7 @@ describe('two-level course catalog', () => {
     ])
     expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics', 'structures-arrays', 'structures-pointers'])
     expect(getLessonsByTopicId('dynamic-memory').map(lesson => lesson.id)).toEqual(['memory-allocation', 'memory-reallocation'])
-    expect(getLessonsByTopicId('files-and-input').map(lesson => lesson.id)).toEqual(['files-reading'])
+    expect(getLessonsByTopicId('files-and-input').map(lesson => lesson.id)).toEqual(['files-reading', 'files-characters'])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -104,6 +105,7 @@ describe('two-level course catalog', () => {
       'memory-allocation',
       'memory-reallocation',
       'files-reading',
+      'files-characters',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -328,6 +330,16 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: FILE_READING_CHALLENGE_IDS,
     })
     expect(isLessonId('files-reading')).toBe(true)
+  })
+
+  it('adds character input with explicit EOF and early-stop concepts', () => {
+    expect(getLessonById('files-characters')).toMatchObject({
+      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 2, order: 30,
+      path: '/learn/files/characters', status: 'available',
+      prerequisiteLessonIds: ['files-reading', 'loops-break-continue', 'conditionals-if-else'],
+      requiredChallengeIds: FILE_CHARACTER_CHALLENGE_IDS,
+    })
+    expect(isLessonId('files-characters')).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {

@@ -103,7 +103,7 @@ it('completes keyboard challenges independently and restores saved controls afte
   fireEvent.keyDown(screen.getByRole('tab', { name: /只加總指定範圍/ }), { key: 'ArrowRight' }); solve('6 9 4 9 5')
   fireEvent.keyDown(screen.getByRole('tab', { name: /呼叫端陣列也改變/ }), { key: 'End' }); solve('2')
   expect(screen.getByText('你已完成陣列作為函式參數。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 29, totalChallenges: 87, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 30, totalChallenges: 90, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
   expect(screen.getByRole('combobox', { name: '傳入的 count' })).toHaveValue('0')

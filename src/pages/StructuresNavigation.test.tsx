@@ -101,3 +101,15 @@ it('opens chapter nine from the course map and connects it to reallocation', asy
   await screen.findByRole('heading', { level: 1, name: /先接住新結果/ })
   expect(screen.getByRole('link', { name: '下一課：檔案開啟與 fgets 讀取' })).toHaveAttribute('href', '/learn/files/reading')
 })
+
+it('opens fgetc input from the map and connects the two file lessons', async () => {
+  render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
+  const group = await screen.findByRole('region', { name: '檔案與文字輸入' })
+  fireEvent.click(within(group).getByRole('link', { name: /fgetc 逐字讀取與 EOF，未開始/ }))
+  const heading = await screen.findByRole('heading', { level: 1, name: /用 int 接住回傳值/ })
+  await waitFor(() => expect(heading).toHaveFocus())
+  expect(document.title).toContain('fgetc 逐字讀取與 EOF')
+  fireEvent.click(screen.getByRole('link', { name: '上一課：檔案開啟與 fgets 讀取' }))
+  await screen.findByRole('heading', { level: 1, name: /先確認讀到了什麼/ })
+  expect(screen.getByRole('link', { name: '下一課：fgetc 逐字讀取與 EOF' })).toHaveAttribute('href', '/learn/files/characters')
+})
