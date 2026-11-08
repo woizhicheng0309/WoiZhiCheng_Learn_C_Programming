@@ -76,3 +76,15 @@ it('opens chapter eight from the course map and connects it to the prior chapter
   await screen.findByRole('heading', { level: 1, name: /沿著指標/ })
   expect(screen.getByRole('link', { name: '下一課：動態記憶體配置與釋放' })).toHaveAttribute('href', '/learn/memory/allocation')
 })
+
+it('opens the reallocation lesson from the map and connects adjacent memory lessons', async () => {
+  render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
+  const group = await screen.findByRole('region', { name: '動態記憶體' })
+  fireEvent.click(within(group).getByRole('link', { name: /realloc 容量調整與失敗處理，未開始/ }))
+  const heading = await screen.findByRole('heading', { level: 1, name: /先接住新結果/ })
+  await waitFor(() => expect(heading).toHaveFocus())
+  expect(document.title).toContain('realloc 容量調整與失敗處理')
+  fireEvent.click(screen.getByRole('link', { name: '上一課：動態記憶體配置與釋放' }))
+  await screen.findByRole('heading', { level: 1, name: /先取得空間/ })
+  expect(screen.getByRole('link', { name: '下一課：realloc 容量調整與失敗處理' })).toHaveAttribute('href', '/learn/memory/reallocation')
+})

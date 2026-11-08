@@ -1,3 +1,4 @@
+import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
 import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
 import { STRUCTURE_POINTER_CHALLENGE_IDS } from './structurePointerChallenges'
 import { STRUCTURE_ARRAY_CHALLENGE_IDS } from './structureArrayChallenges'
@@ -67,6 +68,7 @@ export const LESSON_IDS = [
   'structures-arrays',
   'structures-pointers',
   'memory-allocation',
+  'memory-reallocation',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -528,6 +530,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 30,
     prerequisiteLessonIds: ['pointers-basics', 'arrays-basics', 'loops-for', 'conditionals-if-else'],
     requiredChallengeIds: ALLOCATION_CHALLENGE_IDS,
+  },
+  {
+    id: 'memory-reallocation',
+    topicId: 'dynamic-memory',
+    moduleNumber: 8,
+    lessonNumber: 2,
+    order: 28,
+    title: 'realloc 容量調整與失敗處理',
+    englishTitle: 'Reallocation & Failure Handling',
+    description: '以暫存指標接收 realloc 結果，追蹤擴充、縮小、資料保留與失敗時的有效原配置。',
+    concepts: ['暫存指標', '保留資料前綴', '擴充與縮小', 'realloc 失敗分支'],
+    status: 'available',
+    path: '/learn/memory/reallocation',
+    estimatedMinutes: 30,
+    prerequisiteLessonIds: ['memory-allocation', 'pointers-basics', 'loops-for'],
+    requiredChallengeIds: REALLOCATION_CHALLENGE_IDS,
   },
 ]
 

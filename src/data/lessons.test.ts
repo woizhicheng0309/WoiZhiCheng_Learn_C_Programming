@@ -1,3 +1,4 @@
+import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
 import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
 import { STRUCTURE_POINTER_CHALLENGE_IDS } from './structurePointerChallenges'
 import { STRUCTURE_ARRAY_CHALLENGE_IDS } from './structureArrayChallenges'
@@ -66,7 +67,7 @@ describe('two-level course catalog', () => {
       'pointers-const',
     ])
     expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics', 'structures-arrays', 'structures-pointers'])
-    expect(getLessonsByTopicId('dynamic-memory').map(lesson => lesson.id)).toEqual(['memory-allocation'])
+    expect(getLessonsByTopicId('dynamic-memory').map(lesson => lesson.id)).toEqual(['memory-allocation', 'memory-reallocation'])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -98,6 +99,7 @@ describe('two-level course catalog', () => {
       'structures-arrays',
       'structures-pointers',
       'memory-allocation',
+      'memory-reallocation',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -301,6 +303,16 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: ALLOCATION_CHALLENGE_IDS,
     })
     expect(isLessonId('memory-allocation')).toBe(true)
+  })
+
+  it('adds reallocation after the allocation lifetime lesson', () => {
+    expect(getLessonById('memory-reallocation')).toMatchObject({
+      topicId: 'dynamic-memory', moduleNumber: 8, lessonNumber: 2, order: 28,
+      path: '/learn/memory/reallocation', status: 'available',
+      prerequisiteLessonIds: ['memory-allocation', 'pointers-basics', 'loops-for'],
+      requiredChallengeIds: REALLOCATION_CHALLENGE_IDS,
+    })
+    expect(isLessonId('memory-reallocation')).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {
