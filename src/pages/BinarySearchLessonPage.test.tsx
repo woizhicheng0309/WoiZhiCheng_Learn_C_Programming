@@ -87,7 +87,7 @@ it('completes and reloads all three challenges including the negative sentinel',
   fireEvent.keyDown(screen.getByRole('tab', { name: /找出第一個中點/ }), { key: 'ArrowRight' }); solve(4)
   fireEvent.keyDown(screen.getByRole('tab', { name: /更新左邊界/ }), { key: 'End' }); solve(-1)
   expect(screen.getByText('你已完成二分搜尋與區間縮小。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 19, totalChallenges: 57, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 20, totalChallenges: 60, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
 })

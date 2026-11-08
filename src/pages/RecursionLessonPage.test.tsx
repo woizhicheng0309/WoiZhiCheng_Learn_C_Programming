@@ -10,9 +10,10 @@ const renderPage = () => render(<StrictMode><ProgressProvider><MemoryRouter><Rec
 const number = (label: string, value: number) => fireEvent.change(screen.getByRole('spinbutton', { name: label }), { target: { value: String(value) } })
 const next = () => fireEvent.click(screen.getByRole('button', { name: '遞迴執行：執行下一步' }))
 function finish() {
+  const button = screen.getByRole<HTMLButtonElement>('button', { name: '遞迴執行：執行下一步' })
   for (let i = 0; i < 100; i++) {
-    if (screen.getByRole<HTMLButtonElement>('button', { name: '遞迴執行：執行下一步' }).disabled) return
-    next()
+    if (button.disabled) return
+    fireEvent.click(button)
   }
   throw new Error('Trace did not finish')
 }
@@ -74,7 +75,7 @@ it('completes three challenges and preserves them across reload', () => {
   fireEvent.click(screen.getByRole('tab', { name: /找出最先回傳/ }))
   number('你的答案', 1); fireEvent.click(screen.getByRole('button', { name: '檢查答案' }))
   expect(screen.getByText('你已完成遞迴與呼叫堆疊。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 19, totalChallenges: 57, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 20, totalChallenges: 60, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
 })

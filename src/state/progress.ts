@@ -1,3 +1,4 @@
+import { DEFAULT_STRING_COPY_CONFIG, validateStringCopyConfig, type StringCopyConfig } from '../domain/stringCopy'
 import { DEFAULT_BUBBLE_SORT_CONFIG, validateBubbleSortConfig, type BubbleSortConfig } from '../domain/bubbleSort'
 import { DEFAULT_INSERTION_SORT_CONFIG, validateInsertionSortConfig, type InsertionSortConfig } from '../domain/insertionSort'
 import { DEFAULT_SELECTION_SORT_CONFIG, validateSelectionSortConfig, type SelectionSortConfig } from '../domain/selectionSort'
@@ -243,6 +244,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'arrays-selection-sort') return { ...DEFAULT_SELECTION_SORT_CONFIG }
   if (id === 'arrays-insertion-sort') return { ...DEFAULT_INSERTION_SORT_CONFIG }
   if (id === 'arrays-bubble-sort') return { ...DEFAULT_BUBBLE_SORT_CONFIG }
+  if (id === 'arrays-string-copy') return { ...DEFAULT_STRING_COPY_CONFIG }
   if (id === 'pointers-basics') return { ...DEFAULT_POINTER_STATE }
   if (id === 'pointers-swap') return { ...DEFAULT_SWAP_STATE }
   if (id === 'pointers-traversal') return { ...DEFAULT_TRAVERSAL_STATE }
@@ -477,6 +479,11 @@ export function isSelectionSortSavedState(value: unknown): value is JsonObject &
   return validateSelectionSortConfig(value as SelectionSortConfig).length === 0
 }
 
+export function isStringCopySavedState(value: unknown): value is JsonObject & StringCopyConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateStringCopyConfig(value as StringCopyConfig).length === 0
+}
+
 export function isBubbleSortSavedState(value: unknown): value is JsonObject & BubbleSortConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateBubbleSortConfig(value as BubbleSortConfig).length === 0
@@ -506,6 +513,7 @@ export function isSavedStateForLesson(
   if (id === 'arrays-selection-sort') return isSelectionSortSavedState(value)
   if (id === 'arrays-insertion-sort') return isInsertionSortSavedState(value)
   if (id === 'arrays-bubble-sort') return isBubbleSortSavedState(value)
+  if (id === 'arrays-string-copy') return isStringCopySavedState(value)
   if (id === 'pointers-basics') return isPointerSavedState(value)
   if (id === 'pointers-swap') return isSwapSavedState(value)
   if (id === 'pointers-traversal') return isTraversalSavedState(value)

@@ -90,7 +90,7 @@ it('completes and restores all three challenges using keyboard tab navigation', 
   fireEvent.keyDown(screen.getByRole('tab', { name: /預測第一輪相鄰交換/ }), { key: 'ArrowRight' }); solve('4')
   fireEvent.keyDown(screen.getByRole('tab', { name: /提前結束省了多少/ }), { key: 'End' }); solve('2')
   expect(screen.getByText('你已完成氣泡排序與提前結束。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 19, totalChallenges: 57, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 20, totalChallenges: 60, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
 })

@@ -19,6 +19,7 @@ const routeTitles: Record<string, string> = {
   '/learn/arrays/search': `線性搜尋與提前結束｜${SITE_TITLE}`,
   '/learn/arrays/binary-search': `二分搜尋與區間縮小｜${SITE_TITLE}`,
   '/learn/arrays/selection-sort': `選擇排序與交換｜${SITE_TITLE}`,
+  '/learn/arrays/string-copy': `字串長度與安全複製｜${SITE_TITLE}`,
   '/learn/arrays/bubble-sort': `氣泡排序與提前結束｜${SITE_TITLE}`,
   '/learn/arrays/insertion-sort': `插入排序與右移｜${SITE_TITLE}`,
   '/learn/pointers/basics': `指標、位址與間接存取｜${SITE_TITLE}`,

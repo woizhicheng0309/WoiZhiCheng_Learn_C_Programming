@@ -117,6 +117,6 @@ export function BubbleSortLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>完整一輪沒有交換，才能放心停下。</h2><p>開啟提前結束後，已排序的五格仍須先比較 4 次，確認整輪沒有交換。關閉時固定比較 4 + 3 + 2 + 1 = 10 次。相反排列的最壞情況仍需平方量級的比較；一對沒交換不能代表整輪有序。相等元素不交換，可維持它們原本的相對次序。</p>{count === 3 && <p role="status">你已完成氣泡排序與提前結束。</p>}<div><Link className="button button-secondary" to="/learn/arrays/insertion-sort">上一課：插入排序</Link><Link className="button button-primary" to="/learn/pointers/basics">下一課：指標基礎</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>完整一輪沒有交換，才能放心停下。</h2><p>開啟提前結束後，已排序的五格仍須先比較 4 次，確認整輪沒有交換。關閉時固定比較 4 + 3 + 2 + 1 = 10 次。相反排列的最壞情況仍需平方量級的比較；一對沒交換不能代表整輪有序。相等元素不交換，可維持它們原本的相對次序。</p>{count === 3 && <p role="status">你已完成氣泡排序與提前結束。</p>}<div><Link className="button button-secondary" to="/learn/arrays/insertion-sort">上一課：插入排序</Link><Link className="button button-primary" to="/learn/arrays/string-copy">下一課：字串安全複製</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

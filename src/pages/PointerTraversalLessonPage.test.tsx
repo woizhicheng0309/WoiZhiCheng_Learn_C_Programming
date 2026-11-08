@@ -18,9 +18,10 @@ function predict(value = '4 7 2 9 5') {
   fireEvent.click(screen.getByRole('button', { name: /提交.*預測/ }))
 }
 function nextButton() { return screen.getByRole<HTMLButtonElement>('button', { name: '走訪執行：執行下一步' }) }
-function step(times = 1) { for (let index = 0; index < times; index += 1) fireEvent.click(nextButton()) }
+function step(times = 1) { const button = nextButton(); for (let index = 0; index < times; index += 1) fireEvent.click(button) }
 function finish() {
-  for (let index = 0; index < 100; index += 1) { if (nextButton().disabled) return; step() }
+  const button = nextButton()
+  for (let index = 0; index < 100; index += 1) { if (button.disabled) return; fireEvent.click(button) }
   throw new Error('Traversal did not reach a terminal step.')
 }
 function stored(): ProgressV2 {

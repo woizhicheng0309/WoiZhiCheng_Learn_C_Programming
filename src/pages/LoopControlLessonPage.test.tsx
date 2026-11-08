@@ -18,18 +18,20 @@ function predict(value = 12) {
   fireEvent.click(screen.getByRole('button', { name: /提交總和預測/ }))
 }
 function nextButton() { return screen.getByRole<HTMLButtonElement>('button', { name: '流程控制執行：執行下一步' }) }
-function step(times = 1) { for (let index = 0; index < times; index += 1) fireEvent.click(nextButton()) }
+function step(times = 1) { const button = nextButton(); for (let index = 0; index < times; index += 1) fireEvent.click(button) }
 function finish() {
+  const button = nextButton()
   for (let index = 0; index < 100; index += 1) {
-    if (nextButton().disabled) return
-    step()
+    if (button.disabled) return
+    fireEvent.click(button)
   }
   throw new Error('Loop-control program did not reach a terminal step.')
 }
 function advanceToJump() {
+  const button = nextButton()
   for (let index = 0; index < 100; index += 1) {
-    if (screen.queryByLabelText('C 程式碼，目前執行第 7 行')) return
-    step()
+    if (document.querySelector('.source-code-panel__line.is-active[data-line="7"]')) return
+    fireEvent.click(button)
   }
   throw new Error('Loop-control program did not reach the jump.')
 }

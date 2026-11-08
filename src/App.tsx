@@ -26,6 +26,8 @@ const SelectionSortLessonPage = lazy(() => import('./pages/SelectionSortLessonPa
 const InsertionSortLessonPage = lazy(() => import('./pages/InsertionSortLessonPage').then(module => ({ default: module.InsertionSortLessonPage })))
 const BubbleSortLessonPage = lazy(() => import('./pages/BubbleSortLessonPage').then(module => ({ default: module.BubbleSortLessonPage })))
 
+const StringCopyLessonPage = lazy(() => import('./pages/StringCopyLessonPage').then(module => ({ default: module.StringCopyLessonPage })))
+
 export default function App() {
   const { pathname } = useLocation()
   return (
@@ -54,6 +56,7 @@ export default function App() {
               <Route path="/learn/arrays/selection-sort" element={<SelectionSortLessonPage />} />
               <Route path="/learn/arrays/insertion-sort" element={<InsertionSortLessonPage />} />
               <Route path="/learn/arrays/bubble-sort" element={<BubbleSortLessonPage />} />
+              <Route path="/learn/arrays/string-copy" element={<StringCopyLessonPage />} />
               <Route path="/learn/pointers/basics" element={<PointerLessonPage />} />
               <Route path="/learn/pointers/swap" element={<PointerSwapLessonPage />} />
               <Route path="/learn/pointers/traversal" element={<PointerTraversalLessonPage />} />
