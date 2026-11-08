@@ -90,7 +90,7 @@ it('completes and reloads all challenges using keyboard tab navigation', () => {
   fireEvent.keyDown(screen.getByRole('tab', { name: /預測第一輪插入後/ }), { key: 'ArrowRight' }); solve('0')
   fireEvent.keyDown(screen.getByRole('tab', { name: /負索引與短路判斷/ }), { key: 'End' }); solve('0')
   expect(screen.getByText('你已完成插入排序與右移。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 20, totalChallenges: 60, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 21, totalChallenges: 63, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
 })

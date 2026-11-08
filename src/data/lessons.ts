@@ -1,3 +1,4 @@
+import { ARRAY_PARAMETER_CHALLENGE_IDS } from './arrayParameterChallenges'
 import { STRING_COPY_CHALLENGE_IDS } from './stringCopyChallenges'
 import { BUBBLE_SORT_CHALLENGE_IDS } from './bubbleSortChallenges'
 import { INSERTION_SORT_CHALLENGE_IDS } from './insertionSortChallenges'
@@ -51,6 +52,7 @@ export const LESSON_IDS = [
   'pointers-swap',
   'pointers-traversal',
   'pointers-strings',
+  'pointers-array-parameters',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -400,6 +402,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 25,
     prerequisiteLessonIds: ['arrays-basics', 'pointers-traversal'],
     requiredChallengeIds: STRING_POINTER_CHALLENGE_IDS,
+  },
+  {
+    id: 'pointers-array-parameters',
+    topicId: 'pointers',
+    moduleNumber: 6,
+    lessonNumber: 5,
+    order: 21,
+    title: '陣列作為函式參數',
+    englishTitle: 'Arrays as Function Parameters',
+    description: '傳入起始位址與元素數量，追蹤唯讀加總、原地修改，以及呼叫端與函式的不同變數。',
+    concepts: ['陣列參數', '共用原陣列', '明確傳入數量', 'const 唯讀參數'],
+    status: 'available',
+    path: '/learn/pointers/array-parameters',
+    estimatedMinutes: 25,
+    prerequisiteLessonIds: ['functions-basics', 'arrays-basics', 'pointers-basics'],
+    requiredChallengeIds: ARRAY_PARAMETER_CHALLENGE_IDS,
   },
 ]
 

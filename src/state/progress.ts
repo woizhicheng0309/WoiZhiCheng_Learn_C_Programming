@@ -1,3 +1,4 @@
+import { DEFAULT_ARRAY_PARAMETER_CONFIG, validateArrayParameterConfig, type ArrayParameterConfig } from '../domain/arrayParameters'
 import { DEFAULT_STRING_COPY_CONFIG, validateStringCopyConfig, type StringCopyConfig } from '../domain/stringCopy'
 import { DEFAULT_BUBBLE_SORT_CONFIG, validateBubbleSortConfig, type BubbleSortConfig } from '../domain/bubbleSort'
 import { DEFAULT_INSERTION_SORT_CONFIG, validateInsertionSortConfig, type InsertionSortConfig } from '../domain/insertionSort'
@@ -249,6 +250,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'pointers-swap') return { ...DEFAULT_SWAP_STATE }
   if (id === 'pointers-traversal') return { ...DEFAULT_TRAVERSAL_STATE }
   if (id === 'pointers-strings') return { ...DEFAULT_STRING_POINTER_STATE }
+  if (id === 'pointers-array-parameters') return { ...DEFAULT_ARRAY_PARAMETER_CONFIG }
   return null
 }
 
@@ -479,6 +481,11 @@ export function isSelectionSortSavedState(value: unknown): value is JsonObject &
   return validateSelectionSortConfig(value as SelectionSortConfig).length === 0
 }
 
+export function isArrayParameterSavedState(value: unknown): value is JsonObject & ArrayParameterConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateArrayParameterConfig(value as ArrayParameterConfig).length === 0
+}
+
 export function isStringCopySavedState(value: unknown): value is JsonObject & StringCopyConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateStringCopyConfig(value as StringCopyConfig).length === 0
@@ -518,6 +525,7 @@ export function isSavedStateForLesson(
   if (id === 'pointers-swap') return isSwapSavedState(value)
   if (id === 'pointers-traversal') return isTraversalSavedState(value)
   if (id === 'pointers-strings') return isStringPointerSavedState(value)
+  if (id === 'pointers-array-parameters') return isArrayParameterSavedState(value)
   return value === null
 }
 

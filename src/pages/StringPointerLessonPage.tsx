@@ -196,6 +196,6 @@ export function StringPointerLessonPage() {
         {feedback[challenge.id] && <p className={`functions-challenge-feedback ${feedback[challenge.id]?.solved ? 'is-success' : 'is-hint'}`} role="status">{feedback[challenge.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>讀到 '\0'，字串就到這裡。</h2><p>數字 '0' 是資料，NUL 是終止字元。正確的條件會讀到 NUL 來確認終點，卻不會把它輸出或算進字串長度。</p><div><Link className="button button-secondary" to="/learn/pointers/traversal"><ArrowLeft size={17} aria-hidden="true" />上一課：陣列與指標走訪</Link><Link className="button button-primary" to="/learn">回到課程地圖 <ArrowRight size={17} aria-hidden="true" /></Link></div></section>
+    <section className="pointers-recap page-width"><h2>讀到 '\0'，字串就到這裡。</h2><p>數字 '0' 是資料，NUL 是終止字元。正確的條件會讀到 NUL 來確認終點，卻不會把它輸出或算進字串長度。</p><div><Link className="button button-secondary" to="/learn/pointers/traversal"><ArrowLeft size={17} aria-hidden="true" />上一課：陣列與指標走訪</Link><Link className="button button-primary" to="/learn/pointers/array-parameters">下一課：陣列作為函式參數 <ArrowRight size={17} aria-hidden="true" /></Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }
