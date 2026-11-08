@@ -129,6 +129,6 @@ export function StructurePointerLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>複製指標值，仍然共用原物件。</h2><p>q = p 讓兩個指標保存同一個位址。之後重新指定 p，不會改掉 q，也不會搬移結構。透過任一有效指標寫入成員，改變的都是它當下指向的那份物件。</p><p>可以把 NULL 存入指標，但不能透過空指標存取成員。本例用 if 決定是否執行修改；NULL 情境仍能正常輸出兩份物件的分數。</p>{count === 3 && <p role="status">你已完成指向結構的指標。</p>}<div><Link className="button button-secondary" to="/learn/structures/arrays">上一課：結構陣列與逐筆統計</Link><Link className="button button-primary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>複製指標值，仍然共用原物件。</h2><p>q = p 讓兩個指標保存同一個位址。之後重新指定 p，不會改掉 q，也不會搬移結構。透過任一有效指標寫入成員，改變的都是它當下指向的那份物件。</p><p>可以把 NULL 存入指標，但不能透過空指標存取成員。本例用 if 決定是否執行修改；NULL 情境仍能正常輸出兩份物件的分數。</p>{count === 3 && <p role="status">你已完成指向結構的指標。</p>}<div><Link className="button button-secondary" to="/learn/structures/arrays">上一課：結構陣列與逐筆統計</Link><Link className="button button-primary" to="/learn/memory/allocation">下一課：動態記憶體配置與釋放</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

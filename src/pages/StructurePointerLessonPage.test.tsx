@@ -124,7 +124,7 @@ it('completes the three keyboard challenges independently and restores all saved
   fireEvent.keyDown(screen.getByRole('tab', { name: /選出箭頭的等價寫法/ }), { key: 'ArrowRight' }); solve('95 70')
   fireEvent.keyDown(screen.getByRole('tab', { name: /複製位址，再改指向/ }), { key: 'End' }); solve('1 0')
   expect(screen.getByText('你已完成指向結構的指標。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 26, totalChallenges: 78, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 27, totalChallenges: 81, completedChallenges: 3 })
   expect(loadProgress().lessons['structures-pointers']?.guidedRunCompleted).toBe(false)
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')

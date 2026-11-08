@@ -105,7 +105,7 @@ it('completes independent keyboard challenges and restores all four saved contro
   fireEvent.keyDown(screen.getByRole('tab', { name: /先選元素，再選成員/ }), { key: 'ArrowRight' }); solve('245 2')
   fireEvent.keyDown(screen.getByRole('tab', { name: /修改後再統計/ }), { key: 'End' }); solve('2 3')
   expect(screen.getByText('你已完成結構陣列與逐筆統計。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 26, totalChallenges: 78, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 27, totalChallenges: 81, completedChallenges: 3 })
   expect(loadProgress().lessons['structures-arrays']?.guidedRunCompleted).toBe(false)
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')

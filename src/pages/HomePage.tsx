@@ -326,7 +326,7 @@ export function HomePage() {
           <Reveal className="section-heading center-heading">
             <span className="section-kicker">LEARNING PATH</span>
             <h2>一張持續成長的學習地圖</h2>
-            <p>先建立變數基礎，再前往條件、迴圈、函式、陣列、指標與結構；已開放單元都能自由進入，不會被先備課程鎖住。</p>
+            <p>先建立變數基礎，再前往條件、迴圈、函式、陣列、指標、結構與動態記憶體；已開放單元都能自由進入，不會被先備課程鎖住。</p>
           </Reveal>
           <Reveal className="topic-ribbon" style={{ '--topic-count': COURSE_TOPICS.length } as CSSProperties}>
             {COURSE_TOPICS.map((topic) => {

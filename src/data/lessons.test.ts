@@ -1,3 +1,4 @@
+import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
 import { STRUCTURE_POINTER_CHALLENGE_IDS } from './structurePointerChallenges'
 import { STRUCTURE_ARRAY_CHALLENGE_IDS } from './structureArrayChallenges'
 import { STRUCTURE_CHALLENGE_IDS } from './structureChallenges'
@@ -31,6 +32,7 @@ describe('two-level course catalog', () => {
       'arrays-and-strings',
       'pointers',
       'structures',
+      'dynamic-memory',
     ])
     expect(getLessonsByTopicId('variables').map((lesson) => lesson.id)).toEqual([
       'variables-basics',
@@ -64,6 +66,7 @@ describe('two-level course catalog', () => {
       'pointers-const',
     ])
     expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics', 'structures-arrays', 'structures-pointers'])
+    expect(getLessonsByTopicId('dynamic-memory').map(lesson => lesson.id)).toEqual(['memory-allocation'])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -94,6 +97,7 @@ describe('two-level course catalog', () => {
       'structures-basics',
       'structures-arrays',
       'structures-pointers',
+      'memory-allocation',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -286,6 +290,17 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: STRUCTURE_POINTER_CHALLENGE_IDS,
     })
     expect(isLessonId('structures-pointers')).toBe(true)
+  })
+
+  it('opens chapter eight with dynamic allocation and its own challenges', () => {
+    expect(getTopicById('dynamic-memory')).toMatchObject({ order: 8, title: '動態記憶體' })
+    expect(getLessonById('memory-allocation')).toMatchObject({
+      topicId: 'dynamic-memory', moduleNumber: 8, lessonNumber: 1, order: 27,
+      path: '/learn/memory/allocation', status: 'available',
+      prerequisiteLessonIds: ['pointers-basics', 'arrays-basics', 'loops-for', 'conditionals-if-else'],
+      requiredChallengeIds: ALLOCATION_CHALLENGE_IDS,
+    })
+    expect(isLessonId('memory-allocation')).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {

@@ -1,0 +1,27 @@
+.allocation-page { --accent: #698879; --accent-dark: #385d4c; --functions-teal-dark: #385d4c; }
+.allocation-controls > p, .allocation-execution > p, .allocation-block > p { color: var(--ink-soft); font-size: .8rem; line-height: 1.9; }
+.allocation-range { display: flex; align-items: center; gap: 14px; margin-bottom: 25px; }
+.allocation-range input { min-width: 0; width: 100%; min-height: 44px; accent-color: var(--accent-dark); }
+.allocation-range input:disabled { opacity: .5; }
+.allocation-range output { min-width: 3ch; font: 700 1rem var(--mono); text-align: right; }
+.allocation-execution { min-width: 0; padding: 22px; }
+.allocation-variables { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0 0 20px; }
+.allocation-variables > div { min-width: 0; padding: 12px; border: 1px solid var(--line-strong); border-radius: 9px; }
+.allocation-variables > div:first-child { grid-column: 1 / -1; background: #e5ede7; }
+.allocation-variables dt { font: .8rem var(--mono); }
+.allocation-variables dd { margin: 10px 0 0; font: 700 1rem var(--mono); overflow-wrap: anywhere; }
+.allocation-block { min-width: 0; padding: 16px; border: 1px solid var(--line-strong); border-radius: 12px; }
+.allocation-block h3 { font-size: 1rem; }
+.allocation-block.is-live { border-color: var(--accent-dark); }
+.allocation-block.is-freed { background: var(--paper); border-style: dashed; }
+.allocation-cells { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 90px), 1fr)); gap: 10px; padding: 0; list-style: none; }
+.allocation-cells li { min-width: 0; padding: 12px 6px; border: 1px solid var(--line-strong); border-radius: 8px; text-align: center; }
+.allocation-cells li.is-active { outline: 3px solid var(--accent-dark); outline-offset: -3px; background: #e5ede7; }
+.allocation-cells code { display: block; color: var(--ink-soft); font-size: .75rem; }
+.allocation-cells strong { display: block; margin-top: 12px; font: 700 .9rem var(--mono); overflow-wrap: anywhere; }
+.allocation-condition { min-height: 2em; font-family: var(--mono); }
+.allocation-console { padding: 18px; border-radius: 12px; background: var(--code); color: #f5eee5; }
+.allocation-console h3 { font-size: .85rem; }
+.allocation-console ol { list-style: none; padding: 0; font: .8rem/1.9 var(--mono); overflow-wrap: anywhere; }
+.allocation-page .pointers-challenge-content input { max-width: 100%; width: 280px; min-height: 46px; padding: 10px; border: 1px solid var(--line-strong); border-radius: 9px; }
+@media (max-width: 600px) { .allocation-execution { padding: 16px; } }

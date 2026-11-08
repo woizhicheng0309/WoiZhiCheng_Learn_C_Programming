@@ -1,3 +1,4 @@
+import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
 import { STRUCTURE_POINTER_CHALLENGE_IDS } from './structurePointerChallenges'
 import { STRUCTURE_ARRAY_CHALLENGE_IDS } from './structureArrayChallenges'
 import { STRUCTURE_CHALLENGE_IDS } from './structureChallenges'
@@ -33,6 +34,7 @@ export const TOPIC_IDS = [
   'arrays-and-strings',
   'pointers',
   'structures',
+  'dynamic-memory',
 ] as const
 
 export type TopicId = (typeof TOPIC_IDS)[number]
@@ -64,6 +66,7 @@ export const LESSON_IDS = [
   'structures-basics',
   'structures-arrays',
   'structures-pointers',
+  'memory-allocation',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -510,6 +513,22 @@ const lessons: readonly LessonDefinition[] = [
     prerequisiteLessonIds: ['structures-basics', 'pointers-basics', 'conditionals-if-else'],
     requiredChallengeIds: STRUCTURE_POINTER_CHALLENGE_IDS,
   },
+  {
+    id: 'memory-allocation',
+    topicId: 'dynamic-memory',
+    moduleNumber: 8,
+    lessonNumber: 1,
+    order: 27,
+    title: '動態記憶體配置與釋放',
+    englishTitle: 'Dynamic Allocation & Release',
+    description: '比較 malloc 與 calloc，追蹤配置失敗、逐格初始化、讀取加總與釋放後的生命週期。',
+    concepts: ['malloc 與 calloc', 'NULL 失敗分支', '先初始化再讀取', 'free 與指標生命週期'],
+    status: 'available',
+    path: '/learn/memory/allocation',
+    estimatedMinutes: 30,
+    prerequisiteLessonIds: ['pointers-basics', 'arrays-basics', 'loops-for', 'conditionals-if-else'],
+    requiredChallengeIds: ALLOCATION_CHALLENGE_IDS,
+  },
 ]
 
 const topicMetadata: ReadonlyArray<Omit<TopicDefinition, 'lessons'>> = [
@@ -561,6 +580,13 @@ const topicMetadata: ReadonlyArray<Omit<TopicDefinition, 'lessons'>> = [
     title: '結構與自訂型別',
     englishTitle: 'Structures & Custom Types',
     description: '將相關成員組合成自訂資料型態，學習成員存取、複製與資料分組。',
+  },
+  {
+    id: 'dynamic-memory',
+    order: 8,
+    title: '動態記憶體',
+    englishTitle: 'Dynamic Memory',
+    description: '依需求取得空間，管理初始化、容量與配置區塊的生命週期。',
   },
 ]
 
