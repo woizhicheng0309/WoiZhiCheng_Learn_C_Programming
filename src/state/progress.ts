@@ -1,3 +1,4 @@
+import { DEFAULT_CONST_POINTER_CONFIG, validateConstPointerConfig, type ConstPointerConfig } from '../domain/constPointers'
 import { DEFAULT_STRING_COMPARISON_CONFIG, validateStringComparisonConfig, type StringComparisonConfig } from '../domain/stringComparison'
 import { DEFAULT_ARRAY_PARAMETER_CONFIG, validateArrayParameterConfig, type ArrayParameterConfig } from '../domain/arrayParameters'
 import { DEFAULT_STRING_COPY_CONFIG, validateStringCopyConfig, type StringCopyConfig } from '../domain/stringCopy'
@@ -253,6 +254,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'pointers-traversal') return { ...DEFAULT_TRAVERSAL_STATE }
   if (id === 'pointers-strings') return { ...DEFAULT_STRING_POINTER_STATE }
   if (id === 'pointers-array-parameters') return { ...DEFAULT_ARRAY_PARAMETER_CONFIG }
+  if (id === 'pointers-const') return { ...DEFAULT_CONST_POINTER_CONFIG }
   return null
 }
 
@@ -483,6 +485,11 @@ export function isSelectionSortSavedState(value: unknown): value is JsonObject &
   return validateSelectionSortConfig(value as SelectionSortConfig).length === 0
 }
 
+export function isConstPointerSavedState(value: unknown): value is JsonObject & ConstPointerConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateConstPointerConfig(value as ConstPointerConfig).length === 0
+}
+
 export function isStringComparisonSavedState(value: unknown): value is JsonObject & StringComparisonConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateStringComparisonConfig(value as StringComparisonConfig).length === 0
@@ -534,6 +541,7 @@ export function isSavedStateForLesson(
   if (id === 'pointers-traversal') return isTraversalSavedState(value)
   if (id === 'pointers-strings') return isStringPointerSavedState(value)
   if (id === 'pointers-array-parameters') return isArrayParameterSavedState(value)
+  if (id === 'pointers-const') return isConstPointerSavedState(value)
   return value === null
 }
 

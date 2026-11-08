@@ -64,7 +64,7 @@ it('completes the three challenges and validates persisted configuration', () =>
   fireEvent.click(screen.getByRole('tab', { name: /沒有 case 命中/ }))
   solve('Water Done')
   expect(screen.getByText('你已完成 switch、case 與 break。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 22, totalChallenges: 66, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 23, totalChallenges: 69, completedChallenges: 3 })
   expect(isSwitchSavedState({ choice: 2, mode: 'with-break' })).toBe(true)
   expect(isSwitchSavedState({ choice: '2', mode: 'with-break' })).toBe(false)
 })

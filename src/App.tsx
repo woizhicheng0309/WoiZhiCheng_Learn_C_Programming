@@ -32,6 +32,8 @@ const ArrayParameterLessonPage = lazy(() => import('./pages/ArrayParameterLesson
 
 const StringComparisonLessonPage = lazy(() => import('./pages/StringComparisonLessonPage').then(module => ({ default: module.StringComparisonLessonPage })))
 
+const ConstPointerLessonPage = lazy(() => import('./pages/ConstPointerLessonPage').then(module => ({ default: module.ConstPointerLessonPage })))
+
 export default function App() {
   const { pathname } = useLocation()
   return (
@@ -67,6 +69,7 @@ export default function App() {
               <Route path="/learn/pointers/traversal" element={<PointerTraversalLessonPage />} />
               <Route path="/learn/pointers/strings" element={<StringPointerLessonPage />} />
               <Route path="/learn/pointers/array-parameters" element={<ArrayParameterLessonPage />} />
+              <Route path="/learn/pointers/const" element={<ConstPointerLessonPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

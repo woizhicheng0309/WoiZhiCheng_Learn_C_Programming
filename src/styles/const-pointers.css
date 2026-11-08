@@ -1,0 +1,25 @@
+.const-pointer-page { --accent: #7482a5; --accent-dark: #405174; --functions-teal-dark: #405174; }
+.const-pointer-controls > p, .const-pointer-execution > p { color: var(--ink-soft); font-size: .85rem; line-height: 1.9; }
+.const-pointer-table-scroll { min-width: 0; max-width: 100%; overflow-x: auto; margin-top: 24px; border-radius: 9px; }
+.const-pointer-table-scroll:focus-visible { outline: 3px solid #405174; outline-offset: 3px; }
+.const-pointer-table { width: 100%; min-width: 420px; border-collapse: collapse; font-size: .85rem; }
+.const-pointer-table caption { text-align: left; padding: 0 0 14px; line-height: 1.8; }
+.const-pointer-table th, .const-pointer-table td { padding: 14px 12px; border: 1px solid var(--line-strong); text-align: left; line-height: 1.8; }
+.const-pointer-table th { font-weight: 600; }
+.const-pointer-table small { display: block; color: #405174; }
+.const-pointer-table .is-selected { background: #e8ecf5; }
+.const-pointer-execution { min-width: 0; padding: 22px; }
+.const-pointer-values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.const-pointer-values > div { min-width: 0; padding: 16px; border: 1px solid var(--line-strong); border-radius: 10px; background: var(--paper); }
+.const-pointer-values dt { font: .9rem var(--mono); }
+.const-pointer-values dd { margin: 12px 0; font: 700 1.8rem var(--mono); }
+.const-pointer-values small { font-size: .7rem; line-height: 1.8; }
+.const-pointer-binding { padding: 18px; border: 1px solid var(--line-strong); border-radius: 12px; background: #e8ecf5; overflow-wrap: anywhere; }
+.const-pointer-binding h3 { font: 700 1rem var(--mono); }
+.const-pointer-binding p { font-size: .85rem; line-height: 1.9; }
+.const-pointer-values .is-active, .const-pointer-binding.is-active { outline: 3px solid #405174; outline-offset: -3px; }
+.const-pointer-console { padding: 18px; border-radius: 12px; background: var(--code); color: #f5eee5; }
+.const-pointer-console h3 { font-size: .85rem; }
+.const-pointer-console ol { list-style: none; padding: 0; font: .9rem/1.9 var(--mono); overflow-wrap: anywhere; }
+.const-pointer-page .pointers-challenge-content input { max-width: 100%; width: 320px; min-height: 46px; padding: 10px; border: 1px solid var(--line-strong); border-radius: 9px; }
+@media (max-width: 600px) { .const-pointer-execution { padding: 16px; } }

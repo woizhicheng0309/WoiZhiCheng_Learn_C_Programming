@@ -1,3 +1,4 @@
+import { CONST_POINTER_CHALLENGE_IDS } from './constPointerChallenges'
 import { STRING_COMPARISON_CHALLENGE_IDS } from './stringComparisonChallenges'
 import { ARRAY_PARAMETER_CHALLENGE_IDS } from './arrayParameterChallenges'
 import { STRING_COPY_CHALLENGE_IDS } from './stringCopyChallenges'
@@ -55,6 +56,7 @@ export const LESSON_IDS = [
   'pointers-traversal',
   'pointers-strings',
   'pointers-array-parameters',
+  'pointers-const',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -436,6 +438,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 25,
     prerequisiteLessonIds: ['functions-basics', 'arrays-basics', 'pointers-basics'],
     requiredChallengeIds: ARRAY_PARAMETER_CHALLENGE_IDS,
+  },
+  {
+    id: 'pointers-const',
+    topicId: 'pointers',
+    moduleNumber: 6,
+    lessonNumber: 6,
+    order: 23,
+    title: '指標與 const',
+    englishTitle: 'Pointers & const',
+    description: '比較指向唯讀資料與固定指標，區分編譯限制、合法改值、改指向及原變數的直接修改。',
+    concepts: ['const int *p', 'int *const p', '編譯階段限制', '原變數與別名'],
+    status: 'available',
+    path: '/learn/pointers/const',
+    estimatedMinutes: 25,
+    prerequisiteLessonIds: ['pointers-basics', 'pointers-array-parameters'],
+    requiredChallengeIds: CONST_POINTER_CHALLENGE_IDS,
   },
 ]
 

@@ -134,6 +134,6 @@ export function ArrayParameterLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>位址傳值，元素仍是原來那一組。</h2><p>函式參數 int items[] 不會攜帶整個陣列的大小。sizeof items 得到的是指標大小，不能用來推算原陣列有幾格。由呼叫端明確傳入 count，並確保它不超過可存取範圍。</p>{count === 3 && <p role="status">你已完成陣列作為函式參數。</p>}<div><Link className="button button-secondary" to="/learn/pointers/strings">上一課：字串與字元指標</Link><Link className="button button-primary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>位址傳值，元素仍是原來那一組。</h2><p>函式參數 int items[] 不會攜帶整個陣列的大小。sizeof items 得到的是指標大小，不能用來推算原陣列有幾格。由呼叫端明確傳入 count，並確保它不超過可存取範圍。</p>{count === 3 && <p role="status">你已完成陣列作為函式參數。</p>}<div><Link className="button button-secondary" to="/learn/pointers/strings">上一課：字串與字元指標</Link><Link className="button button-primary" to="/learn/pointers/const">下一課：指標與 const</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

@@ -57,6 +57,7 @@ describe('two-level course catalog', () => {
       'pointers-traversal',
       'pointers-strings',
       'pointers-array-parameters',
+      'pointers-const',
     ])
   })
 
@@ -84,6 +85,7 @@ describe('two-level course catalog', () => {
       'pointers-traversal',
       'pointers-strings',
       'pointers-array-parameters',
+      'pointers-const',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
