@@ -51,3 +51,15 @@ it('links the second structure lesson from the map and back to its prerequisite'
   await screen.findByRole('heading', { level: 1, name: /把相關資料/ })
   expect(screen.getByRole('link', { name: '下一課：結構陣列與逐筆統計' })).toHaveAttribute('href', '/learn/structures/arrays')
 })
+
+it('opens the structure-pointer lesson from the map and connects adjacent lessons', async () => {
+  render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
+  const group = await screen.findByRole('region', { name: '結構與自訂型別' })
+  fireEvent.click(within(group).getByRole('link', { name: /指向結構的指標，未開始/ }))
+  const heading = await screen.findByRole('heading', { level: 1, name: /沿著指標/ })
+  await waitFor(() => expect(heading).toHaveFocus())
+  expect(document.title).toContain('指向結構的指標')
+  fireEvent.click(screen.getByRole('link', { name: '上一課：結構陣列與逐筆統計' }))
+  await screen.findByRole('heading', { level: 1, name: /先找到那一筆/ })
+  expect(screen.getByRole('link', { name: '下一課：指向結構的指標' })).toHaveAttribute('href', '/learn/structures/pointers')
+})

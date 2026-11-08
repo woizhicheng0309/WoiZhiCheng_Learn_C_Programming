@@ -821,9 +821,9 @@ describe('progress selectors', () => {
       .toBe('not-started')
     expect(getCourseProgress(progress)).toEqual({
       completedLessons: 2,
-      totalLessons: 25,
+      totalLessons: 26,
       completedChallenges: 6,
-      totalChallenges: 75,
+      totalChallenges: 78,
       percentage: 8,
     })
   })

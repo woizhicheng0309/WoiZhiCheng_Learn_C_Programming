@@ -19,9 +19,9 @@
 .structure-page .pointers-challenge-content input { max-width: 100%; width: 320px; min-height: 46px; padding: 10px; border: 1px solid var(--line-strong); border-radius: 9px; }
 @media (max-width: 600px) { .structure-execution { padding: 16px; } }
 
-.structure-array-range { display: flex; align-items: center; gap: 14px; margin-bottom: 25px; }
-.structure-array-range input { min-width: 0; width: 100%; min-height: 44px; accent-color: var(--accent-dark); }
-.structure-array-range output { min-width: 3ch; font: 700 1rem var(--mono); text-align: right; }
+.structure-array-range, .structure-pointer-range { display: flex; align-items: center; gap: 14px; margin-bottom: 25px; }
+.structure-array-range input, .structure-pointer-range input { min-width: 0; width: 100%; min-height: 44px; accent-color: var(--accent-dark); }
+.structure-array-range output, .structure-pointer-range output { min-width: 3ch; font: 700 1rem var(--mono); text-align: right; }
 .structure-array-table-scroll { overflow-x: auto; margin: 18px 0; border: 1px solid var(--line-strong); border-radius: 10px; }
 .structure-array-table { width: 100%; min-width: 290px; border-collapse: collapse; font-family: var(--mono); }
 .structure-array-table caption { padding: 14px; color: var(--ink-soft); text-align: left; font-size: .75rem; }
@@ -36,3 +36,11 @@
 .structure-array-totals dt { font: .8rem var(--mono); }
 .structure-array-totals dd { margin: 10px 0 0; font: 700 1.4rem var(--mono); }
 .structure-array-condition { min-height: 2em; font-family: var(--mono); }
+
+.structure-pointer-links { display: grid; gap: 12px; margin: 0 0 20px; }
+.structure-pointer-links > div { min-width: 0; padding: 16px; border: 1px solid var(--line-strong); border-radius: 10px; background: #eee8f4; }
+.structure-pointer-links .is-active { outline: 3px solid var(--accent-dark); outline-offset: -3px; }
+.structure-pointer-links dt { font: 700 1rem var(--mono); }
+.structure-pointer-links dt small { display: block; margin-top: 7px; color: var(--ink-soft); font-size: .75rem; font-weight: 400; }
+.structure-pointer-links dd { margin: 12px 0 0; font: 700 1.1rem var(--mono); overflow-wrap: anywhere; }
+.structure-pointer-range input:disabled { opacity: .5; }

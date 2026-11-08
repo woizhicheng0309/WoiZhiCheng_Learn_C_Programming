@@ -1,3 +1,4 @@
+import { STRUCTURE_POINTER_CHALLENGE_IDS } from './structurePointerChallenges'
 import { STRUCTURE_ARRAY_CHALLENGE_IDS } from './structureArrayChallenges'
 import { STRUCTURE_CHALLENGE_IDS } from './structureChallenges'
 import { CONST_POINTER_CHALLENGE_IDS } from './constPointerChallenges'
@@ -62,6 +63,7 @@ export const LESSON_IDS = [
   'pointers-const',
   'structures-basics',
   'structures-arrays',
+  'structures-pointers',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -491,6 +493,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 25,
     prerequisiteLessonIds: ['structures-basics', 'arrays-basics', 'loops-for'],
     requiredChallengeIds: STRUCTURE_ARRAY_CHALLENGE_IDS,
+  },
+  {
+    id: 'structures-pointers',
+    topicId: 'structures',
+    moduleNumber: 7,
+    lessonNumber: 3,
+    order: 26,
+    title: '指向結構的指標',
+    englishTitle: 'Pointers to Structures',
+    description: '比較箭頭與解參照寫法，追蹤指標複製、共用物件、改指向與 NULL 分支。',
+    concepts: ['箭頭運算子', '(*p).member', '指標複製與別名', 'NULL 條件分支'],
+    status: 'available',
+    path: '/learn/structures/pointers',
+    estimatedMinutes: 25,
+    prerequisiteLessonIds: ['structures-basics', 'pointers-basics', 'conditionals-if-else'],
+    requiredChallengeIds: STRUCTURE_POINTER_CHALLENGE_IDS,
   },
 ]
 

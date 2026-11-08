@@ -1,3 +1,4 @@
+import { STRUCTURE_POINTER_CHALLENGE_IDS } from './structurePointerChallenges'
 import { STRUCTURE_ARRAY_CHALLENGE_IDS } from './structureArrayChallenges'
 import { STRUCTURE_CHALLENGE_IDS } from './structureChallenges'
 import {
@@ -62,7 +63,7 @@ describe('two-level course catalog', () => {
       'pointers-array-parameters',
       'pointers-const',
     ])
-    expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics', 'structures-arrays'])
+    expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics', 'structures-arrays', 'structures-pointers'])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -92,6 +93,7 @@ describe('two-level course catalog', () => {
       'pointers-const',
       'structures-basics',
       'structures-arrays',
+      'structures-pointers',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -274,6 +276,16 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: STRUCTURE_ARRAY_CHALLENGE_IDS,
     })
     expect(isLessonId('structures-arrays')).toBe(true)
+  })
+
+  it('connects structure member access with pointer and branching prerequisites', () => {
+    expect(getLessonById('structures-pointers')).toMatchObject({
+      topicId: 'structures', moduleNumber: 7, lessonNumber: 3, order: 26,
+      path: '/learn/structures/pointers', status: 'available',
+      prerequisiteLessonIds: ['structures-basics', 'pointers-basics', 'conditionals-if-else'],
+      requiredChallengeIds: STRUCTURE_POINTER_CHALLENGE_IDS,
+    })
+    expect(isLessonId('structures-pointers')).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {

@@ -125,6 +125,6 @@ export function StructureArrayLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>資料列各自獨立，統計依序累積。</h2><p>更新 students[1].score 只改第二筆的分數。for 先檢查 i &lt; 3 才進入迴圈；i 變成 3 時直接離開，不讀取 students[3]。達標判斷使用 &gt;=，等於門檻也會計入。</p>{count === 3 && <p role="status">你已完成結構陣列與逐筆統計。</p>}<div><Link className="button button-secondary" to="/learn/structures/basics">上一課：結構與成員存取</Link><Link className="button button-primary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>資料列各自獨立，統計依序累積。</h2><p>更新 students[1].score 只改第二筆的分數。for 先檢查 i &lt; 3 才進入迴圈；i 變成 3 時直接離開，不讀取 students[3]。達標判斷使用 &gt;=，等於門檻也會計入。</p>{count === 3 && <p role="status">你已完成結構陣列與逐筆統計。</p>}<div><Link className="button button-secondary" to="/learn/structures/basics">上一課：結構與成員存取</Link><Link className="button button-primary" to="/learn/structures/pointers">下一課：指向結構的指標</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

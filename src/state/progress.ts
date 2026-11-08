@@ -1,3 +1,4 @@
+import { DEFAULT_STRUCTURE_POINTER_CONFIG, validateStructurePointerConfig, type StructurePointerConfig } from '../domain/structurePointers'
 import { DEFAULT_STRUCTURE_ARRAY_CONFIG, validateStructureArrayConfig, type StructureArrayConfig } from '../domain/structureArrays'
 import { DEFAULT_STRUCTURE_CONFIG, validateStructureConfig, type StructureConfig } from '../domain/structures'
 import { DEFAULT_CONST_POINTER_CONFIG, validateConstPointerConfig, type ConstPointerConfig } from '../domain/constPointers'
@@ -259,6 +260,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'pointers-const') return { ...DEFAULT_CONST_POINTER_CONFIG }
   if (id === 'structures-basics') return { ...DEFAULT_STRUCTURE_CONFIG }
   if (id === 'structures-arrays') return { ...DEFAULT_STRUCTURE_ARRAY_CONFIG }
+  if (id === 'structures-pointers') return { ...DEFAULT_STRUCTURE_POINTER_CONFIG }
   return null
 }
 
@@ -489,6 +491,11 @@ export function isSelectionSortSavedState(value: unknown): value is JsonObject &
   return validateSelectionSortConfig(value as SelectionSortConfig).length === 0
 }
 
+export function isStructurePointerSavedState(value: unknown): value is JsonObject & StructurePointerConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateStructurePointerConfig(value as StructurePointerConfig).length === 0
+}
+
 export function isStructureArraySavedState(value: unknown): value is JsonObject & StructureArrayConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateStructureArrayConfig(value as StructureArrayConfig).length === 0
@@ -558,6 +565,7 @@ export function isSavedStateForLesson(
   if (id === 'pointers-const') return isConstPointerSavedState(value)
   if (id === 'structures-basics') return isStructureSavedState(value)
   if (id === 'structures-arrays') return isStructureArraySavedState(value)
+  if (id === 'structures-pointers') return isStructurePointerSavedState(value)
   return value === null
 }
 
