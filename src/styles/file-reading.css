@@ -1,0 +1,13 @@
+.file-reading-page { --accent: #7c8da5; --accent-dark: #435a78; --functions-teal-dark: #435a78; }
+.file-reading-page .allocation-variables { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.file-reading-page .allocation-variables dt { overflow-wrap: anywhere; }
+.file-reading-page .allocation-block { margin-bottom: 16px; }
+.file-reading-page .allocation-block > p { color: var(--ink-soft); font-size: .8rem; line-height: 1.9; overflow-wrap: anywhere; }
+.file-input-tokens { display: flex; flex-wrap: wrap; gap: 7px; padding: 0; list-style: none; }
+.file-input-tokens li { min-width: 38px; padding: 10px 8px; border: 1px solid var(--line-strong); border-radius: 7px; text-align: center; }
+.file-input-tokens small { display: block; margin-bottom: 8px; color: var(--ink-soft); font-family: var(--mono); }
+.file-input-tokens .is-consumed { background: #e6ebf1; }
+.file-input-tokens .is-next { outline: 3px solid var(--accent-dark); outline-offset: -3px; }
+.file-buffer .is-tail { background: var(--paper); border-style: dashed; }
+.file-buffer .allocation-cells strong { font-size: .8rem; }
+.file-reading-page .allocation-console pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: .85rem/1.9 var(--mono); }

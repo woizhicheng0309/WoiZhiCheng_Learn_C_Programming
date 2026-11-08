@@ -31,6 +31,7 @@ const routeTitles: Record<string, string> = {
   '/learn/structures/pointers': `指向結構的指標｜${SITE_TITLE}`,
   '/learn/memory/allocation': `動態記憶體配置與釋放｜${SITE_TITLE}`,
   '/learn/memory/reallocation': `realloc 容量調整與失敗處理｜${SITE_TITLE}`,
+  '/learn/files/reading': `檔案開啟與 fgets 讀取｜${SITE_TITLE}`,
   '/learn/pointers/const': `指標與 const｜${SITE_TITLE}`,
   '/learn/pointers/array-parameters': `陣列作為函式參數｜${SITE_TITLE}`,
   '/learn/pointers/strings': `字串與字元指標｜${SITE_TITLE}`,

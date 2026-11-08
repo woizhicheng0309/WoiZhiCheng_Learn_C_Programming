@@ -144,6 +144,6 @@ export function ReallocationLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>失敗保留原配置，成功改用新結果。</h2><p>直接把 realloc 回傳值覆寫到唯一的 p，可能在失敗時遺失原區塊的位址。暫存結果讓程式能分辨兩條路徑。成功後，即使位置相同也不用舊指標；最後 free 有效區塊，再直接把兩個指標變數設為 NULL。</p><p>語意依據：<a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf#page=367" target="_blank" rel="noreferrer">C11 工作草案 N1570 §7.22.3.5：realloc</a>。</p>{count === 3 && <p role="status">你已完成 realloc 容量調整與失敗處理。</p>}<div><Link className="button button-secondary" to="/learn/memory/allocation">上一課：動態記憶體配置與釋放</Link><Link className="button button-primary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>失敗保留原配置，成功改用新結果。</h2><p>直接把 realloc 回傳值覆寫到唯一的 p，可能在失敗時遺失原區塊的位址。暫存結果讓程式能分辨兩條路徑。成功後，即使位置相同也不用舊指標；最後 free 有效區塊，再直接把兩個指標變數設為 NULL。</p><p>語意依據：<a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf#page=367" target="_blank" rel="noreferrer">C11 工作草案 N1570 §7.22.3.5：realloc</a>。</p>{count === 3 && <p role="status">你已完成 realloc 容量調整與失敗處理。</p>}<div><Link className="button button-secondary" to="/learn/memory/allocation">上一課：動態記憶體配置與釋放</Link><Link className="button button-primary" to="/learn/files/reading">下一課：檔案開啟與 fgets 讀取</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

@@ -43,6 +43,7 @@ const topicIcons: Record<TopicId, LucideIcon> = {
   pointers: MousePointer2,
   structures: Braces,
   'dynamic-memory': Layers3,
+  'files-and-input': Code2,
 }
 
 const progressStatusLabels: Record<LessonProgressStatus, string> = {
@@ -175,7 +176,7 @@ export function LearnPage() {
             >
               <span className="section-kicker">COURSE MAP</span>
               <h1>從第一行程式，<br />一路建立思考方式。</h1>
-              <p>先從程式骨架、變數與運算開始，再前往條件、迴圈、函式、陣列、指標、結構與動態記憶體。每個已開放單元都能自由進入，先備內容是學習建議，不會把你鎖在門外。</p>
+              <p>先從程式骨架、變數與運算開始，再前往條件、迴圈、函式、陣列、指標、結構、動態記憶體與檔案輸入。每個已開放單元都能自由進入，先備內容是學習建議，不會把你鎖在門外。</p>
             </motion.div>
 
             <motion.aside

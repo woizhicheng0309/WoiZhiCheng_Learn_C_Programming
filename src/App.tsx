@@ -39,6 +39,7 @@ const StructureArrayLessonPage = lazy(() => import('./pages/StructureArrayLesson
 const StructurePointerLessonPage = lazy(() => import('./pages/StructurePointerLessonPage').then(module => ({ default: module.StructurePointerLessonPage })))
 const AllocationLessonPage = lazy(() => import('./pages/AllocationLessonPage').then(module => ({ default: module.AllocationLessonPage })))
 const ReallocationLessonPage = lazy(() => import('./pages/ReallocationLessonPage').then(module => ({ default: module.ReallocationLessonPage })))
+const FileReadingLessonPage = lazy(() => import('./pages/FileReadingLessonPage').then(module => ({ default: module.FileReadingLessonPage })))
 
 export default function App() {
   const { pathname } = useLocation()
@@ -81,6 +82,7 @@ export default function App() {
               <Route path="/learn/structures/pointers" element={<StructurePointerLessonPage />} />
               <Route path="/learn/memory/allocation" element={<AllocationLessonPage />} />
               <Route path="/learn/memory/reallocation" element={<ReallocationLessonPage />} />
+              <Route path="/learn/files/reading" element={<FileReadingLessonPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

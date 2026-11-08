@@ -1,3 +1,4 @@
+import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
 import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
 import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
 import { STRUCTURE_POINTER_CHALLENGE_IDS } from './structurePointerChallenges'
@@ -34,6 +35,7 @@ describe('two-level course catalog', () => {
       'pointers',
       'structures',
       'dynamic-memory',
+      'files-and-input',
     ])
     expect(getLessonsByTopicId('variables').map((lesson) => lesson.id)).toEqual([
       'variables-basics',
@@ -68,6 +70,7 @@ describe('two-level course catalog', () => {
     ])
     expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics', 'structures-arrays', 'structures-pointers'])
     expect(getLessonsByTopicId('dynamic-memory').map(lesson => lesson.id)).toEqual(['memory-allocation', 'memory-reallocation'])
+    expect(getLessonsByTopicId('files-and-input').map(lesson => lesson.id)).toEqual(['files-reading'])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -100,6 +103,7 @@ describe('two-level course catalog', () => {
       'structures-pointers',
       'memory-allocation',
       'memory-reallocation',
+      'files-reading',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -313,6 +317,17 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: REALLOCATION_CHALLENGE_IDS,
     })
     expect(isLessonId('memory-reallocation')).toBe(true)
+  })
+
+  it('opens chapter nine with file input and independent required challenges', () => {
+    expect(getTopicById('files-and-input')).toMatchObject({ order: 9, title: '檔案與文字輸入' })
+    expect(getLessonById('files-reading')).toMatchObject({
+      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 1, order: 29,
+      path: '/learn/files/reading', status: 'available',
+      prerequisiteLessonIds: ['arrays-string-copy', 'pointers-basics', 'loops-while-do-while'],
+      requiredChallengeIds: FILE_READING_CHALLENGE_IDS,
+    })
+    expect(isLessonId('files-reading')).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {

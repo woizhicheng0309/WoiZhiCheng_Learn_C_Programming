@@ -1,3 +1,4 @@
+import { DEFAULT_FILE_READING_CONFIG, validateFileReadingConfig, type FileReadingConfig } from '../domain/fileReading'
 import { DEFAULT_REALLOCATION_CONFIG, validateReallocationConfig, type ReallocationConfig } from '../domain/reallocation'
 import { DEFAULT_ALLOCATION_CONFIG, validateAllocationConfig, type AllocationConfig } from '../domain/allocation'
 import { DEFAULT_STRUCTURE_POINTER_CONFIG, validateStructurePointerConfig, type StructurePointerConfig } from '../domain/structurePointers'
@@ -265,6 +266,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'structures-pointers') return { ...DEFAULT_STRUCTURE_POINTER_CONFIG }
   if (id === 'memory-allocation') return { ...DEFAULT_ALLOCATION_CONFIG }
   if (id === 'memory-reallocation') return { ...DEFAULT_REALLOCATION_CONFIG }
+  if (id === 'files-reading') return { ...DEFAULT_FILE_READING_CONFIG }
   return null
 }
 
@@ -495,6 +497,11 @@ export function isSelectionSortSavedState(value: unknown): value is JsonObject &
   return validateSelectionSortConfig(value as SelectionSortConfig).length === 0
 }
 
+export function isFileReadingSavedState(value: unknown): value is JsonObject & FileReadingConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateFileReadingConfig(value as FileReadingConfig).length === 0
+}
+
 export function isReallocationSavedState(value: unknown): value is JsonObject & ReallocationConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateReallocationConfig(value as ReallocationConfig).length === 0
@@ -582,6 +589,7 @@ export function isSavedStateForLesson(
   if (id === 'structures-pointers') return isStructurePointerSavedState(value)
   if (id === 'memory-allocation') return isAllocationSavedState(value)
   if (id === 'memory-reallocation') return isReallocationSavedState(value)
+  if (id === 'files-reading') return isFileReadingSavedState(value)
   return value === null
 }
 

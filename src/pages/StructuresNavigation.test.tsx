@@ -21,18 +21,19 @@ beforeEach(() => {
 })
 afterEach(() => vi.unstubAllGlobals())
 
-it('shows all eight available topics on the home ribbon with a dynamic column count', () => {
+it('shows all nine available topics on the home ribbon with a dynamic column count', () => {
   render(<ProgressProvider><MemoryRouter><HomePage /></MemoryRouter></ProgressProvider>)
   const ribbon = document.querySelector<HTMLElement>('.topic-ribbon')!
-  expect(ribbon.querySelectorAll('.topic-pill')).toHaveLength(8)
-  expect(ribbon.style.getPropertyValue('--topic-count')).toBe('8')
+  expect(ribbon.querySelectorAll('.topic-pill')).toHaveLength(9)
+  expect(ribbon.style.getPropertyValue('--topic-count')).toBe('9')
   expect(within(ribbon).getByText('結構與自訂型別').closest('.topic-pill')).toHaveTextContent('現在開放')
   expect(within(ribbon).getByText('動態記憶體').closest('.topic-pill')).toHaveTextContent('現在開放')
+  expect(within(ribbon).getByText('檔案與文字輸入').closest('.topic-pill')).toHaveTextContent('現在開放')
 })
 it('opens the new chapter from its course-map group and focuses the loaded lesson heading', async () => {
   render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
   const group = await screen.findByRole('region', { name: '結構與自訂型別' })
-  expect(screen.getByText('8 CORE TOPICS')).toBeInTheDocument()
+  expect(screen.getByText('9 CORE TOPICS')).toBeInTheDocument()
   const link = within(group).getByRole('link', { name: /結構與成員存取，未開始/ })
   expect(link).toHaveAttribute('href', '/learn/structures/basics')
   fireEvent.click(link)
@@ -87,4 +88,16 @@ it('opens the reallocation lesson from the map and connects adjacent memory less
   fireEvent.click(screen.getByRole('link', { name: '上一課：動態記憶體配置與釋放' }))
   await screen.findByRole('heading', { level: 1, name: /先取得空間/ })
   expect(screen.getByRole('link', { name: '下一課：realloc 容量調整與失敗處理' })).toHaveAttribute('href', '/learn/memory/reallocation')
+})
+
+it('opens chapter nine from the course map and connects it to reallocation', async () => {
+  render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
+  const group = await screen.findByRole('region', { name: '檔案與文字輸入' })
+  fireEvent.click(within(group).getByRole('link', { name: /檔案開啟與 fgets 讀取，未開始/ }))
+  const heading = await screen.findByRole('heading', { level: 1, name: /先確認讀到了什麼/ })
+  await waitFor(() => expect(heading).toHaveFocus())
+  expect(document.title).toContain('檔案開啟與 fgets 讀取')
+  fireEvent.click(screen.getByRole('link', { name: '上一課：realloc 容量調整與失敗處理' }))
+  await screen.findByRole('heading', { level: 1, name: /先接住新結果/ })
+  expect(screen.getByRole('link', { name: '下一課：檔案開啟與 fgets 讀取' })).toHaveAttribute('href', '/learn/files/reading')
 })

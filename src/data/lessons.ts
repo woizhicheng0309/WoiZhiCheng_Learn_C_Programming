@@ -1,3 +1,4 @@
+import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
 import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
 import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
 import { STRUCTURE_POINTER_CHALLENGE_IDS } from './structurePointerChallenges'
@@ -36,6 +37,7 @@ export const TOPIC_IDS = [
   'pointers',
   'structures',
   'dynamic-memory',
+  'files-and-input',
 ] as const
 
 export type TopicId = (typeof TOPIC_IDS)[number]
@@ -69,6 +71,7 @@ export const LESSON_IDS = [
   'structures-pointers',
   'memory-allocation',
   'memory-reallocation',
+  'files-reading',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -547,6 +550,22 @@ const lessons: readonly LessonDefinition[] = [
     prerequisiteLessonIds: ['memory-allocation', 'pointers-basics', 'loops-for'],
     requiredChallengeIds: REALLOCATION_CHALLENGE_IDS,
   },
+  {
+    id: 'files-reading',
+    topicId: 'files-and-input',
+    moduleNumber: 9,
+    lessonNumber: 1,
+    order: 29,
+    title: '檔案開啟與 fgets 讀取',
+    englishTitle: 'File Streams & fgets',
+    description: '逐次追蹤 fopen、fgets 與 fclose，區分緩衝區分段、換行、EOF 和 I/O 失敗分支。',
+    concepts: ['文字串流', 'fgets 與空字元', 'EOF 與 ferror', '關閉與解除串流關聯'],
+    status: 'available',
+    path: '/learn/files/reading',
+    estimatedMinutes: 30,
+    prerequisiteLessonIds: ['arrays-string-copy', 'pointers-basics', 'loops-while-do-while'],
+    requiredChallengeIds: FILE_READING_CHALLENGE_IDS,
+  },
 ]
 
 const topicMetadata: ReadonlyArray<Omit<TopicDefinition, 'lessons'>> = [
@@ -605,6 +624,13 @@ const topicMetadata: ReadonlyArray<Omit<TopicDefinition, 'lessons'>> = [
     title: '動態記憶體',
     englishTitle: 'Dynamic Memory',
     description: '依需求取得空間，管理初始化、容量與配置區塊的生命週期。',
+  },
+  {
+    id: 'files-and-input',
+    order: 9,
+    title: '檔案與文字輸入',
+    englishTitle: 'Files & Text Input',
+    description: '透過串流取得文字，分辨成功、結尾與錯誤，並管理輸入資源。',
   },
 ]
 
