@@ -1,3 +1,4 @@
+import { STRUCTURE_ARRAY_CHALLENGE_IDS } from './structureArrayChallenges'
 import { STRUCTURE_CHALLENGE_IDS } from './structureChallenges'
 import { CONST_POINTER_CHALLENGE_IDS } from './constPointerChallenges'
 import { STRING_COMPARISON_CHALLENGE_IDS } from './stringComparisonChallenges'
@@ -60,6 +61,7 @@ export const LESSON_IDS = [
   'pointers-array-parameters',
   'pointers-const',
   'structures-basics',
+  'structures-arrays',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -473,6 +475,22 @@ const lessons: readonly LessonDefinition[] = [
     estimatedMinutes: 25,
     prerequisiteLessonIds: ['variables-basics', 'arrays-basics'],
     requiredChallengeIds: STRUCTURE_CHALLENGE_IDS,
+  },
+  {
+    id: 'structures-arrays',
+    topicId: 'structures',
+    moduleNumber: 7,
+    lessonNumber: 2,
+    order: 25,
+    title: '結構陣列與逐筆統計',
+    englishTitle: 'Arrays of Structures',
+    description: '先用索引選到一筆結構，再讀寫成員，逐步追蹤分數加總、門檻判斷與陣列界線。',
+    concepts: ['結構陣列初始化', '索引與成員存取', '逐筆統計', '迴圈索引界線'],
+    status: 'available',
+    path: '/learn/structures/arrays',
+    estimatedMinutes: 25,
+    prerequisiteLessonIds: ['structures-basics', 'arrays-basics', 'loops-for'],
+    requiredChallengeIds: STRUCTURE_ARRAY_CHALLENGE_IDS,
   },
 ]
 

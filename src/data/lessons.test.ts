@@ -1,3 +1,4 @@
+import { STRUCTURE_ARRAY_CHALLENGE_IDS } from './structureArrayChallenges'
 import { STRUCTURE_CHALLENGE_IDS } from './structureChallenges'
 import {
   COURSE_TOPICS,
@@ -61,7 +62,7 @@ describe('two-level course catalog', () => {
       'pointers-array-parameters',
       'pointers-const',
     ])
-    expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics'])
+    expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics', 'structures-arrays'])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -90,6 +91,7 @@ describe('two-level course catalog', () => {
       'pointers-array-parameters',
       'pointers-const',
       'structures-basics',
+      'structures-arrays',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -262,6 +264,16 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: STRUCTURE_CHALLENGE_IDS,
     })
     expect(isLessonId('structures-basics')).toBe(true)
+  })
+
+  it('adds structure arrays with indexing and loop prerequisites', () => {
+    expect(getLessonById('structures-arrays')).toMatchObject({
+      topicId: 'structures', moduleNumber: 7, lessonNumber: 2, order: 25,
+      path: '/learn/structures/arrays', status: 'available',
+      prerequisiteLessonIds: ['structures-basics', 'arrays-basics', 'loops-for'],
+      requiredChallengeIds: STRUCTURE_ARRAY_CHALLENGE_IDS,
+    })
+    expect(isLessonId('structures-arrays')).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {

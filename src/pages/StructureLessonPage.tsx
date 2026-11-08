@@ -123,6 +123,6 @@ export function StructureLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>相關資料放一起，各份物件仍各自保存值。</h2><p>部分初始化會讓其餘成員得到零值：本課的 score 是 0，grade 是空字元。這與完全沒有初始化的區域物件不同。用點運算子修改單一成員，也不會自動修改其他成員或另一份物件。</p>{count === 3 && <p role="status">你已完成結構與成員存取。</p>}<div><Link className="button button-secondary" to="/learn/pointers/const">上一課：指標與 const</Link><Link className="button button-primary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>相關資料放一起，各份物件仍各自保存值。</h2><p>部分初始化會讓其餘成員得到零值：本課的 score 是 0，grade 是空字元。這與完全沒有初始化的區域物件不同。用點運算子修改單一成員，也不會自動修改其他成員或另一份物件。</p>{count === 3 && <p role="status">你已完成結構與成員存取。</p>}<div><Link className="button button-secondary" to="/learn/pointers/const">上一課：指標與 const</Link><Link className="button button-primary" to="/learn/structures/arrays">下一課：結構陣列與逐筆統計</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

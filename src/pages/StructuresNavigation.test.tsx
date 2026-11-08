@@ -39,3 +39,15 @@ it('opens the new chapter from its course-map group and focuses the loaded lesso
   await waitFor(() => expect(heading).toHaveFocus())
   expect(document.title).toContain('結構與成員存取')
 })
+
+it('links the second structure lesson from the map and back to its prerequisite', async () => {
+  render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
+  const group = await screen.findByRole('region', { name: '結構與自訂型別' })
+  fireEvent.click(within(group).getByRole('link', { name: /結構陣列與逐筆統計，未開始/ }))
+  const heading = await screen.findByRole('heading', { level: 1, name: /先找到那一筆/ })
+  await waitFor(() => expect(heading).toHaveFocus())
+  expect(document.title).toContain('結構陣列與逐筆統計')
+  fireEvent.click(screen.getByRole('link', { name: '上一課：結構與成員存取' }))
+  await screen.findByRole('heading', { level: 1, name: /把相關資料/ })
+  expect(screen.getByRole('link', { name: '下一課：結構陣列與逐筆統計' })).toHaveAttribute('href', '/learn/structures/arrays')
+})

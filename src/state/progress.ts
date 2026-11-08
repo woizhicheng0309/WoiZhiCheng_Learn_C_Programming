@@ -1,3 +1,4 @@
+import { DEFAULT_STRUCTURE_ARRAY_CONFIG, validateStructureArrayConfig, type StructureArrayConfig } from '../domain/structureArrays'
 import { DEFAULT_STRUCTURE_CONFIG, validateStructureConfig, type StructureConfig } from '../domain/structures'
 import { DEFAULT_CONST_POINTER_CONFIG, validateConstPointerConfig, type ConstPointerConfig } from '../domain/constPointers'
 import { DEFAULT_STRING_COMPARISON_CONFIG, validateStringComparisonConfig, type StringComparisonConfig } from '../domain/stringComparison'
@@ -257,6 +258,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'pointers-array-parameters') return { ...DEFAULT_ARRAY_PARAMETER_CONFIG }
   if (id === 'pointers-const') return { ...DEFAULT_CONST_POINTER_CONFIG }
   if (id === 'structures-basics') return { ...DEFAULT_STRUCTURE_CONFIG }
+  if (id === 'structures-arrays') return { ...DEFAULT_STRUCTURE_ARRAY_CONFIG }
   return null
 }
 
@@ -487,6 +489,11 @@ export function isSelectionSortSavedState(value: unknown): value is JsonObject &
   return validateSelectionSortConfig(value as SelectionSortConfig).length === 0
 }
 
+export function isStructureArraySavedState(value: unknown): value is JsonObject & StructureArrayConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateStructureArrayConfig(value as StructureArrayConfig).length === 0
+}
+
 export function isStructureSavedState(value: unknown): value is JsonObject & StructureConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateStructureConfig(value as StructureConfig).length === 0
@@ -550,6 +557,7 @@ export function isSavedStateForLesson(
   if (id === 'pointers-array-parameters') return isArrayParameterSavedState(value)
   if (id === 'pointers-const') return isConstPointerSavedState(value)
   if (id === 'structures-basics') return isStructureSavedState(value)
+  if (id === 'structures-arrays') return isStructureArraySavedState(value)
   return value === null
 }
 

@@ -96,7 +96,7 @@ it('completes keyboard challenges and restores all saved controls', () => {
   fireEvent.keyDown(screen.getByRole('tab', { name: /選對成員存取方式/ }), { key: 'ArrowRight' }); solve('80 95')
   fireEvent.keyDown(screen.getByRole('tab', { name: /副本修改不影響原物件/ }), { key: 'End' }); solve('0 0')
   expect(screen.getByText('你已完成結構與成員存取。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 24, totalChallenges: 72, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 25, totalChallenges: 75, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
   expect(screen.getByRole('combobox', { name: '初始化方式' })).toHaveValue('partial')
