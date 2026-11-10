@@ -4,6 +4,7 @@ import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
 import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
 import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
 import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
+import { STRUCTURE_FUNCTION_CHALLENGE_IDS } from './structureFunctionChallenges'
 import { STRUCTURE_POINTER_CHALLENGE_IDS } from './structurePointerChallenges'
 import { STRUCTURE_ARRAY_CHALLENGE_IDS } from './structureArrayChallenges'
 import { STRUCTURE_CHALLENGE_IDS } from './structureChallenges'
@@ -72,6 +73,7 @@ export const LESSON_IDS = [
   'structures-basics',
   'structures-arrays',
   'structures-pointers',
+  'structures-functions',
   'memory-allocation',
   'memory-reallocation',
   'files-reading',
@@ -525,11 +527,27 @@ const lessons: readonly LessonDefinition[] = [
     requiredChallengeIds: STRUCTURE_POINTER_CHALLENGE_IDS,
   },
   {
+    id: 'structures-functions',
+    topicId: 'structures',
+    moduleNumber: 7,
+    lessonNumber: 4,
+    order: 27,
+    title: '結構的函式傳遞與 typedef',
+    englishTitle: 'Structure Parameters, Returns & typedef',
+    description: '追蹤結構值與指標值如何傳入函式，切換寫入與改指向的順序，並比較型別別名。',
+    concepts: ['結構傳值', '結構回傳值', '指標參數的副本', 'typedef 型別別名'],
+    status: 'available',
+    path: '/learn/structures/functions',
+    estimatedMinutes: 30,
+    prerequisiteLessonIds: ['structures-pointers', 'functions-basics', 'pointers-swap'],
+    requiredChallengeIds: STRUCTURE_FUNCTION_CHALLENGE_IDS,
+  },
+  {
     id: 'memory-allocation',
     topicId: 'dynamic-memory',
     moduleNumber: 8,
     lessonNumber: 1,
-    order: 27,
+    order: 28,
     title: '動態記憶體配置與釋放',
     englishTitle: 'Dynamic Allocation & Release',
     description: '比較 malloc 與 calloc，追蹤配置失敗、逐格初始化、讀取加總與釋放後的生命週期。',
@@ -545,7 +563,7 @@ const lessons: readonly LessonDefinition[] = [
     topicId: 'dynamic-memory',
     moduleNumber: 8,
     lessonNumber: 2,
-    order: 28,
+    order: 29,
     title: 'realloc 容量調整與失敗處理',
     englishTitle: 'Reallocation & Failure Handling',
     description: '以暫存指標接收 realloc 結果，追蹤擴充、縮小、資料保留與失敗時的有效原配置。',
@@ -561,7 +579,7 @@ const lessons: readonly LessonDefinition[] = [
     topicId: 'files-and-input',
     moduleNumber: 9,
     lessonNumber: 1,
-    order: 29,
+    order: 30,
     title: '檔案開啟與 fgets 讀取',
     englishTitle: 'File Streams & fgets',
     description: '逐次追蹤 fopen、fgets 與 fclose，區分緩衝區分段、換行、EOF 和 I/O 失敗分支。',
@@ -577,7 +595,7 @@ const lessons: readonly LessonDefinition[] = [
     topicId: 'files-and-input',
     moduleNumber: 9,
     lessonNumber: 2,
-    order: 30,
+    order: 31,
     title: 'fgetc 逐字讀取與 EOF',
     englishTitle: 'Character Input & EOF',
     description: '用 int 保存 fgetc 的資料與結束值，追蹤零值、高位元組、數字統計與換行提早停止。',
@@ -589,7 +607,7 @@ const lessons: readonly LessonDefinition[] = [
     requiredChallengeIds: FILE_CHARACTER_CHALLENGE_IDS,
   },
   {
-    id: 'files-integer-parsing', topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 3, order: 31,
+    id: 'files-integer-parsing', topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 3, order: 32,
     title: 'strtol 數字解析與輸入驗證', englishTitle: 'strtol & Input Validation',
     description: '追蹤十進位轉換、end 停止位置、ERANGE 與尾端規則，分辨零值和沒有數字。',
     concepts: ['strtol 與 endptr', 'errno 與 ERANGE', 'long 範圍', '完整輸入驗證'],
@@ -598,7 +616,7 @@ const lessons: readonly LessonDefinition[] = [
     requiredChallengeIds: INTEGER_PARSING_CHALLENGE_IDS,
   },
   {
-    id: 'files-score-statistics', topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 4, order: 32,
+    id: 'files-score-statistics', topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 4, order: 33,
     title: '檔案資料驗證與分數統計', englishTitle: 'Validated Score Files & Statistics',
     description: '收集完整紀錄，整合數字驗證、無效資料策略、分數加總與 I/O 失敗處理。',
     concepts: ['完整紀錄與容量', '逐筆驗證', '部分統計與錯誤', '平均分母與型別轉換'],

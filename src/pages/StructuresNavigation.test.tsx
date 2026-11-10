@@ -97,9 +97,21 @@ it('opens chapter eight from the course map and connects it to the prior chapter
   const heading = await screen.findByRole('heading', { level: 1, name: /先取得空間/ })
   await waitFor(() => expect(heading).toHaveFocus())
   expect(document.title).toContain('動態記憶體配置與釋放')
+  fireEvent.click(screen.getByRole('link', { name: '上一課：結構的函式傳遞與 typedef' }))
+  await screen.findByRole('heading', { level: 1, name: /把結構傳給函式/ })
+  expect(screen.getByRole('link', { name: '下一課：動態記憶體配置與釋放' })).toHaveAttribute('href', '/learn/memory/allocation')
+})
+
+it('opens structure functions from the course map and links back to structure pointers', async () => {
+  render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
+  const group = await screen.findByRole('region', { name: '結構與自訂型別' })
+  fireEvent.click(within(group).getByRole('link', { name: /結構的函式傳遞與 typedef，未開始/ }))
+  const heading = await screen.findByRole('heading', { level: 1, name: /把結構傳給函式/ })
+  await waitFor(() => expect(heading).toHaveFocus())
+  expect(document.title).toContain('結構的函式傳遞與 typedef')
   fireEvent.click(screen.getByRole('link', { name: '上一課：指向結構的指標' }))
   await screen.findByRole('heading', { level: 1, name: /沿著指標/ })
-  expect(screen.getByRole('link', { name: '下一課：動態記憶體配置與釋放' })).toHaveAttribute('href', '/learn/memory/allocation')
+  expect(screen.getByRole('link', { name: '下一課：結構的函式傳遞與 typedef' })).toHaveAttribute('href', '/learn/structures/functions')
 })
 
 it('opens the reallocation lesson from the map and connects adjacent memory lessons', async () => {

@@ -129,6 +129,6 @@ export function AllocationLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>取得空間不等於已有數值，釋放後也不能再使用。</h2><p>malloc 成功後仍要先初始化；配置失敗時，提早回傳可以避開後面的存取。使用完後釋放一次，再直接指定 p = NULL。這只改寫 p，不會修復其他指標別名；本課沒有建立別名。</p>{count === 3 && <p role="status">你已完成動態記憶體配置與釋放。</p>}<div><Link className="button button-secondary" to="/learn/structures/pointers">上一課：指向結構的指標</Link><Link className="button button-primary" to="/learn/memory/reallocation">下一課：realloc 容量調整與失敗處理</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>取得空間不等於已有數值，釋放後也不能再使用。</h2><p>malloc 成功後仍要先初始化；配置失敗時，提早回傳可以避開後面的存取。使用完後釋放一次，再直接指定 p = NULL。這只改寫 p，不會修復其他指標別名；本課沒有建立別名。</p>{count === 3 && <p role="status">你已完成動態記憶體配置與釋放。</p>}<div><Link className="button button-secondary" to="/learn/structures/functions">上一課：結構的函式傳遞與 typedef</Link><Link className="button button-primary" to="/learn/memory/reallocation">下一課：realloc 容量調整與失敗處理</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }

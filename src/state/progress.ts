@@ -4,6 +4,7 @@ import { DEFAULT_FILE_CHARACTER_CONFIG, validateFileCharacterConfig, type FileCh
 import { DEFAULT_FILE_READING_CONFIG, validateFileReadingConfig, type FileReadingConfig } from '../domain/fileReading'
 import { DEFAULT_REALLOCATION_CONFIG, validateReallocationConfig, type ReallocationConfig } from '../domain/reallocation'
 import { DEFAULT_ALLOCATION_CONFIG, validateAllocationConfig, type AllocationConfig } from '../domain/allocation'
+import { DEFAULT_STRUCTURE_FUNCTION_CONFIG, validateStructureFunctionConfig, type StructureFunctionConfig } from '../domain/structureFunctions'
 import { DEFAULT_STRUCTURE_POINTER_CONFIG, validateStructurePointerConfig, type StructurePointerConfig } from '../domain/structurePointers'
 import { DEFAULT_STRUCTURE_ARRAY_CONFIG, validateStructureArrayConfig, type StructureArrayConfig } from '../domain/structureArrays'
 import { DEFAULT_STRUCTURE_CONFIG, validateStructureConfig, type StructureConfig } from '../domain/structures'
@@ -267,6 +268,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'structures-basics') return { ...DEFAULT_STRUCTURE_CONFIG }
   if (id === 'structures-arrays') return { ...DEFAULT_STRUCTURE_ARRAY_CONFIG }
   if (id === 'structures-pointers') return { ...DEFAULT_STRUCTURE_POINTER_CONFIG }
+  if (id === 'structures-functions') return { ...DEFAULT_STRUCTURE_FUNCTION_CONFIG }
   if (id === 'memory-allocation') return { ...DEFAULT_ALLOCATION_CONFIG }
   if (id === 'memory-reallocation') return { ...DEFAULT_REALLOCATION_CONFIG }
   if (id === 'files-reading') return { ...DEFAULT_FILE_READING_CONFIG }
@@ -533,6 +535,11 @@ export function isAllocationSavedState(value: unknown): value is JsonObject & Al
   return validateAllocationConfig(value as AllocationConfig).length === 0
 }
 
+export function isStructureFunctionSavedState(value: unknown): value is JsonObject & StructureFunctionConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateStructureFunctionConfig(value as StructureFunctionConfig).length === 0
+}
+
 export function isStructurePointerSavedState(value: unknown): value is JsonObject & StructurePointerConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateStructurePointerConfig(value as StructurePointerConfig).length === 0
@@ -608,6 +615,7 @@ export function isSavedStateForLesson(
   if (id === 'structures-basics') return isStructureSavedState(value)
   if (id === 'structures-arrays') return isStructureArraySavedState(value)
   if (id === 'structures-pointers') return isStructurePointerSavedState(value)
+  if (id === 'structures-functions') return isStructureFunctionSavedState(value)
   if (id === 'memory-allocation') return isAllocationSavedState(value)
   if (id === 'memory-reallocation') return isReallocationSavedState(value)
   if (id === 'files-reading') return isFileReadingSavedState(value)

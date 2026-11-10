@@ -44,3 +44,7 @@
 .structure-pointer-links dt small { display: block; margin-top: 7px; color: var(--ink-soft); font-size: .75rem; font-weight: 400; }
 .structure-pointer-links dd { margin: 12px 0 0; font: 700 1.1rem var(--mono); overflow-wrap: anywhere; }
 .structure-pointer-range input:disabled { opacity: .5; }
+
+.structure-function-page .source-code-panel__editor { max-height: 28rem; overflow: auto; }
+.structure-function-page .source-code-panel__editor:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: -3px; }
+.structure-function-page .structure-console pre { font: .8rem/1.9 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }

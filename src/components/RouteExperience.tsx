@@ -28,6 +28,7 @@ const routeTitles: Record<string, string> = {
   '/learn/pointers/traversal': `陣列與指標走訪｜${SITE_TITLE}`,
   '/learn/structures/basics': `結構與成員存取｜${SITE_TITLE}`,
   '/learn/structures/arrays': `結構陣列與逐筆統計｜${SITE_TITLE}`,
+  '/learn/structures/functions': `結構的函式傳遞與 typedef｜${SITE_TITLE}`,
   '/learn/structures/pointers': `指向結構的指標｜${SITE_TITLE}`,
   '/learn/memory/allocation': `動態記憶體配置與釋放｜${SITE_TITLE}`,
   '/learn/memory/reallocation': `realloc 容量調整與失敗處理｜${SITE_TITLE}`,
