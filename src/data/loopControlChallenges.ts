@@ -1,10 +1,7 @@
+import { LOOP_CONTROL_CHALLENGE_IDS } from './challengeIds'
 import { simulateLoopControlProgram } from '../domain/loopControl'
 
-export const LOOP_CONTROL_CHALLENGE_IDS = [
-  'predict-break-output',
-  'predict-continue-sum',
-  'identify-continue-update',
-] as const
+export { LOOP_CONTROL_CHALLENGE_IDS } from './challengeIds'
 
 export type LoopControlChallengeId = (typeof LOOP_CONTROL_CHALLENGE_IDS)[number]
 

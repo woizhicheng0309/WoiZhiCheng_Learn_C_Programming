@@ -25,7 +25,7 @@ import {
   type LessonProgressStatus,
   type TopicDefinition,
   type TopicId,
-} from '../data'
+} from '../data/lessons'
 import {
   getContinueLearningLesson,
   getContinueLearningPath,

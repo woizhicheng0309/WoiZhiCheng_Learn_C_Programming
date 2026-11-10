@@ -1,6 +1,8 @@
+import { STRUCTURE_POINTER_CHALLENGE_IDS } from './challengeIds'
 import { simulateStructurePointerProgram } from '../domain/structurePointers'
 
-export const STRUCTURE_POINTER_CHALLENGE_IDS = ['choose-structure-arrow', 'predict-structure-pointer-alias', 'check-structure-null-guard'] as const
+export { STRUCTURE_POINTER_CHALLENGE_IDS } from './challengeIds'
+
 export type StructurePointerChallengeId = (typeof STRUCTURE_POINTER_CHALLENGE_IDS)[number]
 export const STRUCTURE_POINTER_CHALLENGES = [
   { id: 'choose-structure-arrow' as const, title: '選出箭頭的等價寫法', question: 'p 是指向有效 struct Student 物件的指標。p->score 等同哪個寫法？輸入 1：(*p).score；輸入 2：p.score；輸入 3：*p.score。' },

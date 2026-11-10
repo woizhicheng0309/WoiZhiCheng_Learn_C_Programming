@@ -1,10 +1,7 @@
+import { WHILE_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_WHILE_CONFIG, simulateWhileProgram } from '../domain/whileLoops'
 
-export const WHILE_CHALLENGE_IDS = [
-  'predict-while-zero',
-  'predict-do-once',
-  'identify-loop-update',
-] as const
+export { WHILE_CHALLENGE_IDS } from './challengeIds'
 
 export type WhileChallengeId = (typeof WHILE_CHALLENGE_IDS)[number]
 

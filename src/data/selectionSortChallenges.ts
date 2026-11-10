@@ -1,5 +1,8 @@
+import { SELECTION_SORT_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_SELECTION_SORT_CONFIG, simulateSelectionSortProgram } from '../domain/selectionSort'
-export const SELECTION_SORT_CHALLENGE_IDS = ['identify-first-best', 'predict-first-pass', 'count-sorted-comparisons'] as const
+
+export { SELECTION_SORT_CHALLENGE_IDS } from './challengeIds'
+
 export type SelectionSortChallengeId = (typeof SELECTION_SORT_CHALLENGE_IDS)[number]
 export const SELECTION_SORT_CHALLENGES = [
   { id: 'identify-first-best' as const, title: '第一輪候選的位置', question: '以升冪排序 {4, 1, 5, 2, 3}，第一輪比較完、交換前的 best 索引是多少？' },

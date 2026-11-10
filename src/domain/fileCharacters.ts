@@ -1,18 +1,18 @@
-import { FILE_READING_OUTCOMES, type FileStreamStatus } from './fileReading'
+import { type FileStreamStatus } from './fileReading'
+import {
+  FILE_CHARACTER_DATASETS,
+  type FileCharacterConfig,
+  DEFAULT_FILE_CHARACTER_CONFIG,
+  validateFileCharacterConfig,
+} from './fileCharactersConfig'
 
-export const FILE_CHARACTER_DATASETS = {
-  text: { label: 'A、0、換行、B、9', bytes: [65, 48, 10, 66, 57] },
-  nul: { label: 'A、0x00、B、9', bytes: [65, 0, 66, 57] },
-  high: { label: '0xFF、0、換行、9', bytes: [255, 48, 10, 57] },
-  digits: { label: '0、1、9', bytes: [48, 49, 57] },
-  empty: { label: '空檔案', bytes: [] },
-} as const
-export interface FileCharacterConfig {
-  dataset: keyof typeof FILE_CHARACTER_DATASETS
-  outcome: keyof typeof FILE_READING_OUTCOMES
-  stopAtNewline: boolean
-}
-export const DEFAULT_FILE_CHARACTER_CONFIG: Readonly<FileCharacterConfig> = { dataset: 'text', outcome: 'success', stopAtNewline: false }
+export {
+  FILE_CHARACTER_DATASETS,
+  type FileCharacterConfig,
+  DEFAULT_FILE_CHARACTER_CONFIG,
+  validateFileCharacterConfig,
+} from './fileCharactersConfig'
+
 export type FileCharacterPhase = 'prepare' | 'enter-main' | 'open' | 'check-open' | 'print-open-failure' | 'return-open-failure'
   | 'declare-ch' | 'initialize-counters' | 'set-stop' | 'read-attempt' | 'while-condition' | 'check-stop' | 'break'
   | 'count-byte' | 'check-digit' | 'count-digit' | 'print-code' | 'capture-read-error' | 'close' | 'check-errors'
@@ -44,13 +44,6 @@ export interface FileCharacterFrame {
   printedValues: readonly number[] | null
   exitCode: number | null
   output: readonly string[]
-}
-export function validateFileCharacterConfig(config: FileCharacterConfig = DEFAULT_FILE_CHARACTER_CONFIG): readonly string[] {
-  const issues: string[] = []
-  if (typeof config.dataset !== 'string' || !Object.hasOwn(FILE_CHARACTER_DATASETS, config.dataset)) issues.push('請選擇有效的位元組資料。')
-  if (typeof config.outcome !== 'string' || !Object.hasOwn(FILE_READING_OUTCOMES, config.outcome)) issues.push('請選擇有效的 I/O 情境。')
-  if (typeof config.stopAtNewline !== 'boolean') issues.push('請選擇是否在換行時提早停止。')
-  return issues
 }
 export function buildFileCharacterSource(config: FileCharacterConfig = DEFAULT_FILE_CHARACTER_CONFIG) {
   const safe = validateFileCharacterConfig(config).length ? DEFAULT_FILE_CHARACTER_CONFIG : config

@@ -1,5 +1,8 @@
+import { STRING_COPY_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_STRING_COPY_CONFIG, simulateStringCopyProgram } from '../domain/stringCopy'
-export const STRING_COPY_CHALLENGE_IDS = ['count-copy-characters', 'reserve-string-terminator', 'compare-string-length-size'] as const
+
+export { STRING_COPY_CHALLENGE_IDS } from './challengeIds'
+
 export type StringCopyChallengeId = (typeof STRING_COPY_CHALLENGE_IDS)[number]
 export const STRING_COPY_CHALLENGES = [
   { id: 'count-copy-characters' as const, title: '結尾也要複製', question: '把 "CODE" 安全複製到容量 5 的 destination，共需要寫入幾格？請包含結尾空字元。' },

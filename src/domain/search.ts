@@ -1,6 +1,8 @@
+import { type SearchConfig, DEFAULT_SEARCH_CONFIG, validateSearchConfig } from './searchConfig'
+
+export { type SearchConfig, DEFAULT_SEARCH_CONFIG, validateSearchConfig } from './searchConfig'
+
 export const SEARCH_VALUES: readonly number[] = [4, 7, 2, 7, 5]
-export interface SearchConfig { target: number; mode: 'first' | 'last' }
-export const DEFAULT_SEARCH_CONFIG: Readonly<SearchConfig> = { target: 7, mode: 'first' }
 export const SEARCH_LIMITS = { target: { min: -5, max: 15 } } as const
 export type SearchPhase = 'enter-main' | 'initialize-values' | 'initialize-target' | 'initialize-found' | 'initialize-index' | 'condition' | 'compare' | 'record' | 'break' | 'increment' | 'print' | 'return-main' | 'done' | 'blocked'
 export interface SearchFrame {
@@ -19,12 +21,6 @@ export interface SearchFrame {
   matched: boolean | null
   comparedIndices: readonly number[]
   output: string | null
-}
-export function validateSearchConfig(config: SearchConfig = DEFAULT_SEARCH_CONFIG): readonly string[] {
-  const issues: string[] = []
-  if (!Number.isInteger(config.target) || config.target < -5 || config.target > 15) issues.push('target 必須是 -5 到 15 的整數。')
-  if (config.mode !== 'first' && config.mode !== 'last') issues.push('請選擇第一筆或最後一筆。')
-  return issues
 }
 export function buildSearchSource(config: SearchConfig = DEFAULT_SEARCH_CONFIG) {
   const literal = Number.isSafeInteger(config.target) ? String(config.target) : '0 /* invalid target */'

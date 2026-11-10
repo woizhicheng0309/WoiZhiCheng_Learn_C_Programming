@@ -1,5 +1,8 @@
+import { INSERTION_SORT_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_INSERTION_SORT_CONFIG, simulateInsertionSortProgram } from '../domain/insertionSort'
-export const INSERTION_SORT_CHALLENGE_IDS = ['predict-insertion-pass', 'identify-short-circuit', 'count-insertion-shifts'] as const
+
+export { INSERTION_SORT_CHALLENGE_IDS } from './challengeIds'
+
 export type InsertionSortChallengeId = (typeof INSERTION_SORT_CHALLENGE_IDS)[number]
 export const INSERTION_SORT_CHALLENGES = [
   { id: 'predict-insertion-pass' as const, title: '預測第一輪插入後', question: '將 {4, 3, 1, 5, 2} 升冪排序。i = 1 的第一輪結束後，五格依序是什麼？' },

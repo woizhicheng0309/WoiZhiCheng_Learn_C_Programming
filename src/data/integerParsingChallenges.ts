@@ -1,6 +1,8 @@
+import { INTEGER_PARSING_CHALLENGE_IDS } from './challengeIds'
 import { simulateIntegerParsingProgram } from '../domain/integerParsing'
 
-export const INTEGER_PARSING_CHALLENGE_IDS = ['distinguish-strtol-zero', 'predict-strtol-end', 'check-strtol-range'] as const
+export { INTEGER_PARSING_CHALLENGE_IDS } from './challengeIds'
+
 export type IntegerParsingChallengeId = (typeof INTEGER_PARSING_CHALLENGE_IDS)[number]
 export const INTEGER_PARSING_CHALLENGES = [
   { id: 'distinguish-strtol-zero' as const, title: '零值不等於轉換失敗', question: '以 base = 10 轉換 "0" 與 "abc"，strtol 都可能回傳 0。要分辨有沒有轉換任何數字，選哪個檢查？輸入 1：value == 0；輸入 2：end == text；輸入 3：只看字串長度。' },

@@ -1,14 +1,11 @@
+import { VARIABLE_CHALLENGE_IDS } from './challengeIds'
 import {
   simulateVariableProgram,
   type VariableConfig,
   type VariableSimulationResult,
 } from '../domain/variables'
 
-export const VARIABLE_CHALLENGE_IDS = [
-  'predict-int-division',
-  'make-fourteen',
-  'repair-division-by-zero',
-] as const
+export { VARIABLE_CHALLENGE_IDS } from './challengeIds'
 
 export type VariableChallengeId = (typeof VARIABLE_CHALLENGE_IDS)[number]
 

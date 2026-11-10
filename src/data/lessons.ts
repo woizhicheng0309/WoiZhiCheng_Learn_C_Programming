@@ -1,39 +1,41 @@
-import { GRADEBOOK_CHALLENGE_IDS } from './gradebookChallenges'
-import { RECORD_FILE_CHALLENGE_IDS } from './recordFileChallenges'
-import { SCORE_FILE_CHALLENGE_IDS } from './scoreFileChallenges'
-import { INTEGER_PARSING_CHALLENGE_IDS } from './integerParsingChallenges'
-import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
-import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
-import { MEMORY_OWNERSHIP_CHALLENGE_IDS } from './memoryOwnershipChallenges'
-import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
-import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
-import { STRUCTURE_FUNCTION_CHALLENGE_IDS } from './structureFunctionChallenges'
-import { STRUCTURE_POINTER_CHALLENGE_IDS } from './structurePointerChallenges'
-import { STRUCTURE_ARRAY_CHALLENGE_IDS } from './structureArrayChallenges'
-import { STRUCTURE_CHALLENGE_IDS } from './structureChallenges'
-import { CONST_POINTER_CHALLENGE_IDS } from './constPointerChallenges'
-import { STRING_COMPARISON_CHALLENGE_IDS } from './stringComparisonChallenges'
-import { ARRAY_PARAMETER_CHALLENGE_IDS } from './arrayParameterChallenges'
-import { STRING_COPY_CHALLENGE_IDS } from './stringCopyChallenges'
-import { BUBBLE_SORT_CHALLENGE_IDS } from './bubbleSortChallenges'
-import { INSERTION_SORT_CHALLENGE_IDS } from './insertionSortChallenges'
-import { SELECTION_SORT_CHALLENGE_IDS } from './selectionSortChallenges'
-import { BINARY_SEARCH_CHALLENGE_IDS } from './binarySearchChallenges'
-import { SEARCH_CHALLENGE_IDS } from './searchChallenges'
-import { MATRIX_CHALLENGE_IDS } from './matrixChallenges'
-import { RECURSION_CHALLENGE_IDS } from './recursionChallenges'
-import { SWITCH_CHALLENGE_IDS } from './switchChallenges'
-import { CHALLENGE_IDS } from './challenges'
-import { VARIABLE_CHALLENGE_IDS } from './variableChallenges'
-import { CONDITIONAL_CHALLENGE_IDS } from './conditionalChallenges'
-import { FUNCTION_CHALLENGE_IDS } from './functionChallenges'
-import { ARRAY_CHALLENGE_IDS } from './arrayChallenges'
-import { POINTER_CHALLENGE_IDS } from './pointerChallenges'
-import { SWAP_CHALLENGE_IDS } from './swapChallenges'
-import { TRAVERSAL_CHALLENGE_IDS } from './traversalChallenges'
-import { STRING_POINTER_CHALLENGE_IDS } from './stringPointerChallenges'
-import { WHILE_CHALLENGE_IDS } from './whileChallenges'
-import { LOOP_CONTROL_CHALLENGE_IDS } from './loopControlChallenges'
+import {
+  GRADEBOOK_CHALLENGE_IDS,
+  RECORD_FILE_CHALLENGE_IDS,
+  SCORE_FILE_CHALLENGE_IDS,
+  INTEGER_PARSING_CHALLENGE_IDS,
+  FILE_CHARACTER_CHALLENGE_IDS,
+  FILE_READING_CHALLENGE_IDS,
+  MEMORY_OWNERSHIP_CHALLENGE_IDS,
+  REALLOCATION_CHALLENGE_IDS,
+  ALLOCATION_CHALLENGE_IDS,
+  STRUCTURE_FUNCTION_CHALLENGE_IDS,
+  STRUCTURE_POINTER_CHALLENGE_IDS,
+  STRUCTURE_ARRAY_CHALLENGE_IDS,
+  STRUCTURE_CHALLENGE_IDS,
+  CONST_POINTER_CHALLENGE_IDS,
+  STRING_COMPARISON_CHALLENGE_IDS,
+  ARRAY_PARAMETER_CHALLENGE_IDS,
+  STRING_COPY_CHALLENGE_IDS,
+  BUBBLE_SORT_CHALLENGE_IDS,
+  INSERTION_SORT_CHALLENGE_IDS,
+  SELECTION_SORT_CHALLENGE_IDS,
+  BINARY_SEARCH_CHALLENGE_IDS,
+  SEARCH_CHALLENGE_IDS,
+  MATRIX_CHALLENGE_IDS,
+  RECURSION_CHALLENGE_IDS,
+  SWITCH_CHALLENGE_IDS,
+  CHALLENGE_IDS,
+  VARIABLE_CHALLENGE_IDS,
+  CONDITIONAL_CHALLENGE_IDS,
+  FUNCTION_CHALLENGE_IDS,
+  ARRAY_CHALLENGE_IDS,
+  POINTER_CHALLENGE_IDS,
+  SWAP_CHALLENGE_IDS,
+  TRAVERSAL_CHALLENGE_IDS,
+  STRING_POINTER_CHALLENGE_IDS,
+  WHILE_CHALLENGE_IDS,
+  LOOP_CONTROL_CHALLENGE_IDS,
+} from './challengeIds'
 
 export const TOPIC_IDS = [
   'variables',

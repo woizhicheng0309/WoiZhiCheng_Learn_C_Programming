@@ -1,64 +1,136 @@
-import { DEFAULT_GRADEBOOK_CONFIG, validateGradebookConfig, type GradebookConfig } from '../domain/gradebookProject'
-import { DEFAULT_RECORD_FILE_CONFIG, validateRecordFileConfig, type RecordFileConfig } from '../domain/recordFile'
-import { DEFAULT_SCORE_FILE_CONFIG, validateScoreFileConfig, type ScoreFileConfig } from '../domain/scoreFile'
-import { DEFAULT_INTEGER_PARSING_CONFIG, validateIntegerParsingConfig, type IntegerParsingConfig } from '../domain/integerParsing'
-import { DEFAULT_FILE_CHARACTER_CONFIG, validateFileCharacterConfig, type FileCharacterConfig } from '../domain/fileCharacters'
-import { DEFAULT_FILE_READING_CONFIG, validateFileReadingConfig, type FileReadingConfig } from '../domain/fileReading'
-import { DEFAULT_MEMORY_OWNERSHIP_CONFIG, validateMemoryOwnershipConfig, type MemoryOwnershipConfig } from '../domain/memoryOwnership'
-import { DEFAULT_REALLOCATION_CONFIG, validateReallocationConfig, type ReallocationConfig } from '../domain/reallocation'
-import { DEFAULT_ALLOCATION_CONFIG, validateAllocationConfig, type AllocationConfig } from '../domain/allocation'
-import { DEFAULT_STRUCTURE_FUNCTION_CONFIG, validateStructureFunctionConfig, type StructureFunctionConfig } from '../domain/structureFunctions'
-import { DEFAULT_STRUCTURE_POINTER_CONFIG, validateStructurePointerConfig, type StructurePointerConfig } from '../domain/structurePointers'
-import { DEFAULT_STRUCTURE_ARRAY_CONFIG, validateStructureArrayConfig, type StructureArrayConfig } from '../domain/structureArrays'
-import { DEFAULT_STRUCTURE_CONFIG, validateStructureConfig, type StructureConfig } from '../domain/structures'
-import { DEFAULT_CONST_POINTER_CONFIG, validateConstPointerConfig, type ConstPointerConfig } from '../domain/constPointers'
-import { DEFAULT_STRING_COMPARISON_CONFIG, validateStringComparisonConfig, type StringComparisonConfig } from '../domain/stringComparison'
-import { DEFAULT_ARRAY_PARAMETER_CONFIG, validateArrayParameterConfig, type ArrayParameterConfig } from '../domain/arrayParameters'
-import { DEFAULT_STRING_COPY_CONFIG, validateStringCopyConfig, type StringCopyConfig } from '../domain/stringCopy'
-import { DEFAULT_BUBBLE_SORT_CONFIG, validateBubbleSortConfig, type BubbleSortConfig } from '../domain/bubbleSort'
-import { DEFAULT_INSERTION_SORT_CONFIG, validateInsertionSortConfig, type InsertionSortConfig } from '../domain/insertionSort'
-import { DEFAULT_SELECTION_SORT_CONFIG, validateSelectionSortConfig, type SelectionSortConfig } from '../domain/selectionSort'
-import { DEFAULT_BINARY_SEARCH_CONFIG, validateBinarySearchConfig, type BinarySearchConfig } from '../domain/binarySearch'
-import { DEFAULT_SEARCH_CONFIG, validateSearchConfig, type SearchConfig } from '../domain/search'
-import { DEFAULT_MATRIX_CONFIG, validateMatrixConfig, type MatrixConfig } from '../domain/matrices'
-import { DEFAULT_RECURSION_CONFIG, validateRecursionConfig, type RecursionConfig } from '../domain/recursion'
-import { DEFAULT_SWITCH_CONFIG, validateSwitchConfig, type SwitchConfig } from '../domain/switchBranching'
 import {
-  COMPARATORS,
-  DEFAULT_ARRAY_CONFIG,
-  DEFAULT_POINTER_CONFIG,
-  DEFAULT_SWAP_CONFIG,
-  DEFAULT_TRAVERSAL_CONFIG,
+  DEFAULT_GRADEBOOK_CONFIG,
+  validateGradebookConfig,
+  type GradebookConfig,
+} from '../domain/gradebookProjectConfig'
+import {
+  DEFAULT_RECORD_FILE_CONFIG,
+  validateRecordFileConfig,
+  type RecordFileConfig,
+} from '../domain/recordFileConfig'
+import {
+  DEFAULT_SCORE_FILE_CONFIG,
+  validateScoreFileConfig,
+  type ScoreFileConfig,
+} from '../domain/scoreFileConfig'
+import {
+  DEFAULT_INTEGER_PARSING_CONFIG,
+  validateIntegerParsingConfig,
+  type IntegerParsingConfig,
+} from '../domain/integerParsingConfig'
+import {
+  DEFAULT_FILE_CHARACTER_CONFIG,
+  validateFileCharacterConfig,
+  type FileCharacterConfig,
+} from '../domain/fileCharactersConfig'
+import {
+  DEFAULT_FILE_READING_CONFIG,
+  validateFileReadingConfig,
+  type FileReadingConfig,
+} from '../domain/fileReadingConfig'
+import {
+  DEFAULT_MEMORY_OWNERSHIP_CONFIG,
+  validateMemoryOwnershipConfig,
+  type MemoryOwnershipConfig,
+} from '../domain/memoryOwnershipConfig'
+import {
+  DEFAULT_REALLOCATION_CONFIG,
+  validateReallocationConfig,
+  type ReallocationConfig,
+} from '../domain/reallocationConfig'
+import {
+  DEFAULT_ALLOCATION_CONFIG,
+  validateAllocationConfig,
+  type AllocationConfig,
+} from '../domain/allocationConfig'
+import {
+  DEFAULT_STRUCTURE_FUNCTION_CONFIG,
+  validateStructureFunctionConfig,
+  type StructureFunctionConfig,
+} from '../domain/structureFunctionsConfig'
+import {
+  DEFAULT_STRUCTURE_POINTER_CONFIG,
+  validateStructurePointerConfig,
+  type StructurePointerConfig,
+} from '../domain/structurePointersConfig'
+import {
+  DEFAULT_STRUCTURE_ARRAY_CONFIG,
+  validateStructureArrayConfig,
+  type StructureArrayConfig,
+} from '../domain/structureArraysConfig'
+import {
+  DEFAULT_STRUCTURE_CONFIG,
+  validateStructureConfig,
+  type StructureConfig,
+} from '../domain/structuresConfig'
+import {
+  DEFAULT_CONST_POINTER_CONFIG,
+  validateConstPointerConfig,
+  type ConstPointerConfig,
+} from '../domain/constPointersConfig'
+import {
+  DEFAULT_STRING_COMPARISON_CONFIG,
+  validateStringComparisonConfig,
+  type StringComparisonConfig,
+} from '../domain/stringComparisonConfig'
+import {
+  DEFAULT_ARRAY_PARAMETER_CONFIG,
+  validateArrayParameterConfig,
+  type ArrayParameterConfig,
+} from '../domain/arrayParametersConfig'
+import {
+  DEFAULT_STRING_COPY_CONFIG,
+  validateStringCopyConfig,
+  type StringCopyConfig,
+} from '../domain/stringCopyConfig'
+import {
+  DEFAULT_BUBBLE_SORT_CONFIG,
+  validateBubbleSortConfig,
+  type BubbleSortConfig,
+} from '../domain/bubbleSortConfig'
+import {
+  DEFAULT_INSERTION_SORT_CONFIG,
+  validateInsertionSortConfig,
+  type InsertionSortConfig,
+} from '../domain/insertionSortConfig'
+import {
+  DEFAULT_SELECTION_SORT_CONFIG,
+  validateSelectionSortConfig,
+  type SelectionSortConfig,
+} from '../domain/selectionSortConfig'
+import {
+  DEFAULT_BINARY_SEARCH_CONFIG,
+  validateBinarySearchConfig,
+  type BinarySearchConfig,
+} from '../domain/binarySearchConfig'
+import { DEFAULT_SEARCH_CONFIG, validateSearchConfig, type SearchConfig } from '../domain/searchConfig'
+import { DEFAULT_MATRIX_CONFIG, validateMatrixConfig, type MatrixConfig } from '../domain/matricesConfig'
+import { DEFAULT_RECURSION_CONFIG, validateRecursionConfig, type RecursionConfig } from '../domain/recursionConfig'
+import { DEFAULT_SWITCH_CONFIG, validateSwitchConfig, type SwitchConfig } from '../domain/switchBranchingConfig'
+import { COMPARATORS, DEFAULT_LOOP_CONFIG, type LoopConfig } from '../domain/types'
+import { DEFAULT_ARRAY_CONFIG, validateArrayConfig, type ArrayConfig } from '../domain/arraysConfig'
+import { DEFAULT_POINTER_CONFIG, validatePointerConfig, type PointerConfig } from '../domain/pointersConfig'
+import { DEFAULT_SWAP_CONFIG, validateSwapConfig, type SwapConfig } from '../domain/swapConfig'
+import { DEFAULT_TRAVERSAL_CONFIG, validateTraversalConfig, type TraversalConfig } from '../domain/traversalConfig'
+import {
   DEFAULT_STRING_POINTER_CONFIG,
-  DEFAULT_WHILE_CONFIG,
+  validateStringPointerConfig,
+  type StringPointerConfig,
+} from '../domain/stringPointersConfig'
+import { DEFAULT_WHILE_CONFIG, validateWhileConfig, type WhileConfig } from '../domain/whileLoopsConfig'
+import {
   DEFAULT_LOOP_CONTROL_CONFIG,
+  validateLoopControlConfig,
+  type LoopControlConfig,
+} from '../domain/loopControlConfig'
+import {
   CONDITIONAL_LIMITS,
   CONDITIONAL_LOGICAL_OPERATORS,
   DEFAULT_CONDITIONAL_CONFIG,
-  DEFAULT_FUNCTION_CONFIG,
-  DEFAULT_LOOP_CONFIG,
-  FUNCTION_LIMITS,
-  validateLoopConfig,
-  validateArrayConfig,
-  validatePointerConfig,
-  validateSwapConfig,
-  validateTraversalConfig,
-  validateStringPointerConfig,
-  validateWhileConfig,
-  validateLoopControlConfig,
-} from '../domain'
-import type {
-  ArrayConfig,
-  ConditionalConfig,
-  FunctionConfig,
-  LoopConfig,
-  PointerConfig,
-  SwapConfig,
-  TraversalConfig,
-  StringPointerConfig,
-  WhileConfig,
-  LoopControlConfig,
-} from '../domain'
+  type ConditionalConfig,
+} from '../domain/conditionalsConfig'
+import { DEFAULT_FUNCTION_CONFIG, FUNCTION_LIMITS, type FunctionConfig } from '../domain/functionsConfig'
+import { validateLoopConfig } from '../domain/loopConfig'
 import {
   LESSONS,
   getLessonById,
@@ -70,7 +142,7 @@ import type {
   LessonId,
   LessonProgressStatus,
 } from '../data/lessons'
-import { CHALLENGE_IDS } from '../data/challenges'
+import { CHALLENGE_IDS } from '../data/challengeIds'
 import type { ChallengeId } from '../data/challenges'
 
 export const PROGRESS_VERSION = 2 as const

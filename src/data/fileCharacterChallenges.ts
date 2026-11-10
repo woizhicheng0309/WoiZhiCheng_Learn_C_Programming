@@ -1,6 +1,8 @@
+import { FILE_CHARACTER_CHALLENGE_IDS } from './challengeIds'
 import { simulateFileCharacterProgram } from '../domain/fileCharacters'
 
-export const FILE_CHARACTER_CHALLENGE_IDS = ['choose-fgetc-int', 'predict-fgetc-zero-byte', 'check-fgetc-early-stop'] as const
+export { FILE_CHARACTER_CHALLENGE_IDS } from './challengeIds'
+
 export type FileCharacterChallengeId = (typeof FILE_CHARACTER_CHALLENGE_IDS)[number]
 export const FILE_CHARACTER_CHALLENGES = [
   { id: 'choose-fgetc-int' as const, title: '先保留完整回傳值', question: '本課每位元組有 8 位元，int 可表示 0 到 255。要保存 fgetc(fp) 的完整回傳值，先比較 EOF 再當成資料處理，ch 應宣告為哪個型別？輸入 1：char；輸入 2：int；輸入 3：unsigned char。' },

@@ -1,5 +1,8 @@
+import { SEARCH_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_SEARCH_CONFIG, simulateSearchProgram } from '../domain/search'
-export const SEARCH_CHALLENGE_IDS = ['predict-first-match', 'predict-last-match', 'identify-not-found'] as const
+
+export { SEARCH_CHALLENGE_IDS } from './challengeIds'
+
 export type SearchChallengeId = (typeof SEARCH_CHALLENGE_IDS)[number]
 export const SEARCH_CHALLENGES = [
   { id: 'predict-first-match' as const, title: '第一筆相符的索引', question: '在 {4, 7, 2, 7, 5} 搜尋 7，找到就 break。最後 found 是多少？' },

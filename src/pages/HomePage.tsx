@@ -13,14 +13,15 @@ import {
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Link } from 'react-router-dom'
-import { COURSE_TOPICS, VARIABLE_CHALLENGE_IDS, isLessonAvailable } from '../data'
+import { VARIABLE_CHALLENGE_IDS } from '../data/challengeIds'
+import { COURSE_TOPICS, isLessonAvailable } from '../data/lessons'
 import {
   DEFAULT_VARIABLE_CONFIG,
   formatVariableNumber,
   simulateVariableProgram,
   type ArithmeticOperator,
   type VariableConfig,
-} from '../domain'
+} from '../domain/variables'
 import { isLessonCompleted } from '../state'
 import { Reveal } from '../components/Reveal'
 import { useLearningProgress } from '../hooks/useLearningProgress'

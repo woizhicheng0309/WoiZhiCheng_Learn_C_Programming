@@ -1,10 +1,7 @@
+import { SWAP_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_SWAP_CONFIG, simulateSwapProgram } from '../domain/swap'
 
-export const SWAP_CHALLENGE_IDS = [
-  'predict-value-swap',
-  'choose-pointer-call',
-  'preserve-swap-temp',
-] as const
+export { SWAP_CHALLENGE_IDS } from './challengeIds'
 
 export type SwapChallengeId = (typeof SWAP_CHALLENGE_IDS)[number]
 

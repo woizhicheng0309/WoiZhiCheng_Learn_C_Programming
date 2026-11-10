@@ -1,8 +1,17 @@
-export const ARRAY_PARAMETER_SAMPLES = {
-  positive: [4, 7, 2, 9, 5], mixed: [-4, 2, -1, 3, -2], zeros: [0, 0, 0, 0, 0],
-} as const
-export interface ArrayParameterConfig { sample: keyof typeof ARRAY_PARAMETER_SAMPLES; count: number; mode: 'read-only' | 'modify' }
-export const DEFAULT_ARRAY_PARAMETER_CONFIG: Readonly<ArrayParameterConfig> = { sample: 'positive', count: 3, mode: 'read-only' }
+import {
+  ARRAY_PARAMETER_SAMPLES,
+  type ArrayParameterConfig,
+  DEFAULT_ARRAY_PARAMETER_CONFIG,
+  validateArrayParameterConfig,
+} from './arrayParametersConfig'
+
+export {
+  ARRAY_PARAMETER_SAMPLES,
+  type ArrayParameterConfig,
+  DEFAULT_ARRAY_PARAMETER_CONFIG,
+  validateArrayParameterConfig,
+} from './arrayParametersConfig'
+
 export type ArrayParameterPhase = 'enter-main' | 'initialize-array' | 'initialize-count' | 'call-process' | 'bind-parameters' | 'initialize-sum' | 'initialize-i' | 'condition' | 'modify-element' | 'accumulate' | 'increment-i' | 'end-loop' | 'return-process' | 'assign-answer' | 'print-answer' | 'initialize-k' | 'print-condition' | 'print-element' | 'increment-k' | 'return-main' | 'done' | 'blocked'
 export interface ArrayParameterFrame {
   index: number
@@ -26,13 +35,6 @@ export interface ArrayParameterFrame {
   visitedIndices: readonly number[]
   writes: number
   output: readonly string[]
-}
-export function validateArrayParameterConfig(config: ArrayParameterConfig = DEFAULT_ARRAY_PARAMETER_CONFIG): readonly string[] {
-  const issues: string[] = []
-  if (typeof config.sample !== 'string' || !Object.hasOwn(ARRAY_PARAMETER_SAMPLES, config.sample)) issues.push('請選擇有效的陣列範例。')
-  if (!Number.isInteger(config.count) || config.count < 0 || config.count > 5) issues.push('元素數量必須是 0 到 5 的整數。')
-  if (config.mode !== 'read-only' && config.mode !== 'modify') issues.push('請選擇唯讀加總或原地修改。')
-  return issues
 }
 export function buildArrayParameterSource(config: ArrayParameterConfig = DEFAULT_ARRAY_PARAMETER_CONFIG) {
   const sample = typeof config.sample === 'string' && Object.hasOwn(ARRAY_PARAMETER_SAMPLES, config.sample) ? ARRAY_PARAMETER_SAMPLES[config.sample] : ARRAY_PARAMETER_SAMPLES.positive

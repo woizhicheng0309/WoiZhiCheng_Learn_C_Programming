@@ -1,5 +1,8 @@
+import { RECURSION_CHALLENGE_IDS } from './challengeIds'
 import { simulateRecursionProgram } from '../domain/recursion'
-export const RECURSION_CHALLENGE_IDS = ['predict-factorial', 'identify-base-case', 'identify-first-return'] as const
+
+export { RECURSION_CHALLENGE_IDS } from './challengeIds'
+
 export type RecursionChallengeId = (typeof RECURSION_CHALLENGE_IDS)[number]
 export const RECURSION_CHALLENGES = [
   { id: 'predict-factorial' as const, title: '預測 factorial(3)', question: '以本課的 factorial 定義呼叫 factorial(3)，最後回傳多少？' },

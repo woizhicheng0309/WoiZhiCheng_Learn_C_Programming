@@ -1,5 +1,8 @@
+import { STRING_COMPARISON_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_STRING_COMPARISON_CONFIG, simulateStringComparisonProgram } from '../domain/stringComparison'
-export const STRING_COMPARISON_CHALLENGE_IDS = ['find-first-difference', 'compare-prefix-sign', 'choose-strcmp-sign-check'] as const
+
+export { STRING_COMPARISON_CHALLENGE_IDS } from './challengeIds'
+
 export type StringComparisonChallengeId = (typeof STRING_COMPARISON_CHALLENGE_IDS)[number]
 export const STRING_COMPARISON_CHALLENGES = [
   { id: 'find-first-difference' as const, title: '找到第一個不同位置', question: '左字串 "CAT" 與右字串 "CAR"，第一個不同字元的索引是多少？索引從 0 開始。' },

@@ -1,3 +1,4 @@
+import { CONDITIONAL_CHALLENGE_IDS } from './challengeIds'
 import {
   DEFAULT_CONDITIONAL_CONFIG,
   CONDITIONAL_LIMITS,
@@ -9,11 +10,7 @@ import {
   type ConditionalSimulationResult,
 } from '../domain/conditionals'
 
-export const CONDITIONAL_CHALLENGE_IDS = [
-  'predict-mixed-condition',
-  'make-both-pass',
-  'repair-loose-rule',
-] as const
+export { CONDITIONAL_CHALLENGE_IDS } from './challengeIds'
 
 export type ConditionalChallengeId = (typeof CONDITIONAL_CHALLENGE_IDS)[number]
 

@@ -1,6 +1,8 @@
+import { FILE_READING_CHALLENGE_IDS } from './challengeIds'
 import { simulateFileReadingProgram } from '../domain/fileReading'
 
-export const FILE_READING_CHALLENGE_IDS = ['choose-fgets-guard', 'predict-fgets-chunks', 'distinguish-file-read-error'] as const
+export { FILE_READING_CHALLENGE_IDS } from './challengeIds'
+
 export type FileReadingChallengeId = (typeof FILE_READING_CHALLENGE_IDS)[number]
 export const FILE_READING_CHALLENGES = [
   { id: 'choose-fgets-guard' as const, title: '用讀取結果決定是否處理', question: 'fp 已開啟，buffer 是有效字元陣列。哪個條件適合控制每次字串處理？輸入 1：while (!feof(fp))；輸入 2：while (fgets(buffer, sizeof buffer, fp) != NULL)；輸入 3：先輸出 buffer，再檢查 fgets 的回傳值。' },

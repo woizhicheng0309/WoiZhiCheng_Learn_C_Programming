@@ -1,8 +1,17 @@
-export const INSERTION_SAMPLES = {
-  mixed: [4, 3, 1, 5, 2], sorted: [1, 2, 3, 4, 5], reverse: [5, 4, 3, 2, 1], duplicates: [3, 1, 3, 2, 1],
-} as const
-export interface InsertionSortConfig { sample: keyof typeof INSERTION_SAMPLES; order: 'ascending' | 'descending' }
-export const DEFAULT_INSERTION_SORT_CONFIG: Readonly<InsertionSortConfig> = { sample: 'mixed', order: 'ascending' }
+import {
+  INSERTION_SAMPLES,
+  type InsertionSortConfig,
+  DEFAULT_INSERTION_SORT_CONFIG,
+  validateInsertionSortConfig,
+} from './insertionSortConfig'
+
+export {
+  INSERTION_SAMPLES,
+  type InsertionSortConfig,
+  DEFAULT_INSERTION_SORT_CONFIG,
+  validateInsertionSortConfig,
+} from './insertionSortConfig'
+
 export type InsertionVariable = 'i' | 'key' | 'j' | 'k'
 export type InsertionSortPhase = 'enter-main' | 'initialize-values' | 'initialize-i' | 'outer-condition' | 'save-key' | 'initialize-j' | 'check-index' | 'compare-value' | 'shift' | 'decrement-j' | 'write-key' | 'end-pass' | 'increment-i' | 'initialize-k' | 'print-condition' | 'print' | 'increment-k' | 'return-main' | 'done' | 'blocked'
 export interface InsertionSortFrame {
@@ -21,12 +30,6 @@ export interface InsertionSortFrame {
   shifts: number
   firstPassValues: readonly number[] | null
   output: readonly number[]
-}
-export function validateInsertionSortConfig(config: InsertionSortConfig = DEFAULT_INSERTION_SORT_CONFIG): readonly string[] {
-  const issues: string[] = []
-  if (!Object.hasOwn(INSERTION_SAMPLES, config.sample)) issues.push('請選擇有效的陣列範例。')
-  if (config.order !== 'ascending' && config.order !== 'descending') issues.push('請選擇升冪或降冪。')
-  return issues
 }
 export function buildInsertionSortSource(config: InsertionSortConfig = DEFAULT_INSERTION_SORT_CONFIG) {
   const sample = Object.hasOwn(INSERTION_SAMPLES, config.sample) ? INSERTION_SAMPLES[config.sample] : INSERTION_SAMPLES.mixed

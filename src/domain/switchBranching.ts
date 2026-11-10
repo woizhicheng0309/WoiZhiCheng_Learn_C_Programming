@@ -1,9 +1,7 @@
-export interface SwitchConfig {
-  choice: number
-  mode: 'with-break' | 'fall-through'
-}
+import { type SwitchConfig, DEFAULT_SWITCH_CONFIG, validateSwitchConfig } from './switchBranchingConfig'
 
-export const DEFAULT_SWITCH_CONFIG: Readonly<SwitchConfig> = { choice: 2, mode: 'with-break' }
+export { type SwitchConfig, DEFAULT_SWITCH_CONFIG, validateSwitchConfig } from './switchBranchingConfig'
+
 export const SWITCH_LIMITS = { choice: { min: 0, max: 4 } } as const
 export type SwitchCase = 'case-1' | 'case-2' | 'default'
 export type SwitchPhase = 'enter-main' | 'initialize' | 'evaluate-switch' | 'select-case' | 'print-case' | 'break' | 'fall-through' | 'after-switch' | 'return-main' | 'done' | 'blocked'
@@ -18,13 +16,6 @@ export interface SwitchFrame {
   activeCase: SwitchCase | null
   output: readonly string[]
   afterSwitch: boolean
-}
-
-export function validateSwitchConfig(config: SwitchConfig = DEFAULT_SWITCH_CONFIG): readonly string[] {
-  const issues: string[] = []
-  if (!Number.isInteger(config.choice) || config.choice < 0 || config.choice > 4) issues.push('choice 必須是 0 到 4 的整數。')
-  if (config.mode !== 'with-break' && config.mode !== 'fall-through') issues.push('請選擇保留 break 或省略 break。')
-  return issues
 }
 
 export function buildSwitchSource(config: SwitchConfig = DEFAULT_SWITCH_CONFIG) {

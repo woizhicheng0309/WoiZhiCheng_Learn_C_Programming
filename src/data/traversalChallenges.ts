@@ -1,14 +1,11 @@
+import { TRAVERSAL_CHALLENGE_IDS } from './challengeIds'
 import {
   DEFAULT_TRAVERSAL_CONFIG,
   TRAVERSAL_VALUES,
   simulateTraversalProgram,
 } from '../domain/traversal'
 
-export const TRAVERSAL_CHALLENGE_IDS = [
-  'predict-pointer-offset',
-  'choose-pointer-step',
-  'identify-one-past',
-] as const
+export { TRAVERSAL_CHALLENGE_IDS } from './challengeIds'
 
 export type TraversalChallengeId = (typeof TRAVERSAL_CHALLENGE_IDS)[number]
 

@@ -1,6 +1,8 @@
+import { ALLOCATION_CHALLENGE_IDS } from './challengeIds'
 import { simulateAllocationProgram } from '../domain/allocation'
 
-export const ALLOCATION_CHALLENGE_IDS = ['choose-malloc-initialization', 'predict-allocated-sum', 'check-free-lifetime'] as const
+export { ALLOCATION_CHALLENGE_IDS } from './challengeIds'
+
 export type AllocationChallengeId = (typeof ALLOCATION_CHALLENGE_IDS)[number]
 export const ALLOCATION_CHALLENGES = [
   { id: 'choose-malloc-initialization' as const, title: '配置成功還需要初始化', question: 'malloc 成功取得 3 個 int 的空間後，尚未寫入元素。哪個敘述正確？輸入 1：三格必定都是 0；輸入 2：內容未初始化，應先寫入再讀取；輸入 3：配置成功代表元素已有程式指定的值。' },

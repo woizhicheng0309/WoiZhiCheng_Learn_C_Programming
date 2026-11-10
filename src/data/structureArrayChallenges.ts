@@ -1,6 +1,8 @@
+import { STRUCTURE_ARRAY_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_STRUCTURE_ARRAY_CONFIG, simulateStructureArrayProgram } from '../domain/structureArrays'
 
-export const STRUCTURE_ARRAY_CHALLENGE_IDS = ['choose-structure-array-member', 'predict-structure-array-totals', 'check-structure-array-bound'] as const
+export { STRUCTURE_ARRAY_CHALLENGE_IDS } from './challengeIds'
+
 export type StructureArrayChallengeId = (typeof STRUCTURE_ARRAY_CHALLENGE_IDS)[number]
 export const STRUCTURE_ARRAY_CHALLENGES = [
   { id: 'choose-structure-array-member' as const, title: '先選元素，再選成員', question: 'students 是 struct Student 陣列。要讀取第二筆資料的 score，選哪個寫法？輸入 1：students[1].score；輸入 2：students.score[1]；輸入 3：score.students[1]。' },

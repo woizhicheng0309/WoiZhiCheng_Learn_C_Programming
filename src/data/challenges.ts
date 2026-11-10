@@ -1,8 +1,5 @@
-export const CHALLENGE_IDS = [
-  'zero-to-four',
-  'even-two-to-ten',
-  'countdown-five-to-one',
-] as const
+import { CHALLENGE_IDS } from './challengeIds'
+export { CHALLENGE_IDS } from './challengeIds'
 
 export type ChallengeId = (typeof CHALLENGE_IDS)[number]
 

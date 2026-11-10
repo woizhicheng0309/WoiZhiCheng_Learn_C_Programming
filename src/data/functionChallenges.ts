@@ -1,3 +1,4 @@
+import { FUNCTION_CHALLENGE_IDS } from './challengeIds'
 import {
   DEFAULT_FUNCTION_CONFIG,
   simulateFunctionProgram,
@@ -5,11 +6,7 @@ import {
   type FunctionSimulationResult,
 } from '../domain/functions'
 
-export const FUNCTION_CHALLENGE_IDS = [
-  'predict-return-value',
-  'make-return-ten',
-  'identify-local-scope',
-] as const
+export { FUNCTION_CHALLENGE_IDS } from './challengeIds'
 
 export type FunctionChallengeId = (typeof FUNCTION_CHALLENGE_IDS)[number]
 

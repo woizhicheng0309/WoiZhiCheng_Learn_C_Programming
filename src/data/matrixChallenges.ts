@@ -1,5 +1,8 @@
+import { MATRIX_CHALLENGE_IDS } from './challengeIds'
 import { simulateMatrixProgram, DEFAULT_MATRIX_CONFIG } from '../domain/matrices'
-export const MATRIX_CHALLENGE_IDS = ['predict-matrix-cell', 'predict-column-traversal', 'identify-matrix-offset'] as const
+
+export { MATRIX_CHALLENGE_IDS } from './challengeIds'
+
 export type MatrixChallengeId = (typeof MATRIX_CHALLENGE_IDS)[number]
 export const MATRIX_CHALLENGES = [
   { id: 'predict-matrix-cell' as const, title: '找出 grid[1][2]', question: 'grid 為 {{1, 2, 3}, {4, 5, 6}}。grid[1][2] 的值是多少？' },

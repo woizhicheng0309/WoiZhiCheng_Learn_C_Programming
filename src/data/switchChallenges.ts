@@ -1,6 +1,8 @@
+import { SWITCH_CHALLENGE_IDS } from './challengeIds'
 import { buildSwitchSource, simulateSwitchProgram, type SwitchConfig } from '../domain/switchBranching'
 
-export const SWITCH_CHALLENGE_IDS = ['predict-switch-match', 'predict-switch-fallthrough', 'identify-switch-default'] as const
+export { SWITCH_CHALLENGE_IDS } from './challengeIds'
+
 export type SwitchChallengeId = (typeof SWITCH_CHALLENGE_IDS)[number]
 export const SWITCH_CHALLENGES: readonly { id: SwitchChallengeId; title: string; config: SwitchConfig }[] = [
   { id: 'predict-switch-match', title: '命中 case 2', config: { choice: 2, mode: 'with-break' } },

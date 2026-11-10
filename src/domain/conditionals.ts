@@ -1,26 +1,18 @@
-export const CONDITIONAL_LOGICAL_OPERATORS = ['&&', '||'] as const
+import {
+  CONDITIONAL_LOGICAL_OPERATORS,
+  type ConditionalLogicalOperator,
+  type ConditionalConfig,
+  CONDITIONAL_LIMITS,
+  DEFAULT_CONDITIONAL_CONFIG,
+} from './conditionalsConfig'
 
-export type ConditionalLogicalOperator =
-  (typeof CONDITIONAL_LOGICAL_OPERATORS)[number]
-
-export interface ConditionalConfig {
-  score: number
-  attendance: number
-  logicalOperator: ConditionalLogicalOperator
-}
-
-export const CONDITIONAL_LIMITS = {
-  score: { min: 0, max: 100 },
-  attendance: { min: 0, max: 100 },
-  scoreThreshold: 60,
-  attendanceThreshold: 70,
-} as const
-
-export const DEFAULT_CONDITIONAL_CONFIG: Readonly<ConditionalConfig> = {
-  score: 72,
-  attendance: 65,
-  logicalOperator: '&&',
-}
+export {
+  CONDITIONAL_LOGICAL_OPERATORS,
+  type ConditionalLogicalOperator,
+  type ConditionalConfig,
+  CONDITIONAL_LIMITS,
+  DEFAULT_CONDITIONAL_CONFIG,
+} from './conditionalsConfig'
 
 export type ConditionalPhase =
   | 'main'

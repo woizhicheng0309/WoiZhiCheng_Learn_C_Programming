@@ -1,6 +1,8 @@
+import { SCORE_FILE_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_SCORE_FILE_CONFIG, simulateScoreFileProgram } from '../domain/scoreFile'
 
-export const SCORE_FILE_CHALLENGE_IDS = ['validate-whole-score-record', 'predict-score-file-totals', 'handle-no-valid-scores'] as const
+export { SCORE_FILE_CHALLENGE_IDS } from './challengeIds'
+
 export type ScoreFileChallengeId = (typeof SCORE_FILE_CHALLENGE_IDS)[number]
 export const SCORE_FILE_CHALLENGES = [
   { id: 'validate-whole-score-record' as const, title: '過長前綴不能變成一筆分數', question: 'line[12] 最多保存 11 個資料字元。一行有 13 個字元，保留的前綴能轉成合法分數 0，too_long 已設為 1。應怎麼處理？輸入 1：接受前綴；輸入 2：讀到該行結尾後整筆拒絕；輸入 3：把剩餘字元當下一筆。' },

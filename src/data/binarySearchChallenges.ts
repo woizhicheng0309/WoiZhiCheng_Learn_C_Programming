@@ -1,5 +1,8 @@
+import { BINARY_SEARCH_CHALLENGE_IDS } from './challengeIds'
 import { simulateBinarySearchProgram, DEFAULT_BINARY_SEARCH_CONFIG } from '../domain/binarySearch'
-export const BINARY_SEARCH_CHALLENGE_IDS = ['predict-first-mid', 'update-left-bound', 'identify-empty-interval'] as const
+
+export { BINARY_SEARCH_CHALLENGE_IDS } from './challengeIds'
+
 export type BinarySearchChallengeId = (typeof BINARY_SEARCH_CHALLENGE_IDS)[number]
 export const BINARY_SEARCH_CHALLENGES = [
   { id: 'predict-first-mid' as const, title: '找出第一個中點', question: '搜尋七格，left = 0、right = 6，mid = left + (right - left) / 2。第一個 mid 是多少？' },

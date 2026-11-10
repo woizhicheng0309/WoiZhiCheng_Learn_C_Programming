@@ -1,12 +1,19 @@
-export const STRING_COPY_SAMPLES = {
-  word: { label: 'CODE：一般字串', literal: 'CODE', characters: ['C', 'O', 'D', 'E', '\0'] },
-  'digit-zero': { label: 'C0DE：數字字元 0', literal: 'C0DE', characters: ['C', '0', 'D', 'E', '\0'] },
-  'embedded-nul': { label: 'CO\\0DE：內嵌空字元', literal: 'CO\\0DE', characters: ['C', 'O', '\0', 'D', 'E', '\0'] },
-  empty: { label: '空字串', literal: '', characters: ['\0'] },
-} as const
-export const STRING_COPY_CAPACITIES = [1, 3, 5, 8] as const
-export interface StringCopyConfig { sample: keyof typeof STRING_COPY_SAMPLES; capacity: (typeof STRING_COPY_CAPACITIES)[number] }
-export const DEFAULT_STRING_COPY_CONFIG: Readonly<StringCopyConfig> = { sample: 'word', capacity: 5 }
+import {
+  STRING_COPY_SAMPLES,
+  STRING_COPY_CAPACITIES,
+  type StringCopyConfig,
+  DEFAULT_STRING_COPY_CONFIG,
+  validateStringCopyConfig,
+} from './stringCopyConfig'
+
+export {
+  STRING_COPY_SAMPLES,
+  STRING_COPY_CAPACITIES,
+  type StringCopyConfig,
+  DEFAULT_STRING_COPY_CONFIG,
+  validateStringCopyConfig,
+} from './stringCopyConfig'
+
 export type StringCopyPhase = 'enter-main' | 'initialize-source' | 'declare-destination' | 'measure-length' | 'print-sizes' | 'check-capacity' | 'initialize-i' | 'copy-condition' | 'copy-character' | 'increment-i' | 'finish-copy' | 'print-string' | 'reject-copy' | 'end-if' | 'return-main' | 'done' | 'blocked'
 export interface StringCopyFrame {
   index: number
@@ -25,12 +32,6 @@ export interface StringCopyFrame {
   copied: boolean
   fits: boolean | null
   output: readonly string[]
-}
-export function validateStringCopyConfig(config: StringCopyConfig = DEFAULT_STRING_COPY_CONFIG): readonly string[] {
-  const issues: string[] = []
-  if (!Object.hasOwn(STRING_COPY_SAMPLES, config.sample)) issues.push('請選擇有效的字串範例。')
-  if (!STRING_COPY_CAPACITIES.includes(config.capacity)) issues.push('目的陣列容量必須是 1、3、5 或 8。')
-  return issues
 }
 export function buildStringCopySource(config: StringCopyConfig = DEFAULT_STRING_COPY_CONFIG) {
   const sample = Object.hasOwn(STRING_COPY_SAMPLES, config.sample) ? STRING_COPY_SAMPLES[config.sample] : STRING_COPY_SAMPLES.word

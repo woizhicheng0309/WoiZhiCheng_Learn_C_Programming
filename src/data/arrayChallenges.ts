@@ -1,3 +1,4 @@
+import { ARRAY_CHALLENGE_IDS } from './challengeIds'
 import {
   INITIAL_SCORES,
   simulateArrayProgram,
@@ -5,11 +6,7 @@ import {
   type ArraySimulationResult,
 } from '../domain/arrays'
 
-export const ARRAY_CHALLENGE_IDS = [
-  'predict-index-read',
-  'modify-element-to-target',
-  'identify-valid-index',
-] as const
+export { ARRAY_CHALLENGE_IDS } from './challengeIds'
 
 export type ArrayChallengeId = (typeof ARRAY_CHALLENGE_IDS)[number]
 

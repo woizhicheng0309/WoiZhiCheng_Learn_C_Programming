@@ -1,12 +1,20 @@
-export const MATRIX_ROWS = 2
-export const MATRIX_COLUMNS = 3
+import {
+  MATRIX_ROWS,
+  MATRIX_COLUMNS,
+  type MatrixConfig,
+  DEFAULT_MATRIX_CONFIG,
+  validateMatrixConfig,
+} from './matricesConfig'
+
+export {
+  MATRIX_ROWS,
+  MATRIX_COLUMNS,
+  type MatrixConfig,
+  DEFAULT_MATRIX_CONFIG,
+  validateMatrixConfig,
+} from './matricesConfig'
+
 export const MATRIX_VALUES: readonly (readonly number[])[] = [[1, 2, 3], [4, 5, 6]]
-export interface MatrixConfig {
-  mode: 'row-first' | 'column-first'
-  targetRow: number
-  targetColumn: number
-}
-export const DEFAULT_MATRIX_CONFIG: Readonly<MatrixConfig> = { mode: 'row-first', targetRow: 1, targetColumn: 2 }
 export type MatrixPhase = 'enter-main' | 'initialize-grid' | 'read-selected' | 'print-selected' | 'initialize-sum' | 'initialize-outer' | 'outer-condition' | 'initialize-inner' | 'inner-condition' | 'accumulate' | 'print-value' | 'increment-inner' | 'increment-outer' | 'print-sum' | 'return-main' | 'done' | 'blocked'
 export interface MatrixVisit { row: number; column: number; offset: number; value: number }
 export interface MatrixFrame {
@@ -28,13 +36,6 @@ export interface MatrixFrame {
   output: readonly number[]
   selectedOutput: string | null
   summary: string | null
-}
-export function validateMatrixConfig(config: MatrixConfig = DEFAULT_MATRIX_CONFIG): readonly string[] {
-  const issues: string[] = []
-  if (config.mode !== 'row-first' && config.mode !== 'column-first') issues.push('請選擇逐列或逐欄走訪。')
-  if (!Number.isInteger(config.targetRow) || config.targetRow < 0 || config.targetRow >= MATRIX_ROWS) issues.push('列索引必須是 0 到 1 的整數。')
-  if (!Number.isInteger(config.targetColumn) || config.targetColumn < 0 || config.targetColumn >= MATRIX_COLUMNS) issues.push('欄索引必須是 0 到 2 的整數。')
-  return issues
 }
 export function buildMatrixSource(config: MatrixConfig = DEFAULT_MATRIX_CONFIG) {
   const literal = (value: number) => Number.isSafeInteger(value) ? String(value) : '0 /* invalid index */'

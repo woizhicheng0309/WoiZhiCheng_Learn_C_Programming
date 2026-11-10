@@ -1,5 +1,7 @@
-export interface RecursionConfig { n: number }
-export const DEFAULT_RECURSION_CONFIG: Readonly<RecursionConfig> = { n: 4 }
+import { type RecursionConfig, DEFAULT_RECURSION_CONFIG, validateRecursionConfig } from './recursionConfig'
+
+export { type RecursionConfig, DEFAULT_RECURSION_CONFIG, validateRecursionConfig } from './recursionConfig'
+
 export const RECURSION_LIMITS = { n: { min: 0, max: 6 } } as const
 export type RecursionPhase = 'enter-main' | 'call' | 'enter-function' | 'check-base' | 'return-base' | 'receive' | 'multiply' | 'return-result' | 'main-result' | 'print' | 'return-main' | 'done' | 'blocked'
 export interface RecursionActivation {
@@ -19,9 +21,6 @@ export interface RecursionFrame {
   answer: number | null
   mainInScope: boolean
   output: readonly number[]
-}
-export function validateRecursionConfig(config: RecursionConfig = DEFAULT_RECURSION_CONFIG): readonly string[] {
-  return Number.isInteger(config.n) && config.n >= 0 && config.n <= 6 ? [] : ['n 必須是 0 到 6 的整數。']
 }
 export function buildRecursionSource(config: RecursionConfig = DEFAULT_RECURSION_CONFIG) {
   const literal = validateRecursionConfig(config).length ? '0 /* invalid n */' : String(config.n)

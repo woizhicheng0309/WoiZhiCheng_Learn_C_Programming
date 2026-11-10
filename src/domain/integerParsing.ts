@@ -1,3 +1,15 @@
+import {
+  type IntegerParsingConfig,
+  DEFAULT_INTEGER_PARSING_CONFIG,
+  validateIntegerParsingConfig,
+} from './integerParsingConfig'
+
+export {
+  type IntegerParsingConfig,
+  DEFAULT_INTEGER_PARSING_CONFIG,
+  validateIntegerParsingConfig,
+} from './integerParsingConfig'
+
 export const INTEGER_INPUT_PRESETS = {
   prefix: { label: '有尾端文字：42abc', text: '42abc' },
   valid: { label: '完整數字：42', text: '42' },
@@ -11,8 +23,6 @@ export const INTEGER_INPUT_PRESETS = {
   min64: { label: '64 位元下界', text: '-9223372036854775808' },
   over64: { label: '超過 64 位元上界', text: '9223372036854775808' },
 } as const
-export interface IntegerParsingConfig { text: string; longBits: 32 | 64; allowTrailingSpace: boolean }
-export const DEFAULT_INTEGER_PARSING_CONFIG: Readonly<IntegerParsingConfig> = { text: '42abc', longBits: 32, allowTrailingSpace: false }
 export type IntegerParsingPhase = 'prepare' | 'enter-main' | 'declare-input' | 'declare-end' | 'clear-errno'
   | 'begin-conversion' | 'skip-leading-space' | 'read-sign' | 'read-digit' | 'finish-conversion'
   | 'check-conversion' | 'print-no-digits' | 'return-no-digits' | 'check-range' | 'print-range' | 'return-range'
@@ -45,16 +55,6 @@ export const isAsciiSpace = (value: string | undefined) => value !== undefined &
 export function longModelLimits(bits: 32 | 64) {
   const edge = 1n << BigInt(bits - 1)
   return { min: (-edge).toString(), max: (edge - 1n).toString() }
-}
-export function validateIntegerParsingConfig(config: IntegerParsingConfig = DEFAULT_INTEGER_PARSING_CONFIG): readonly string[] {
-  const issues: string[] = []
-  if (typeof config.text !== 'string' || config.text.length > 40 || !Array.from(config.text).every(character => {
-    const code = character.charCodeAt(0)
-    return (code >= 9 && code <= 13) || (code >= 32 && code <= 126)
-  })) issues.push('輸入限 40 個 ASCII 字元，可包含空白、Tab 與換行，不包含內嵌空字元。')
-  if (config.longBits !== 32 && config.longBits !== 64) issues.push('請選擇 32 或 64 位元 long 模型。')
-  if (typeof config.allowTrailingSpace !== 'boolean') issues.push('請選擇是否接受尾端空白。')
-  return issues
 }
 export function escapeIntegerInput(text: string) {
   const escapes: Record<string, string> = { '\\': '\\\\', '"': '\\"', '?': '\\?', '\t': '\\t', '\n': '\\n', '\r': '\\r', '\v': '\\v', '\f': '\\f' }

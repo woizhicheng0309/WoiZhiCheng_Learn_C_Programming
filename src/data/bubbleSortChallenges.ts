@@ -1,5 +1,8 @@
+import { BUBBLE_SORT_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_BUBBLE_SORT_CONFIG, simulateBubbleSortProgram } from '../domain/bubbleSort'
-export const BUBBLE_SORT_CHALLENGE_IDS = ['predict-bubble-pass', 'count-early-comparisons', 'identify-whole-pass'] as const
+
+export { BUBBLE_SORT_CHALLENGE_IDS } from './challengeIds'
+
 export type BubbleSortChallengeId = (typeof BUBBLE_SORT_CHALLENGE_IDS)[number]
 export const BUBBLE_SORT_CHALLENGES = [
   { id: 'predict-bubble-pass' as const, title: '預測第一輪相鄰交換', question: '以升冪排序 {4, 1, 5, 2, 3}，由左往右完成第一輪相鄰比較後，五個元素依序是什麼？' },

@@ -1,5 +1,8 @@
+import { ARRAY_PARAMETER_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_ARRAY_PARAMETER_CONFIG, simulateArrayParameterProgram } from '../domain/arrayParameters'
-export const ARRAY_PARAMETER_CHALLENGE_IDS = ['predict-array-return', 'predict-shared-array', 'choose-explicit-count'] as const
+
+export { ARRAY_PARAMETER_CHALLENGE_IDS } from './challengeIds'
+
 export type ArrayParameterChallengeId = (typeof ARRAY_PARAMETER_CHALLENGE_IDS)[number]
 export const ARRAY_PARAMETER_CHALLENGES = [
   { id: 'predict-array-return' as const, title: '只加總指定範圍', question: 'scores = {4, 7, 2, 9, 5}，以唯讀模式傳入 count = 3，process 會回傳多少？' },

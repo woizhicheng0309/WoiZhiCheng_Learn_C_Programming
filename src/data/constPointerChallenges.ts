@@ -1,5 +1,8 @@
+import { CONST_POINTER_CHALLENGE_IDS } from './challengeIds'
 import { simulateConstPointerProgram } from '../domain/constPointers'
-export const CONST_POINTER_CHALLENGE_IDS = ['choose-pointee-const', 'predict-fixed-pointer-write', 'predict-direct-alias-write'] as const
+
+export { CONST_POINTER_CHALLENGE_IDS } from './challengeIds'
+
 export type ConstPointerChallengeId = (typeof CONST_POINTER_CHALLENGE_IDS)[number]
 export const CONST_POINTER_CHALLENGES = [
   { id: 'choose-pointee-const' as const, title: '可改指向，但不可透過它改值', question: '哪一個宣告允許改指向、但不允許 *p = 30？輸入 1：const int *p；輸入 2：int *const p；輸入 3：const int *const p。' },

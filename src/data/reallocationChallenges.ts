@@ -1,6 +1,8 @@
+import { REALLOCATION_CHALLENGE_IDS } from './challengeIds'
 import { simulateReallocationProgram } from '../domain/reallocation'
 
-export const REALLOCATION_CHALLENGE_IDS = ['choose-realloc-temporary', 'predict-realloc-growth', 'predict-realloc-shrink'] as const
+export { REALLOCATION_CHALLENGE_IDS } from './challengeIds'
+
 export type ReallocationChallengeId = (typeof REALLOCATION_CHALLENGE_IDS)[number]
 export const REALLOCATION_CHALLENGES = [
   { id: 'choose-realloc-temporary' as const, title: '先用暫存指標接結果', question: 'p 指向有效的配置，要求的新大小大於 0。為了在 realloc 失敗時保留原指標，選哪個流程？輸入 1：直接 p = realloc(p, size)；輸入 2：tmp = realloc(p, size)，tmp 非 NULL 才指定 p = tmp；輸入 3：先 free(p) 再 realloc(p, size)。' },

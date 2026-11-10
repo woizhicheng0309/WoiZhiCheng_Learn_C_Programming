@@ -1,8 +1,17 @@
-export const SORT_SAMPLES = {
-  mixed: [4, 1, 5, 2, 3], sorted: [1, 2, 3, 4, 5], reverse: [5, 4, 3, 2, 1], duplicates: [3, 1, 3, 2, 1],
-} as const
-export interface SelectionSortConfig { sample: keyof typeof SORT_SAMPLES; order: 'ascending' | 'descending' }
-export const DEFAULT_SELECTION_SORT_CONFIG: Readonly<SelectionSortConfig> = { sample: 'mixed', order: 'ascending' }
+import {
+  SORT_SAMPLES,
+  type SelectionSortConfig,
+  DEFAULT_SELECTION_SORT_CONFIG,
+  validateSelectionSortConfig,
+} from './selectionSortConfig'
+
+export {
+  SORT_SAMPLES,
+  type SelectionSortConfig,
+  DEFAULT_SELECTION_SORT_CONFIG,
+  validateSelectionSortConfig,
+} from './selectionSortConfig'
+
 export type SortVariable = 'i' | 'j' | 'best' | 'temp' | 'k'
 export type SelectionSortPhase = 'enter-main' | 'initialize-values' | 'initialize-i' | 'outer-condition' | 'initialize-best' | 'initialize-j' | 'inner-condition' | 'compare' | 'update-best' | 'increment-j' | 'check-swap' | 'save-temp' | 'write-front' | 'write-best' | 'finish-swap' | 'end-pass' | 'increment-i' | 'initialize-k' | 'print-condition' | 'print' | 'increment-k' | 'return-main' | 'done' | 'blocked'
 export interface SelectionSortFrame {
@@ -20,12 +29,6 @@ export interface SelectionSortFrame {
   swaps: number
   firstPassValues: readonly number[] | null
   output: readonly number[]
-}
-export function validateSelectionSortConfig(config: SelectionSortConfig = DEFAULT_SELECTION_SORT_CONFIG): readonly string[] {
-  const issues: string[] = []
-  if (!Object.hasOwn(SORT_SAMPLES, config.sample)) issues.push('請選擇有效的陣列範例。')
-  if (config.order !== 'ascending' && config.order !== 'descending') issues.push('請選擇升冪或降冪。')
-  return issues
 }
 export function buildSelectionSortSource(config: SelectionSortConfig = DEFAULT_SELECTION_SORT_CONFIG) {
   const sample = Object.hasOwn(SORT_SAMPLES, config.sample) ? SORT_SAMPLES[config.sample] : SORT_SAMPLES.mixed

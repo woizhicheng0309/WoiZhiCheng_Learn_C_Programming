@@ -1,5 +1,8 @@
+import { STRUCTURE_CHALLENGE_IDS } from './challengeIds'
 import { DEFAULT_STRUCTURE_CONFIG, simulateStructureProgram } from '../domain/structures'
-export const STRUCTURE_CHALLENGE_IDS = ['choose-struct-member', 'predict-structure-copy', 'predict-partial-structure'] as const
+
+export { STRUCTURE_CHALLENGE_IDS } from './challengeIds'
+
 export type StructureChallengeId = (typeof STRUCTURE_CHALLENGE_IDS)[number]
 export const STRUCTURE_CHALLENGES = [
   { id: 'choose-struct-member' as const, title: '選對成員存取方式', question: 'student 是 struct Student 物件，如何讀取它的 score？輸入 1：student.score；輸入 2：student[score]；輸入 3：Student.score。' },

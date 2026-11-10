@@ -1,13 +1,10 @@
+import { POINTER_CHALLENGE_IDS } from './challengeIds'
 import {
   DEFAULT_POINTER_CONFIG,
   simulatePointerProgram,
 } from '../domain/pointers'
 
-export const POINTER_CHALLENGE_IDS = [
-  'predict-pointer-read',
-  'write-through-pointer',
-  'identify-null-pointer',
-] as const
+export { POINTER_CHALLENGE_IDS } from './challengeIds'
 
 export type PointerChallengeId = (typeof POINTER_CHALLENGE_IDS)[number]
 

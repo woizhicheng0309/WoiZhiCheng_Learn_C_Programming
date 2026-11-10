@@ -1,17 +1,6 @@
-export interface FunctionConfig {
-  x: number
-  y: number
-}
+import { type FunctionConfig, FUNCTION_LIMITS, DEFAULT_FUNCTION_CONFIG } from './functionsConfig'
 
-export const FUNCTION_LIMITS = {
-  x: { min: -20, max: 20 },
-  y: { min: -20, max: 20 },
-} as const
-
-export const DEFAULT_FUNCTION_CONFIG: Readonly<FunctionConfig> = {
-  x: 4,
-  y: 3,
-}
+export { type FunctionConfig, FUNCTION_LIMITS, DEFAULT_FUNCTION_CONFIG } from './functionsConfig'
 
 export type FunctionPhase =
   | 'enter-main'

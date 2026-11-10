@@ -1,10 +1,7 @@
+import { STRING_POINTER_CHALLENGE_IDS } from './challengeIds'
 import { simulateStringPointerProgram } from '../domain/stringPointers'
 
-export const STRING_POINTER_CHALLENGE_IDS = [
-  'predict-digit-zero-length',
-  'choose-string-terminator',
-  'identify-embedded-nul',
-] as const
+export { STRING_POINTER_CHALLENGE_IDS } from './challengeIds'
 
 export type StringPointerChallengeId = (typeof STRING_POINTER_CHALLENGE_IDS)[number]
 

@@ -1,7 +1,17 @@
+import {
+  type BinarySearchConfig,
+  DEFAULT_BINARY_SEARCH_CONFIG,
+  validateBinarySearchConfig,
+} from './binarySearchConfig'
+
+export {
+  type BinarySearchConfig,
+  DEFAULT_BINARY_SEARCH_CONFIG,
+  BINARY_SEARCH_LIMITS,
+  validateBinarySearchConfig,
+} from './binarySearchConfig'
+
 export const BINARY_VALUES: readonly number[] = [2, 4, 7, 9, 12, 15, 18]
-export interface BinarySearchConfig { target: number; count: number }
-export const DEFAULT_BINARY_SEARCH_CONFIG: Readonly<BinarySearchConfig> = { target: 15, count: 7 }
-export const BINARY_SEARCH_LIMITS = { target: { min: -5, max: 25 }, count: { min: 0, max: 7 } } as const
 export type BinarySearchPhase = 'enter-main' | 'initialize-values' | 'initialize-target' | 'initialize-count' | 'initialize-left' | 'initialize-right' | 'initialize-found' | 'condition' | 'initialize-mid' | 'compare-equal' | 'record' | 'break' | 'compare-less' | 'move-left' | 'move-right' | 'end-iteration' | 'print' | 'return-main' | 'done' | 'blocked'
 export interface BinarySearchFrame {
   index: number
@@ -21,14 +31,6 @@ export interface BinarySearchFrame {
   activeIndex: number | null
   inspectedIndices: readonly number[]
   output: string | null
-}
-export function validateBinarySearchConfig(config: BinarySearchConfig = DEFAULT_BINARY_SEARCH_CONFIG): readonly string[] {
-  const issues: string[] = []
-  for (const field of ['target', 'count'] as const) {
-    const limit = BINARY_SEARCH_LIMITS[field]
-    if (!Number.isInteger(config[field]) || config[field] < limit.min || config[field] > limit.max) issues.push(`${field} 必須是 ${limit.min} 到 ${limit.max} 的整數。`)
-  }
-  return issues
 }
 export function buildBinarySearchSource(config: BinarySearchConfig = DEFAULT_BINARY_SEARCH_CONFIG) {
   const literal = (value: number) => Number.isSafeInteger(value) ? String(value) : '0 /* invalid input */'
