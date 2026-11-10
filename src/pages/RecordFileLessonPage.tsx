@@ -217,7 +217,7 @@ export function RecordFileLessonPage() {
         <p>預覽呈現已交給輸出串流的文字。執行成功且關檔後才提供下載。關檔回報錯誤時，檔案中的內容可能不完整。成功開啟時，w 模式會建立 selected.txt，或將同名檔案截為空檔。</p>
         <p>語意依據見 <a href="https://www.sigbus.info/n1570#7.21.6.1" target="_blank" rel="noreferrer">C11 工作草案 N1570 的 fprintf</a>與 <a href="https://www.sigbus.info/n1570#7.21.5.1" target="_blank" rel="noreferrer">fclose</a>。</p>
         {count === 3 && <p role="status">你已完成多欄紀錄驗證與檔案輸出。</p>}
-        <div><Link className="button button-secondary" to="/learn/files/score-statistics">上一課：檔案資料驗證與分數統計</Link><Link className="button button-primary" to="/learn">回到課程地圖</Link></div>
+        <div><Link className="button button-secondary" to="/learn/files/score-statistics">上一課：檔案資料驗證與分數統計</Link><Link className="button button-primary" to="/learn/projects/gradebook">下一課：成績資料管理綜合練習</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div>
       </section>
     </div>
   )

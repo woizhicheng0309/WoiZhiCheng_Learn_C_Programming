@@ -52,6 +52,8 @@ const MemoryOwnershipLessonPage = lazy(() => import('./pages/MemoryOwnershipLess
 
 const RecordFileLessonPage = lazy(() => import('./pages/RecordFileLessonPage').then(module => ({ default: module.RecordFileLessonPage })))
 
+const GradebookProjectPage = lazy(() => import('./pages/GradebookProjectPage').then(module => ({ default: module.GradebookProjectPage })))
+
 export default function App() {
   const { pathname } = useLocation()
   return (
@@ -100,6 +102,7 @@ export default function App() {
               <Route path="/learn/files/integer-parsing" element={<IntegerParsingLessonPage />} />
               <Route path="/learn/files/score-statistics" element={<ScoreFileLessonPage />} />
               <Route path="/learn/files/record-filter" element={<RecordFileLessonPage />} />
+              <Route path="/learn/projects/gradebook" element={<GradebookProjectPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

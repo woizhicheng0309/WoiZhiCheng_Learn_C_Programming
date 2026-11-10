@@ -8,6 +8,7 @@ import {
   Code2,
   GitBranch,
   Layers3,
+  ListChecks,
   MousePointer2,
   RotateCcw,
   SquareFunction,
@@ -44,6 +45,7 @@ const topicIcons: Record<TopicId, LucideIcon> = {
   structures: Braces,
   'dynamic-memory': Layers3,
   'files-and-input': Code2,
+  projects: ListChecks,
 }
 
 const progressStatusLabels: Record<LessonProgressStatus, string> = {

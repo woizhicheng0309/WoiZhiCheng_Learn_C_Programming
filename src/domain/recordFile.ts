@@ -1,4 +1,6 @@
-import { simulateIntegerParsingProgram } from './integerParsing'
+import { inspectRecordFields, RECORD_LINE_LIMIT, RECORD_PARSER_STATEMENTS } from './recordFields'
+
+export { RECORD_LINE_LIMIT } from './recordFields'
 
 export const RECORD_FILE_DATASETS = {
   mixed: { label: '混合格式錯誤與合法分數', text: '10,80\n11;95\n0,75\n12,101\n13,60\n14,88,1\n15,100' },
@@ -23,7 +25,6 @@ export interface RecordFileConfig {
 }
 
 export const DEFAULT_RECORD_FILE_CONFIG: Readonly<RecordFileConfig> = { dataset: 'mixed', outcome: 'success', minimumScore: 70 }
-export const RECORD_LINE_LIMIT = 14
 
 export function validateRecordFileConfig(config: RecordFileConfig): string[] {
   const issues: string[] = []
@@ -36,16 +37,7 @@ export function validateRecordFileConfig(config: RecordFileConfig): string[] {
 export function buildRecordFileSource(config: RecordFileConfig = DEFAULT_RECORD_FILE_CONFIG) {
   const safe = validateRecordFileConfig(config).length ? DEFAULT_RECORD_FILE_CONFIG : config
   const statements = [
-    ['stdio', '#include <stdio.h>'], ['stdlib', '#include <stdlib.h>'], ['string', '#include <string.h>'], ['errno', '#include <errno.h>'],
-    ['gap-type', ''], ['type', 'typedef struct { int id; int score; } Record;'], ['gap-parse', ''],
-    ['parse', 'static int parse_record(const char *line, Record *record) {'],
-    ['end', '  char *end;'], ['reset-id', '  errno = 0;'], ['parse-id', '  long id = strtol(line, &end, 10);'],
-    ['check-id', '  if (end == line || errno == ERANGE || id < 1 || id > 9999) return 0;'],
-    ['comma', "  if (*end != ',') return 0;"], ['score-start', '  const char *start = end + 1;'],
-    ['reset-score', '  errno = 0;'], ['parse-score', '  long score = strtol(start, &end, 10);'],
-    ['check-score', '  if (end == start || errno == ERANGE || score < 0 || score > 100) return 0;'],
-    ['newline', "  if (*end == '\\n') ++end;"], ['tail', "  if (*end != '\\0') return 0;"],
-    ['store', '  *record = (Record){(int)id, (int)score};'], ['return-valid', '  return 1;'], ['end-parse', '}'],
+    ...RECORD_PARSER_STATEMENTS,
     ['gap-main', ''], ['main', 'int main(void) {'],
     ['open-input', '  FILE *input = fopen("scores.txt", "r");'],
     ['check-input', '  if (input == NULL) {'], ['print-input-error', '    puts("input open failed");'], ['return-input-error', '    return 1;'], ['end-input-check', '  }'],
@@ -181,28 +173,23 @@ export function simulateRecordFileProgram(config: RecordFileConfig = DEFAULT_REC
         reject('too-long', 'reject-long')
         continue
       }
-      const id = simulateIntegerParsingProgram({ text, longBits: 64, allowTrailingSpace: false })
-      state.idValue = id.value
-      state.end = id.conversionEnd
+      const fields = inspectRecordFields(text)
+      state.idValue = fields.idValue
+      state.end = fields.idEnd
       add('parse-id', 'parse-id', '轉換 id，記住 end 停止的位置。')
-      const idValid = id.conversionEnd !== 0 && id.errno !== 'ERANGE' && Number(id.value) >= 1 && Number(id.value) <= 9999
-      add('check-id', 'check-id', idValid ? 'id 介於 1 到 9999。' : 'id 缺少數字或超出範圍。')
-      if (!idValid) { reject('id', 'reject'); continue }
-      const comma = id.conversionEnd!
-      add('comma', 'comma', text[comma] === ',' ? 'end 指在逗號，下一格是 score 的起點。' : 'id 後方需要一個逗號。')
-      if (text[comma] !== ',') { reject('separator', 'reject'); continue }
-      const start = comma + 1
-      const score = simulateIntegerParsingProgram({ text: text.slice(start), longBits: 64, allowTrailingSpace: false })
-      state.scoreValue = score.value
-      state.end = start + score.conversionEnd!
+      add('check-id', 'check-id', fields.error === 'id' ? 'id 缺少數字或超出範圍。' : 'id 介於 1 到 9999。')
+      if (fields.error === 'id') { reject('id', 'reject'); continue }
+      add('comma', 'comma', fields.error === 'separator' ? 'id 後方需要一個逗號。' : 'end 指在逗號，下一格是 score 的起點。')
+      if (fields.error === 'separator') { reject('separator', 'reject'); continue }
+      state.scoreValue = fields.scoreValue
+      state.end = fields.scoreEnd
       add('parse-score', 'parse-score', '從逗號後轉換 score，再次更新 end。')
-      const scoreValid = score.conversionEnd !== 0 && score.errno !== 'ERANGE' && Number(score.value) >= 0 && Number(score.value) <= 100
-      add('check-score', 'check-score', scoreValid ? 'score 介於 0 到 100。' : 'score 缺少數字或超出範圍。')
-      if (!scoreValid) { reject('score', 'reject'); continue }
-      if (text[state.end] === '\n') state.end += 1
-      add('tail', 'tail', state.end === text.length ? '略過可有可無的換行後，抵達字串終點。' : '分數後仍有多餘字元。')
-      if (state.end !== text.length) { reject('tail', 'reject'); continue }
-      state.record = { id: Number(id.value), score: Number(score.value) }
+      add('check-score', 'check-score', fields.error === 'score' ? 'score 缺少數字或超出範圍。' : 'score 介於 0 到 100。')
+      if (fields.error === 'score') { reject('score', 'reject'); continue }
+      state.end = fields.tailEnd
+      add('tail', 'tail', fields.error === 'tail' ? '分數後仍有多餘字元。' : '略過可有可無的換行後，抵達字串終點。')
+      if (fields.error === 'tail' || fields.record === null) { reject('tail', 'reject'); continue }
+      state.record = fields.record
       add('store', 'store', '所有欄位與尾端都合格，現在才填入 Record。')
       state.valid += 1
       add('accept', 'accept', 'valid 加一，接著判斷輸出門檻。')

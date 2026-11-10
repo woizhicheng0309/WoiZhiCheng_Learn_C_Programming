@@ -45,19 +45,20 @@ it('opens score statistics from the map and connects it to integer parsing', asy
   expect(screen.getByRole('link', { name: '下一課：檔案資料驗證與分數統計' })).toHaveAttribute('href', '/learn/files/score-statistics')
 })
 
-it('shows all nine available topics on the home ribbon with a dynamic column count', () => {
+it('shows all ten available topics on the home ribbon with a dynamic column count', () => {
   render(<ProgressProvider><MemoryRouter><HomePage /></MemoryRouter></ProgressProvider>)
   const ribbon = document.querySelector<HTMLElement>('.topic-ribbon')!
-  expect(ribbon.querySelectorAll('.topic-pill')).toHaveLength(9)
-  expect(ribbon.style.getPropertyValue('--topic-count')).toBe('9')
+  expect(ribbon.querySelectorAll('.topic-pill')).toHaveLength(10)
+  expect(ribbon.style.getPropertyValue('--topic-count')).toBe('10')
   expect(within(ribbon).getByText('結構與自訂型別').closest('.topic-pill')).toHaveTextContent('現在開放')
   expect(within(ribbon).getByText('動態記憶體').closest('.topic-pill')).toHaveTextContent('現在開放')
   expect(within(ribbon).getByText('檔案與文字輸入').closest('.topic-pill')).toHaveTextContent('現在開放')
+  expect(within(ribbon).getByText('綜合練習').closest('.topic-pill')).toHaveTextContent('現在開放')
 })
 it('opens the new chapter from its course-map group and focuses the loaded lesson heading', async () => {
   render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
   const group = await screen.findByRole('region', { name: '結構與自訂型別' })
-  expect(screen.getByText('9 CORE TOPICS')).toBeInTheDocument()
+  expect(screen.getByText('10 CORE TOPICS')).toBeInTheDocument()
   const link = within(group).getByRole('link', { name: /結構與成員存取，未開始/ })
   expect(link).toHaveAttribute('href', '/learn/structures/basics')
   fireEvent.click(link)
@@ -172,4 +173,16 @@ it('opens multi-field file output from the map and connects it to score statisti
   fireEvent.click(screen.getByRole('link', { name: '上一課：檔案資料驗證與分數統計' }))
   await screen.findByRole('heading', { level: 1, name: /先確認整筆資料/ })
   expect(screen.getByRole('link', { name: '下一課：多欄紀錄驗證與檔案輸出' })).toHaveAttribute('href', '/learn/files/record-filter')
+})
+
+it('opens the project topic and links the capstone back to multi-field validation', async () => {
+  render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
+  const group = await screen.findByRole('region', { name: '綜合練習' })
+  fireEvent.click(within(group).getByRole('link', { name: /成績資料管理綜合練習，未開始/ }))
+  const heading = await screen.findByRole('heading', { level: 1, name: /從讀檔到查詢/ })
+  await waitFor(() => expect(heading).toHaveFocus())
+  expect(document.title).toContain('成績資料管理綜合練習')
+  fireEvent.click(screen.getByRole('link', { name: '上一課：多欄紀錄驗證與檔案輸出' }))
+  await screen.findByRole('heading', { level: 1, name: /逐欄驗證/ })
+  expect(screen.getByRole('link', { name: '下一課：成績資料管理綜合練習' })).toHaveAttribute('href', '/learn/projects/gradebook')
 })

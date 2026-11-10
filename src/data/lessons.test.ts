@@ -1,3 +1,4 @@
+import { GRADEBOOK_CHALLENGE_IDS } from './gradebookChallenges'
 import { RECORD_FILE_CHALLENGE_IDS } from './recordFileChallenges'
 import { SCORE_FILE_CHALLENGE_IDS } from './scoreFileChallenges'
 import { INTEGER_PARSING_CHALLENGE_IDS } from './integerParsingChallenges'
@@ -42,6 +43,7 @@ describe('two-level course catalog', () => {
       'structures',
       'dynamic-memory',
       'files-and-input',
+      'projects',
     ])
     expect(getLessonsByTopicId('variables').map((lesson) => lesson.id)).toEqual([
       'variables-basics',
@@ -116,6 +118,7 @@ describe('two-level course catalog', () => {
       'files-integer-parsing',
       'files-score-statistics',
       'files-record-filter',
+      'projects-gradebook',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -400,6 +403,16 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: RECORD_FILE_CHALLENGE_IDS,
     })
     expect(isLessonId('files-record-filter')).toBe(true)
+  })
+
+  it('adds the gradebook project after the required input, structures and search lessons', () => {
+    expect(getLessonsByTopicId('projects').map(lesson => lesson.id)).toEqual(['projects-gradebook'])
+    expect(getLessonById('projects-gradebook')).toMatchObject({
+      topicId: 'projects', moduleNumber: 10, lessonNumber: 1, order: 36,
+      path: '/learn/projects/gradebook', status: 'available',
+      prerequisiteLessonIds: ['files-record-filter', 'structures-arrays', 'arrays-search'],
+      requiredChallengeIds: GRADEBOOK_CHALLENGE_IDS,
+    })
   })
 
   it('provides safe topic and lesson lookups', () => {

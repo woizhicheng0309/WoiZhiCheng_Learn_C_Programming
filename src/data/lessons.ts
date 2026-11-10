@@ -1,3 +1,4 @@
+import { GRADEBOOK_CHALLENGE_IDS } from './gradebookChallenges'
 import { RECORD_FILE_CHALLENGE_IDS } from './recordFileChallenges'
 import { SCORE_FILE_CHALLENGE_IDS } from './scoreFileChallenges'
 import { INTEGER_PARSING_CHALLENGE_IDS } from './integerParsingChallenges'
@@ -44,6 +45,7 @@ export const TOPIC_IDS = [
   'structures',
   'dynamic-memory',
   'files-and-input',
+  'projects',
 ] as const
 
 export type TopicId = (typeof TOPIC_IDS)[number]
@@ -84,6 +86,7 @@ export const LESSON_IDS = [
   'files-integer-parsing',
   'files-score-statistics',
   'files-record-filter',
+  'projects-gradebook',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -653,6 +656,15 @@ const lessons: readonly LessonDefinition[] = [
     prerequisiteLessonIds: ['files-score-statistics', 'structures-functions'],
     requiredChallengeIds: RECORD_FILE_CHALLENGE_IDS,
   },
+  {
+    id: 'projects-gradebook', topicId: 'projects', moduleNumber: 10, lessonNumber: 1, order: 36,
+    title: '成績資料管理綜合練習', englishTitle: 'Gradebook Capstone',
+    description: '整合讀檔驗證、結構陣列、容量檢查、線性搜尋與查詢報告。',
+    concepts: ['讀檔與驗證', '結構陣列有效範圍', '查重與查詢', '報告輸出'],
+    status: 'available', path: '/learn/projects/gradebook', estimatedMinutes: 40,
+    prerequisiteLessonIds: ['files-record-filter', 'structures-arrays', 'arrays-search'],
+    requiredChallengeIds: GRADEBOOK_CHALLENGE_IDS,
+  },
 ]
 
 const topicMetadata: ReadonlyArray<Omit<TopicDefinition, 'lessons'>> = [
@@ -718,6 +730,10 @@ const topicMetadata: ReadonlyArray<Omit<TopicDefinition, 'lessons'>> = [
     title: '檔案與文字輸入',
     englishTitle: 'Files & Text Input',
     description: '透過串流取得文字，分辨成功、結尾與錯誤，並管理輸入資源。',
+  },
+  {
+    id: 'projects', order: 10, title: '綜合練習', englishTitle: 'Capstone Projects',
+    description: '把已學概念組成完整程式，練習驗證、追蹤與輸出。',
   },
 ]
 

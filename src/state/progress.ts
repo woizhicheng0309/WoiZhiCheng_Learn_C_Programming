@@ -1,3 +1,4 @@
+import { DEFAULT_GRADEBOOK_CONFIG, validateGradebookConfig, type GradebookConfig } from '../domain/gradebookProject'
 import { DEFAULT_RECORD_FILE_CONFIG, validateRecordFileConfig, type RecordFileConfig } from '../domain/recordFile'
 import { DEFAULT_SCORE_FILE_CONFIG, validateScoreFileConfig, type ScoreFileConfig } from '../domain/scoreFile'
 import { DEFAULT_INTEGER_PARSING_CONFIG, validateIntegerParsingConfig, type IntegerParsingConfig } from '../domain/integerParsing'
@@ -279,6 +280,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'files-integer-parsing') return { ...DEFAULT_INTEGER_PARSING_CONFIG }
   if (id === 'files-score-statistics') return { ...DEFAULT_SCORE_FILE_CONFIG }
   if (id === 'files-record-filter') return { ...DEFAULT_RECORD_FILE_CONFIG }
+  if (id === 'projects-gradebook') return { ...DEFAULT_GRADEBOOK_CONFIG }
   return null
 }
 
@@ -509,6 +511,11 @@ export function isSelectionSortSavedState(value: unknown): value is JsonObject &
   return validateSelectionSortConfig(value as SelectionSortConfig).length === 0
 }
 
+export function isGradebookSavedState(value: unknown): value is JsonObject & GradebookConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateGradebookConfig(value as GradebookConfig).length === 0
+}
+
 export function isRecordFileSavedState(value: unknown): value is JsonObject & RecordFileConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateRecordFileConfig(value as RecordFileConfig).length === 0
@@ -638,6 +645,7 @@ export function isSavedStateForLesson(
   if (id === 'files-integer-parsing') return isIntegerParsingSavedState(value)
   if (id === 'files-score-statistics') return isScoreFileSavedState(value)
   if (id === 'files-record-filter') return isRecordFileSavedState(value)
+  if (id === 'projects-gradebook') return isGradebookSavedState(value)
   return value === null
 }
 
