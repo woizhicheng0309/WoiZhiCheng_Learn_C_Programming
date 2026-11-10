@@ -74,7 +74,7 @@ it('saves settings and the three separate challenge completions', () => {
   fireEvent.keyDown(screen.getByRole('tab', { name: /先改指向/ }), { key: 'End' })
   submit('2')
   expect(screen.getByText('你已完成結構的函式傳遞與 typedef。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 33, totalChallenges: 99, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 34, totalChallenges: 102, completedChallenges: 3 })
   view.unmount()
   renderLesson()
   expect(screen.getByRole('combobox', { name: '型別寫法' })).toHaveValue('tag')

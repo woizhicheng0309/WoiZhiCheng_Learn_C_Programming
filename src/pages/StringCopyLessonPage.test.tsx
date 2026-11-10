@@ -98,7 +98,7 @@ it('completes all challenges via keyboard tabs and restores the lesson state aft
   fireEvent.keyDown(screen.getByRole('tab', { name: /結尾也要複製/ }), { key: 'ArrowRight' }); solve('5')
   fireEvent.keyDown(screen.getByRole('tab', { name: /四個字元要幾格/ }), { key: 'End' }); solve('2 6')
   expect(screen.getByText('你已完成字串長度與安全複製。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 33, totalChallenges: 99, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 34, totalChallenges: 102, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
   expect(screen.getByRole('combobox', { name: '目的陣列容量' })).toHaveValue('8')

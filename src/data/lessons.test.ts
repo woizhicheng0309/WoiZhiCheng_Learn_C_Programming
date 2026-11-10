@@ -2,6 +2,7 @@ import { SCORE_FILE_CHALLENGE_IDS } from './scoreFileChallenges'
 import { INTEGER_PARSING_CHALLENGE_IDS } from './integerParsingChallenges'
 import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
 import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
+import { MEMORY_OWNERSHIP_CHALLENGE_IDS } from './memoryOwnershipChallenges'
 import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
 import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
 import { STRUCTURE_FUNCTION_CHALLENGE_IDS } from './structureFunctionChallenges'
@@ -73,7 +74,7 @@ describe('two-level course catalog', () => {
       'pointers-const',
     ])
     expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics', 'structures-arrays', 'structures-pointers', 'structures-functions'])
-    expect(getLessonsByTopicId('dynamic-memory').map(lesson => lesson.id)).toEqual(['memory-allocation', 'memory-reallocation'])
+    expect(getLessonsByTopicId('dynamic-memory').map(lesson => lesson.id)).toEqual(['memory-allocation', 'memory-reallocation', 'memory-ownership'])
     expect(getLessonsByTopicId('files-and-input').map(lesson => lesson.id)).toEqual(['files-reading', 'files-characters', 'files-integer-parsing', 'files-score-statistics'])
   })
 
@@ -108,6 +109,7 @@ describe('two-level course catalog', () => {
       'structures-functions',
       'memory-allocation',
       'memory-reallocation',
+      'memory-ownership',
       'files-reading',
       'files-characters',
       'files-integer-parsing',
@@ -330,7 +332,7 @@ describe('two-level course catalog', () => {
   it('opens chapter nine with file input and independent required challenges', () => {
     expect(getTopicById('files-and-input')).toMatchObject({ order: 9, title: '檔案與文字輸入' })
     expect(getLessonById('files-reading')).toMatchObject({
-      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 1, order: 30,
+      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 1, order: 31,
       path: '/learn/files/reading', status: 'available',
       prerequisiteLessonIds: ['arrays-string-copy', 'pointers-basics', 'loops-while-do-while'],
       requiredChallengeIds: FILE_READING_CHALLENGE_IDS,
@@ -340,7 +342,7 @@ describe('two-level course catalog', () => {
 
   it('adds character input with explicit EOF and early-stop concepts', () => {
     expect(getLessonById('files-characters')).toMatchObject({
-      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 2, order: 31,
+      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 2, order: 32,
       path: '/learn/files/characters', status: 'available',
       prerequisiteLessonIds: ['files-reading', 'loops-break-continue', 'conditionals-if-else'],
       requiredChallengeIds: FILE_CHARACTER_CHALLENGE_IDS,
@@ -350,7 +352,7 @@ describe('two-level course catalog', () => {
 
   it('adds integer parsing with explicit range and complete-input validation', () => {
     expect(getLessonById('files-integer-parsing')).toMatchObject({
-      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 3, order: 32,
+      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 3, order: 33,
       path: '/learn/files/integer-parsing', status: 'available',
       prerequisiteLessonIds: ['files-reading', 'pointers-strings', 'conditionals-if-else'],
       requiredChallengeIds: INTEGER_PARSING_CHALLENGE_IDS,
@@ -360,7 +362,7 @@ describe('two-level course catalog', () => {
 
   it('adds the score file capstone after character reading and number parsing', () => {
     expect(getLessonById('files-score-statistics')).toMatchObject({
-      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 4, order: 33,
+      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 4, order: 34,
       path: '/learn/files/score-statistics', status: 'available',
       prerequisiteLessonIds: ['files-characters', 'files-integer-parsing', 'arrays-basics'],
       requiredChallengeIds: SCORE_FILE_CHALLENGE_IDS,
@@ -376,6 +378,16 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: STRUCTURE_FUNCTION_CHALLENGE_IDS,
     })
     expect(isLessonId('structures-functions')).toBe(true)
+  })
+
+  it('places ownership and borrowing between reallocation and file input', () => {
+    expect(getLessonById('memory-ownership')).toMatchObject({
+      topicId: 'dynamic-memory', moduleNumber: 8, lessonNumber: 3, order: 30,
+      path: '/learn/memory/ownership', status: 'available',
+      prerequisiteLessonIds: ['memory-allocation', 'structures-functions'],
+      requiredChallengeIds: MEMORY_OWNERSHIP_CHALLENGE_IDS,
+    })
+    expect(isLessonId('memory-ownership')).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {

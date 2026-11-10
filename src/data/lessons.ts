@@ -2,6 +2,7 @@ import { SCORE_FILE_CHALLENGE_IDS } from './scoreFileChallenges'
 import { INTEGER_PARSING_CHALLENGE_IDS } from './integerParsingChallenges'
 import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
 import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
+import { MEMORY_OWNERSHIP_CHALLENGE_IDS } from './memoryOwnershipChallenges'
 import { REALLOCATION_CHALLENGE_IDS } from './reallocationChallenges'
 import { ALLOCATION_CHALLENGE_IDS } from './allocationChallenges'
 import { STRUCTURE_FUNCTION_CHALLENGE_IDS } from './structureFunctionChallenges'
@@ -76,6 +77,7 @@ export const LESSON_IDS = [
   'structures-functions',
   'memory-allocation',
   'memory-reallocation',
+  'memory-ownership',
   'files-reading',
   'files-characters',
   'files-integer-parsing',
@@ -575,11 +577,27 @@ const lessons: readonly LessonDefinition[] = [
     requiredChallengeIds: REALLOCATION_CHALLENGE_IDS,
   },
   {
+    id: 'memory-ownership',
+    topicId: 'dynamic-memory',
+    moduleNumber: 8,
+    lessonNumber: 3,
+    order: 30,
+    title: '記憶體所有權、借用與釋放',
+    englishTitle: 'Memory Ownership, Borrowing & Release',
+    description: '用結構欄位持有配置區塊，追蹤借用別名、轉交釋放責任與失效指標。',
+    concepts: ['所有權約定', '借用與指標別名', '結構指標參數', '釋放後的生命週期'],
+    status: 'available',
+    path: '/learn/memory/ownership',
+    estimatedMinutes: 30,
+    prerequisiteLessonIds: ['memory-allocation', 'structures-functions'],
+    requiredChallengeIds: MEMORY_OWNERSHIP_CHALLENGE_IDS,
+  },
+  {
     id: 'files-reading',
     topicId: 'files-and-input',
     moduleNumber: 9,
     lessonNumber: 1,
-    order: 30,
+    order: 31,
     title: '檔案開啟與 fgets 讀取',
     englishTitle: 'File Streams & fgets',
     description: '逐次追蹤 fopen、fgets 與 fclose，區分緩衝區分段、換行、EOF 和 I/O 失敗分支。',
@@ -595,7 +613,7 @@ const lessons: readonly LessonDefinition[] = [
     topicId: 'files-and-input',
     moduleNumber: 9,
     lessonNumber: 2,
-    order: 31,
+    order: 32,
     title: 'fgetc 逐字讀取與 EOF',
     englishTitle: 'Character Input & EOF',
     description: '用 int 保存 fgetc 的資料與結束值，追蹤零值、高位元組、數字統計與換行提早停止。',
@@ -607,7 +625,7 @@ const lessons: readonly LessonDefinition[] = [
     requiredChallengeIds: FILE_CHARACTER_CHALLENGE_IDS,
   },
   {
-    id: 'files-integer-parsing', topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 3, order: 32,
+    id: 'files-integer-parsing', topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 3, order: 33,
     title: 'strtol 數字解析與輸入驗證', englishTitle: 'strtol & Input Validation',
     description: '追蹤十進位轉換、end 停止位置、ERANGE 與尾端規則，分辨零值和沒有數字。',
     concepts: ['strtol 與 endptr', 'errno 與 ERANGE', 'long 範圍', '完整輸入驗證'],
@@ -616,7 +634,7 @@ const lessons: readonly LessonDefinition[] = [
     requiredChallengeIds: INTEGER_PARSING_CHALLENGE_IDS,
   },
   {
-    id: 'files-score-statistics', topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 4, order: 33,
+    id: 'files-score-statistics', topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 4, order: 34,
     title: '檔案資料驗證與分數統計', englishTitle: 'Validated Score Files & Statistics',
     description: '收集完整紀錄，整合數字驗證、無效資料策略、分數加總與 I/O 失敗處理。',
     concepts: ['完整紀錄與容量', '逐筆驗證', '部分統計與錯誤', '平均分母與型別轉換'],

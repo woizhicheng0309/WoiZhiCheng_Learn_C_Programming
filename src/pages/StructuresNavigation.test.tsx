@@ -126,15 +126,27 @@ it('opens the reallocation lesson from the map and connects adjacent memory less
   expect(screen.getByRole('link', { name: '下一課：realloc 容量調整與失敗處理' })).toHaveAttribute('href', '/learn/memory/reallocation')
 })
 
-it('opens chapter nine from the course map and connects it to reallocation', async () => {
+it('opens ownership from the course map and connects back to reallocation', async () => {
+  render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
+  const group = await screen.findByRole('region', { name: '動態記憶體' })
+  fireEvent.click(within(group).getByRole('link', { name: /記憶體所有權、借用與釋放，未開始/ }))
+  const heading = await screen.findByRole('heading', { level: 1, name: /交接同一塊記憶體/ })
+  await waitFor(() => expect(heading).toHaveFocus())
+  expect(document.title).toContain('記憶體所有權、借用與釋放')
+  fireEvent.click(screen.getByRole('link', { name: '上一課：realloc 容量調整與失敗處理' }))
+  await screen.findByRole('heading', { level: 1, name: /先接住新結果/ })
+  expect(screen.getByRole('link', { name: '下一課：記憶體所有權、借用與釋放' })).toHaveAttribute('href', '/learn/memory/ownership')
+})
+
+it('opens chapter nine from the course map and connects it to ownership', async () => {
   render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
   const group = await screen.findByRole('region', { name: '檔案與文字輸入' })
   fireEvent.click(within(group).getByRole('link', { name: /檔案開啟與 fgets 讀取，未開始/ }))
   const heading = await screen.findByRole('heading', { level: 1, name: /先確認讀到了什麼/ })
   await waitFor(() => expect(heading).toHaveFocus())
   expect(document.title).toContain('檔案開啟與 fgets 讀取')
-  fireEvent.click(screen.getByRole('link', { name: '上一課：realloc 容量調整與失敗處理' }))
-  await screen.findByRole('heading', { level: 1, name: /先接住新結果/ })
+  fireEvent.click(screen.getByRole('link', { name: '上一課：記憶體所有權、借用與釋放' }))
+  await screen.findByRole('heading', { level: 1, name: /交接同一塊記憶體/ })
   expect(screen.getByRole('link', { name: '下一課：檔案開啟與 fgets 讀取' })).toHaveAttribute('href', '/learn/files/reading')
 })
 

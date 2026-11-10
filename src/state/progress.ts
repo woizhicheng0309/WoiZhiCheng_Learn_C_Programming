@@ -2,6 +2,7 @@ import { DEFAULT_SCORE_FILE_CONFIG, validateScoreFileConfig, type ScoreFileConfi
 import { DEFAULT_INTEGER_PARSING_CONFIG, validateIntegerParsingConfig, type IntegerParsingConfig } from '../domain/integerParsing'
 import { DEFAULT_FILE_CHARACTER_CONFIG, validateFileCharacterConfig, type FileCharacterConfig } from '../domain/fileCharacters'
 import { DEFAULT_FILE_READING_CONFIG, validateFileReadingConfig, type FileReadingConfig } from '../domain/fileReading'
+import { DEFAULT_MEMORY_OWNERSHIP_CONFIG, validateMemoryOwnershipConfig, type MemoryOwnershipConfig } from '../domain/memoryOwnership'
 import { DEFAULT_REALLOCATION_CONFIG, validateReallocationConfig, type ReallocationConfig } from '../domain/reallocation'
 import { DEFAULT_ALLOCATION_CONFIG, validateAllocationConfig, type AllocationConfig } from '../domain/allocation'
 import { DEFAULT_STRUCTURE_FUNCTION_CONFIG, validateStructureFunctionConfig, type StructureFunctionConfig } from '../domain/structureFunctions'
@@ -271,6 +272,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'structures-functions') return { ...DEFAULT_STRUCTURE_FUNCTION_CONFIG }
   if (id === 'memory-allocation') return { ...DEFAULT_ALLOCATION_CONFIG }
   if (id === 'memory-reallocation') return { ...DEFAULT_REALLOCATION_CONFIG }
+  if (id === 'memory-ownership') return { ...DEFAULT_MEMORY_OWNERSHIP_CONFIG }
   if (id === 'files-reading') return { ...DEFAULT_FILE_READING_CONFIG }
   if (id === 'files-characters') return { ...DEFAULT_FILE_CHARACTER_CONFIG }
   if (id === 'files-integer-parsing') return { ...DEFAULT_INTEGER_PARSING_CONFIG }
@@ -525,6 +527,11 @@ export function isFileReadingSavedState(value: unknown): value is JsonObject & F
   return validateFileReadingConfig(value as FileReadingConfig).length === 0
 }
 
+export function isMemoryOwnershipSavedState(value: unknown): value is JsonObject & MemoryOwnershipConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateMemoryOwnershipConfig(value as MemoryOwnershipConfig).length === 0
+}
+
 export function isReallocationSavedState(value: unknown): value is JsonObject & ReallocationConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateReallocationConfig(value as ReallocationConfig).length === 0
@@ -618,6 +625,7 @@ export function isSavedStateForLesson(
   if (id === 'structures-functions') return isStructureFunctionSavedState(value)
   if (id === 'memory-allocation') return isAllocationSavedState(value)
   if (id === 'memory-reallocation') return isReallocationSavedState(value)
+  if (id === 'memory-ownership') return isMemoryOwnershipSavedState(value)
   if (id === 'files-reading') return isFileReadingSavedState(value)
   if (id === 'files-characters') return isFileCharacterSavedState(value)
   if (id === 'files-integer-parsing') return isIntegerParsingSavedState(value)

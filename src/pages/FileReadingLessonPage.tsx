@@ -132,6 +132,6 @@ export function FileReadingLessonPage() {
         </form>{feedback[item.id] && <p role="status">{feedback[item.id]?.message}</p>}
       </div>}</ChallengePanel>
     </section>
-    <section className="pointers-recap page-width"><h2>先檢查讀取結果，再處理字串，最後解除串流關聯。</h2><p>不要用 !feof 預測下一次讀取，也不要在 fgets 回傳 NULL 後重複處理舊 buffer。串流仍有效時先保存 ferror，再檢查 fclose 的結果；即使 fclose 回報錯誤，串流也已解除檔案關聯。</p><p>語意依據：<a href="https://www.sigbus.info/n1570#7.21.7.2" target="_blank" rel="noreferrer">C11 工作草案 N1570：fgets、fclose 與錯誤指標</a>。</p>{count === 3 && <p role="status">你已完成檔案開啟與 fgets 讀取。</p>}<div><Link className="button button-secondary" to="/learn/memory/reallocation">上一課：realloc 容量調整與失敗處理</Link><Link className="button button-primary" to="/learn/files/characters">下一課：fgetc 逐字讀取與 EOF</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
+    <section className="pointers-recap page-width"><h2>先檢查讀取結果，再處理字串，最後解除串流關聯。</h2><p>不要用 !feof 預測下一次讀取，也不要在 fgets 回傳 NULL 後重複處理舊 buffer。串流仍有效時先保存 ferror，再檢查 fclose 的結果；即使 fclose 回報錯誤，串流也已解除檔案關聯。</p><p>語意依據：<a href="https://www.sigbus.info/n1570#7.21.7.2" target="_blank" rel="noreferrer">C11 工作草案 N1570：fgets、fclose 與錯誤指標</a>。</p>{count === 3 && <p role="status">你已完成檔案開啟與 fgets 讀取。</p>}<div><Link className="button button-secondary" to="/learn/memory/ownership">上一課：記憶體所有權、借用與釋放</Link><Link className="button button-primary" to="/learn/files/characters">下一課：fgetc 逐字讀取與 EOF</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div></section>
   </div>
 }
