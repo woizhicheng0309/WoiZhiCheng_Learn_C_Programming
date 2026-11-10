@@ -120,7 +120,7 @@ it('completes independent keyboard challenges and restores all saved controls', 
   fireEvent.keyDown(screen.getByRole('tab', { name: /零值不等於轉換失敗/ }), { key: 'ArrowRight' }); solve('42 2')
   fireEvent.keyDown(screen.getByRole('tab', { name: /轉換前綴與停止位置/ }), { key: 'End' }); solve('10 1')
   expect(screen.getByText('你已完成 strtol 數字解析與輸入驗證。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 34, totalChallenges: 102, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 35, totalChallenges: 105, completedChallenges: 3 })
   expect(loadProgress().lessons['files-integer-parsing']?.guidedRunCompleted).toBe(false)
   view.unmount(); renderPage()
   expect(screen.getByRole('textbox', { name: '輸入文字（套用後執行）' })).toHaveValue(' +123 \t')

@@ -38,3 +38,9 @@
 .ownership-variables dt { overflow-wrap: anywhere; }
 .ownership-block { margin-bottom: 16px; }
 .memory-ownership-page .allocation-console pre { font: .8rem/1.9 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.record-file-page .source-code-panel__editor { max-height: 28rem; overflow: auto; }
+.record-file-page .source-code-panel__editor:focus-visible { outline: 3px solid var(--accent-soft); outline-offset: -3px; }
+.record-file-page .allocation-variables { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.record-file-page :is(.allocation-controls, .allocation-execution) pre { font: .8rem/1.9 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+.record-file-page .allocation-console { margin-top: 16px; }

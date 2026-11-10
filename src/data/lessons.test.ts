@@ -1,3 +1,4 @@
+import { RECORD_FILE_CHALLENGE_IDS } from './recordFileChallenges'
 import { SCORE_FILE_CHALLENGE_IDS } from './scoreFileChallenges'
 import { INTEGER_PARSING_CHALLENGE_IDS } from './integerParsingChallenges'
 import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
@@ -75,7 +76,7 @@ describe('two-level course catalog', () => {
     ])
     expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics', 'structures-arrays', 'structures-pointers', 'structures-functions'])
     expect(getLessonsByTopicId('dynamic-memory').map(lesson => lesson.id)).toEqual(['memory-allocation', 'memory-reallocation', 'memory-ownership'])
-    expect(getLessonsByTopicId('files-and-input').map(lesson => lesson.id)).toEqual(['files-reading', 'files-characters', 'files-integer-parsing', 'files-score-statistics'])
+    expect(getLessonsByTopicId('files-and-input').map(lesson => lesson.id)).toEqual(['files-reading', 'files-characters', 'files-integer-parsing', 'files-score-statistics', 'files-record-filter'])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -114,6 +115,7 @@ describe('two-level course catalog', () => {
       'files-characters',
       'files-integer-parsing',
       'files-score-statistics',
+      'files-record-filter',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -388,6 +390,16 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: MEMORY_OWNERSHIP_CHALLENGE_IDS,
     })
     expect(isLessonId('memory-ownership')).toBe(true)
+  })
+
+  it('places multi-field filtering after score statistics', () => {
+    expect(getLessonById('files-record-filter')).toMatchObject({
+      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 5, order: 35,
+      path: '/learn/files/record-filter', status: 'available',
+      prerequisiteLessonIds: ['files-score-statistics', 'structures-functions'],
+      requiredChallengeIds: RECORD_FILE_CHALLENGE_IDS,
+    })
+    expect(isLessonId('files-record-filter')).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {

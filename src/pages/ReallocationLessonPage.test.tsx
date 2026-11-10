@@ -148,7 +148,7 @@ it('completes keyboard challenges independently and restores all four saved cont
   fireEvent.keyDown(screen.getByRole('tab', { name: /先用暫存指標接結果/ }), { key: 'ArrowRight' }); solve('5 32')
   fireEvent.keyDown(screen.getByRole('tab', { name: /保留前綴，初始化新增部分/ }), { key: 'End' }); solve('2 11')
   expect(screen.getByText('你已完成 realloc 容量調整與失敗處理。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 34, totalChallenges: 102, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 35, totalChallenges: 105, completedChallenges: 3 })
   expect(loadProgress().lessons['memory-reallocation']?.guidedRunCompleted).toBe(false)
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')

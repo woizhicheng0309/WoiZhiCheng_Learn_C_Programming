@@ -1,3 +1,4 @@
+import { RECORD_FILE_CHALLENGE_IDS } from './recordFileChallenges'
 import { SCORE_FILE_CHALLENGE_IDS } from './scoreFileChallenges'
 import { INTEGER_PARSING_CHALLENGE_IDS } from './integerParsingChallenges'
 import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
@@ -82,6 +83,7 @@ export const LESSON_IDS = [
   'files-characters',
   'files-integer-parsing',
   'files-score-statistics',
+  'files-record-filter',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -641,6 +643,15 @@ const lessons: readonly LessonDefinition[] = [
     status: 'available', path: '/learn/files/score-statistics', estimatedMinutes: 35,
     prerequisiteLessonIds: ['files-characters', 'files-integer-parsing', 'arrays-basics'],
     requiredChallengeIds: SCORE_FILE_CHALLENGE_IDS,
+  },
+  {
+    id: 'files-record-filter', topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 5, order: 35,
+    title: '多欄紀錄驗證與檔案輸出', englishTitle: 'Multi-field Validation & File Output',
+    description: '讀取 id 與 score，驗證欄位、分隔符和尾端，篩選合格紀錄並確認關檔結果。',
+    concepts: ['逐欄 strtol', '整筆紀錄驗證', 'fprintf 與輸出門檻', '關檔與錯誤檢查'],
+    status: 'available', path: '/learn/files/record-filter', estimatedMinutes: 35,
+    prerequisiteLessonIds: ['files-score-statistics', 'structures-functions'],
+    requiredChallengeIds: RECORD_FILE_CHALLENGE_IDS,
   },
 ]
 

@@ -130,7 +130,7 @@ it('completes independent keyboard challenges and restores all saved controls', 
   fireEvent.keyDown(screen.getByRole('tab', { name: /過長前綴不能變成一筆分數/ }), { key: 'ArrowRight' }); solve('3 3 180')
   fireEvent.keyDown(screen.getByRole('tab', { name: /只把完整合法紀錄加入總和/ }), { key: 'End' }); solve('2')
   expect(screen.getByText('你已完成檔案資料驗證與分數統計。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 34, totalChallenges: 102, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 35, totalChallenges: 105, completedChallenges: 3 })
   expect(loadProgress().lessons['files-score-statistics']?.guidedRunCompleted).toBe(false)
   view.unmount(); renderPage()
   expect(screen.getByRole('combobox', { name: '分數資料' })).toHaveValue('long')

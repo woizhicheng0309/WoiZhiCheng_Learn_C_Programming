@@ -78,7 +78,7 @@ it('saves settings and all three separate challenge completions', () => {
   fireEvent.keyDown(screen.getByRole('tab', { name: /持有欄位清空後/ }), { key: 'End' })
   submit('1 0')
   expect(screen.getByText('你已完成記憶體所有權、借用與釋放。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 34, totalChallenges: 102, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 35, totalChallenges: 105, completedChallenges: 3 })
   view.unmount()
   renderLesson()
   expect(screen.getByRole('combobox', { name: '配置情境' })).toHaveValue('failure')

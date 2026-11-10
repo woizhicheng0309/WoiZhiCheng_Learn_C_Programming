@@ -119,7 +119,7 @@ it('completes independent keyboard challenges and restores all settings without 
   fireEvent.keyDown(screen.getByRole('tab', { name: /配置成功還需要初始化/ }), { key: 'ArrowRight' }); solve('18')
   fireEvent.keyDown(screen.getByRole('tab', { name: /逐格寫入再加總/ }), { key: 'End' }); solve('3')
   expect(screen.getByText('你已完成動態記憶體配置與釋放。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 34, totalChallenges: 102, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 35, totalChallenges: 105, completedChallenges: 3 })
   expect(loadProgress().lessons['memory-allocation']?.guidedRunCompleted).toBe(false)
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
