@@ -1,3 +1,4 @@
+import { SCORE_FILE_CHALLENGE_IDS } from './scoreFileChallenges'
 import { INTEGER_PARSING_CHALLENGE_IDS } from './integerParsingChallenges'
 import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
 import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
@@ -76,6 +77,7 @@ export const LESSON_IDS = [
   'files-reading',
   'files-characters',
   'files-integer-parsing',
+  'files-score-statistics',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -594,6 +596,15 @@ const lessons: readonly LessonDefinition[] = [
     status: 'available', path: '/learn/files/integer-parsing', estimatedMinutes: 30,
     prerequisiteLessonIds: ['files-reading', 'pointers-strings', 'conditionals-if-else'],
     requiredChallengeIds: INTEGER_PARSING_CHALLENGE_IDS,
+  },
+  {
+    id: 'files-score-statistics', topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 4, order: 32,
+    title: '檔案資料驗證與分數統計', englishTitle: 'Validated Score Files & Statistics',
+    description: '收集完整紀錄，整合數字驗證、無效資料策略、分數加總與 I/O 失敗處理。',
+    concepts: ['完整紀錄與容量', '逐筆驗證', '部分統計與錯誤', '平均分母與型別轉換'],
+    status: 'available', path: '/learn/files/score-statistics', estimatedMinutes: 35,
+    prerequisiteLessonIds: ['files-characters', 'files-integer-parsing', 'arrays-basics'],
+    requiredChallengeIds: SCORE_FILE_CHALLENGE_IDS,
   },
 ]
 

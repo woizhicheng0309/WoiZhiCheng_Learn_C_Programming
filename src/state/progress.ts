@@ -1,3 +1,4 @@
+import { DEFAULT_SCORE_FILE_CONFIG, validateScoreFileConfig, type ScoreFileConfig } from '../domain/scoreFile'
 import { DEFAULT_INTEGER_PARSING_CONFIG, validateIntegerParsingConfig, type IntegerParsingConfig } from '../domain/integerParsing'
 import { DEFAULT_FILE_CHARACTER_CONFIG, validateFileCharacterConfig, type FileCharacterConfig } from '../domain/fileCharacters'
 import { DEFAULT_FILE_READING_CONFIG, validateFileReadingConfig, type FileReadingConfig } from '../domain/fileReading'
@@ -271,6 +272,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'files-reading') return { ...DEFAULT_FILE_READING_CONFIG }
   if (id === 'files-characters') return { ...DEFAULT_FILE_CHARACTER_CONFIG }
   if (id === 'files-integer-parsing') return { ...DEFAULT_INTEGER_PARSING_CONFIG }
+  if (id === 'files-score-statistics') return { ...DEFAULT_SCORE_FILE_CONFIG }
   return null
 }
 
@@ -501,6 +503,11 @@ export function isSelectionSortSavedState(value: unknown): value is JsonObject &
   return validateSelectionSortConfig(value as SelectionSortConfig).length === 0
 }
 
+export function isScoreFileSavedState(value: unknown): value is JsonObject & ScoreFileConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateScoreFileConfig(value as ScoreFileConfig).length === 0
+}
+
 export function isIntegerParsingSavedState(value: unknown): value is JsonObject & IntegerParsingConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateIntegerParsingConfig(value as IntegerParsingConfig).length === 0
@@ -606,6 +613,7 @@ export function isSavedStateForLesson(
   if (id === 'files-reading') return isFileReadingSavedState(value)
   if (id === 'files-characters') return isFileCharacterSavedState(value)
   if (id === 'files-integer-parsing') return isIntegerParsingSavedState(value)
+  if (id === 'files-score-statistics') return isScoreFileSavedState(value)
   return value === null
 }
 

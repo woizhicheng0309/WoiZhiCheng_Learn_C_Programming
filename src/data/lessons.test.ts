@@ -1,3 +1,4 @@
+import { SCORE_FILE_CHALLENGE_IDS } from './scoreFileChallenges'
 import { INTEGER_PARSING_CHALLENGE_IDS } from './integerParsingChallenges'
 import { FILE_CHARACTER_CHALLENGE_IDS } from './fileCharacterChallenges'
 import { FILE_READING_CHALLENGE_IDS } from './fileReadingChallenges'
@@ -72,7 +73,7 @@ describe('two-level course catalog', () => {
     ])
     expect(getLessonsByTopicId('structures').map(lesson => lesson.id)).toEqual(['structures-basics', 'structures-arrays', 'structures-pointers'])
     expect(getLessonsByTopicId('dynamic-memory').map(lesson => lesson.id)).toEqual(['memory-allocation', 'memory-reallocation'])
-    expect(getLessonsByTopicId('files-and-input').map(lesson => lesson.id)).toEqual(['files-reading', 'files-characters', 'files-integer-parsing'])
+    expect(getLessonsByTopicId('files-and-input').map(lesson => lesson.id)).toEqual(['files-reading', 'files-characters', 'files-integer-parsing', 'files-score-statistics'])
   })
 
   it('defines the available lessons without locking the for lab', () => {
@@ -108,6 +109,7 @@ describe('two-level course catalog', () => {
       'files-reading',
       'files-characters',
       'files-integer-parsing',
+      'files-score-statistics',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -352,6 +354,16 @@ describe('two-level course catalog', () => {
       requiredChallengeIds: INTEGER_PARSING_CHALLENGE_IDS,
     })
     expect(isLessonId('files-integer-parsing')).toBe(true)
+  })
+
+  it('adds the score file capstone after character reading and number parsing', () => {
+    expect(getLessonById('files-score-statistics')).toMatchObject({
+      topicId: 'files-and-input', moduleNumber: 9, lessonNumber: 4, order: 32,
+      path: '/learn/files/score-statistics', status: 'available',
+      prerequisiteLessonIds: ['files-characters', 'files-integer-parsing', 'arrays-basics'],
+      requiredChallengeIds: SCORE_FILE_CHALLENGE_IDS,
+    })
+    expect(isLessonId('files-score-statistics')).toBe(true)
   })
 
   it('provides safe topic and lesson lookups', () => {

@@ -44,6 +44,8 @@ const FileCharacterLessonPage = lazy(() => import('./pages/FileCharacterLessonPa
 
 const IntegerParsingLessonPage = lazy(() => import('./pages/IntegerParsingLessonPage').then(module => ({ default: module.IntegerParsingLessonPage })))
 
+const ScoreFileLessonPage = lazy(() => import('./pages/ScoreFileLessonPage').then(module => ({ default: module.ScoreFileLessonPage })))
+
 export default function App() {
   const { pathname } = useLocation()
   return (
@@ -88,6 +90,7 @@ export default function App() {
               <Route path="/learn/files/reading" element={<FileReadingLessonPage />} />
               <Route path="/learn/files/characters" element={<FileCharacterLessonPage />} />
               <Route path="/learn/files/integer-parsing" element={<IntegerParsingLessonPage />} />
+              <Route path="/learn/files/score-statistics" element={<ScoreFileLessonPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Suspense>

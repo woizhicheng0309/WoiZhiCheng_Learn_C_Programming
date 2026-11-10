@@ -33,6 +33,18 @@ it('opens integer parsing from the map and connects it to character input', asyn
   expect(screen.getByRole('link', { name: '下一課：strtol 數字解析與輸入驗證' })).toHaveAttribute('href', '/learn/files/integer-parsing')
 })
 
+it('opens score statistics from the map and connects it to integer parsing', async () => {
+  render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
+  const group = await screen.findByRole('region', { name: '檔案與文字輸入' })
+  fireEvent.click(within(group).getByRole('link', { name: /檔案資料驗證與分數統計，未開始/ }))
+  const heading = await screen.findByRole('heading', { level: 1, name: /先確認整筆資料/ })
+  await waitFor(() => expect(heading).toHaveFocus())
+  expect(document.title).toContain('檔案資料驗證與分數統計')
+  fireEvent.click(screen.getByRole('link', { name: '上一課：strtol 數字解析與輸入驗證' }))
+  await screen.findByRole('heading', { level: 1, name: /先轉換數字/ })
+  expect(screen.getByRole('link', { name: '下一課：檔案資料驗證與分數統計' })).toHaveAttribute('href', '/learn/files/score-statistics')
+})
+
 it('shows all nine available topics on the home ribbon with a dynamic column count', () => {
   render(<ProgressProvider><MemoryRouter><HomePage /></MemoryRouter></ProgressProvider>)
   const ribbon = document.querySelector<HTMLElement>('.topic-ribbon')!

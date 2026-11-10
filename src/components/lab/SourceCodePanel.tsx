@@ -1,4 +1,4 @@
-import { useId, type HTMLAttributes, type ReactNode } from 'react'
+import { useEffect, useId, useRef, type HTMLAttributes, type ReactNode } from 'react'
 import type { SourceCodeLine } from './types'
 
 export interface SourceCodePanelProps<PartId extends string = string>
@@ -10,6 +10,7 @@ export interface SourceCodePanelProps<PartId extends string = string>
   status?: ReactNode
   explanation?: ReactNode
   codeLabel?: string
+  followActiveLine?: boolean
 }
 
 function joinClassNames(...classNames: Array<string | false | undefined>) {
@@ -24,12 +25,25 @@ export function SourceCodePanel<PartId extends string = string>({
   status,
   explanation,
   codeLabel,
+  followActiveLine = false,
   className,
   ...rest
 }: SourceCodePanelProps<PartId>) {
   const titleId = useId()
+  const editorRef = useRef<HTMLDivElement>(null)
+  const activeLineRef = useRef<HTMLDivElement>(null)
   const resolvedCodeLabel = codeLabel
     ?? (activeLine === null ? 'C 程式碼' : `C 程式碼，目前執行第 ${activeLine} 行`)
+
+  useEffect(() => {
+    const editor = editorRef.current
+    const line = activeLineRef.current
+    if (!followActiveLine || !editor || !line) return
+    const editorBounds = editor.getBoundingClientRect()
+    const lineBounds = line.getBoundingClientRect()
+    if (lineBounds.top < editorBounds.top) editor.scrollTop += lineBounds.top - editorBounds.top
+    else if (lineBounds.bottom > editorBounds.bottom) editor.scrollTop += lineBounds.bottom - editorBounds.bottom
+  }, [activeLine, followActiveLine])
 
   return (
     <section
@@ -41,11 +55,18 @@ export function SourceCodePanel<PartId extends string = string>({
         <h2 id={titleId}>{title}</h2>
         {status && <div className="source-code-panel__status">{status}</div>}
       </div>
-      <div className="source-code-panel__editor" aria-label={resolvedCodeLabel}>
+      <div
+        ref={editorRef}
+        className="source-code-panel__editor"
+        aria-label={resolvedCodeLabel}
+        role={followActiveLine ? 'region' : undefined}
+        tabIndex={followActiveLine ? 0 : undefined}
+      >
         {lines.map((line) => {
           const lineIsActive = line.lineNumber === activeLine
           return (
             <div
+              ref={lineIsActive && followActiveLine ? activeLineRef : undefined}
               className={joinClassNames(
                 'source-code-panel__line',
                 lineIsActive && 'is-active',

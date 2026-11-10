@@ -114,7 +114,7 @@ it('completes keyboard challenges and preserves an inspectable compile-error con
   fireEvent.keyDown(screen.getByRole('tab', { name: /可改指向，但不可透過它改值/ }), { key: 'ArrowRight' }); solve('30 20 30')
   fireEvent.keyDown(screen.getByRole('tab', { name: /固定指標仍可改值/ }), { key: 'End' }); solve('30')
   expect(screen.getByText('你已完成指標與 const。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 31, totalChallenges: 93, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 32, totalChallenges: 96, completedChallenges: 3 })
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')
   expect(screen.getByRole('combobox', { name: '指標宣告' })).toHaveValue('pointer-const')

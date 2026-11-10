@@ -143,7 +143,7 @@ it('completes independent keyboard challenges and restores all saved controls', 
   fireEvent.keyDown(screen.getByRole('tab', { name: /用讀取結果決定是否處理/ }), { key: 'ArrowRight' }); solve('4')
   fireEvent.keyDown(screen.getByRole('tab', { name: /讀取次數不一定等於行數/ }), { key: 'End' }); solve('0 1')
   expect(screen.getByText('你已完成檔案開啟與 fgets 讀取。')).toBeInTheDocument()
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 31, totalChallenges: 93, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 32, totalChallenges: 96, completedChallenges: 3 })
   expect(loadProgress().lessons['files-reading']?.guidedRunCompleted).toBe(false)
   view.unmount(); renderPage()
   expect(screen.getByLabelText('本單元學習進度')).toHaveTextContent('單元完成')

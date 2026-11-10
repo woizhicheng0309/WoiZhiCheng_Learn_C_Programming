@@ -29,6 +29,7 @@ export interface TracePlayer<Frame extends ExecutionFrame> {
   pause: () => void
   toggle: () => void
   next: () => void
+  jumpToNext: (matches: (frame: Frame) => boolean) => void
   reset: () => void
   replay: () => void
 }
@@ -154,6 +155,17 @@ export function useTracePlayer<Frame extends ExecutionFrame>({
     })
   }, [boundedIndex, config, frames, isTerminal, lastIndex])
 
+  const jumpToNext = useCallback((matches: (frame: Frame) => boolean) => {
+    if (atEnd) return
+    const target = frames.findIndex((candidate, index) => index > boundedIndex && (isTerminal(candidate) || matches(candidate)))
+    setPlayer({
+      frameIndex: target === -1 ? lastIndex : target,
+      playing: false,
+      framesIdentity: frames,
+      configIdentity: config,
+    })
+  }, [atEnd, boundedIndex, config, frames, isTerminal, lastIndex])
+
   const toggle = useCallback(() => {
     if (playing) pause()
     else play()
@@ -169,6 +181,7 @@ export function useTracePlayer<Frame extends ExecutionFrame>({
     pause,
     toggle,
     next,
+    jumpToNext,
     reset,
     replay,
   }), [
@@ -176,6 +189,7 @@ export function useTracePlayer<Frame extends ExecutionFrame>({
     atStart,
     boundedIndex,
     frame,
+    jumpToNext,
     next,
     pause,
     play,
