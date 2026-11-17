@@ -86,7 +86,7 @@ it('saves each core challenge independently and restores all chosen controls', (
   solve('2 5 3')
   fireEvent.keyDown(screen.getByRole('tab', { name: /同分紀錄的兩個邊界/ }), { key: 'ArrowRight' }); solve('11 13 15')
   fireEvent.keyDown(screen.getByRole('tab', { name: /同分時保留/ }), { key: 'End' }); solve('0')
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 37, totalChallenges: 111, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 38, totalChallenges: 114, completedChallenges: 3 })
   view.unmount(); renderLesson()
   expect(screen.getByRole('combobox', { name: '成績資料' })).toHaveValue('ordered')
   expect(screen.getByRole('slider', { name: '有效筆數' })).toHaveValue('4')

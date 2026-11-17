@@ -222,7 +222,7 @@ export function ScoreRangeProjectPage() {
         <h2>分數包含兩端，索引使用半開範圍。</h2>
         <p>after_equal 為 0 時，分數相等就往左縮小；為 1 時，分數相等仍向右尋找。空資料、查無紀錄與全體同分都沿用同一套邊界規則。</p>
         {count === 3 && <p role="status">你已完成成績排序與區間查詢。</p>}
-        <div><Link className="button button-secondary" to="/learn/projects/gradebook">上一課：成績資料管理綜合練習</Link><Link className="button button-primary" to="/learn">回到課程地圖</Link></div>
+        <div><Link className="button button-secondary" to="/learn/projects/gradebook">上一課：成績資料管理綜合練習</Link><Link className="button button-primary" to="/learn/projects/dynamic-records">下一課：動態容量紀錄管理</Link></div>
       </section>
     </div>
   )

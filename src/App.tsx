@@ -54,6 +54,7 @@ const RecordFileLessonPage = lazy(() => import('./pages/RecordFileLessonPage').t
 
 const GradebookProjectPage = lazy(() => import('./pages/GradebookProjectPage').then(module => ({ default: module.GradebookProjectPage })))
 
+const DynamicRecordsProjectPage = lazy(() => import('./pages/DynamicRecordsProjectPage').then(module => ({ default: module.DynamicRecordsProjectPage })))
 const ScoreRangeProjectPage = lazy(() => import('./pages/ScoreRangeProjectPage').then(module => ({ default: module.ScoreRangeProjectPage })))
 
 export default function App() {
@@ -105,6 +106,7 @@ export default function App() {
               <Route path="/learn/files/score-statistics" element={<ScoreFileLessonPage />} />
               <Route path="/learn/files/record-filter" element={<RecordFileLessonPage />} />
               <Route path="/learn/projects/gradebook" element={<GradebookProjectPage />} />
+              <Route path="/learn/projects/dynamic-records" element={<DynamicRecordsProjectPage />} />
               <Route path="/learn/projects/score-range" element={<ScoreRangeProjectPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

@@ -1,5 +1,11 @@
 // Stable challenge IDs shared by the course catalog and the lesson challenges.
 
+export const DYNAMIC_RECORDS_CHALLENGE_IDS = [
+  'dynamic-records-growth-count',
+  'dynamic-records-failure-preservation',
+  'dynamic-records-output-and-free',
+] as const
+
 export const SCORE_RANGE_CHALLENGE_IDS = [
   'score-range-duplicate-bounds',
   'score-range-stable-records',

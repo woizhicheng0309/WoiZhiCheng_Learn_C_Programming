@@ -121,6 +121,7 @@ describe('two-level course catalog', () => {
       'files-record-filter',
       'projects-gradebook',
       'projects-score-range',
+      'projects-dynamic-records',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -408,7 +409,7 @@ describe('two-level course catalog', () => {
   })
 
   it('adds the gradebook project after the required input, structures and search lessons', () => {
-    expect(getLessonsByTopicId('projects').map(lesson => lesson.id)).toEqual(['projects-gradebook', 'projects-score-range'])
+    expect(getLessonsByTopicId('projects').map(lesson => lesson.id)).toEqual(['projects-gradebook', 'projects-score-range', 'projects-dynamic-records'])
     expect(getLessonById('projects-gradebook')).toMatchObject({
       topicId: 'projects', moduleNumber: 10, lessonNumber: 1, order: 36,
       path: '/learn/projects/gradebook', status: 'available',
@@ -423,6 +424,15 @@ describe('two-level course catalog', () => {
       path: '/learn/projects/score-range', status: 'available',
       prerequisiteLessonIds: ['projects-gradebook', 'arrays-insertion-sort', 'arrays-binary-search'],
       requiredChallengeIds: SCORE_RANGE_CHALLENGE_IDS,
+    })
+  })
+
+  it('places dynamic record management after the memory prerequisites', () => {
+    expect(getLessonById('projects-dynamic-records')).toMatchObject({
+      topicId: 'projects', moduleNumber: 10, lessonNumber: 3, order: 38,
+      path: '/learn/projects/dynamic-records', status: 'available',
+      prerequisiteLessonIds: ['projects-gradebook', 'memory-reallocation', 'memory-ownership'],
+      requiredChallengeIds: ['dynamic-records-growth-count', 'dynamic-records-failure-preservation', 'dynamic-records-output-and-free'],
     })
   })
 

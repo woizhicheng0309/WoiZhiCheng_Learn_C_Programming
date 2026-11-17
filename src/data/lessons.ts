@@ -1,6 +1,7 @@
 import {
   GRADEBOOK_CHALLENGE_IDS,
   SCORE_RANGE_CHALLENGE_IDS,
+  DYNAMIC_RECORDS_CHALLENGE_IDS,
   RECORD_FILE_CHALLENGE_IDS,
   SCORE_FILE_CHALLENGE_IDS,
   INTEGER_PARSING_CHALLENGE_IDS,
@@ -91,6 +92,7 @@ export const LESSON_IDS = [
   'files-record-filter',
   'projects-gradebook',
   'projects-score-range',
+  'projects-dynamic-records',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -677,6 +679,15 @@ const lessons: readonly LessonDefinition[] = [
     status: 'available', path: '/learn/projects/score-range', estimatedMinutes: 35,
     prerequisiteLessonIds: ['projects-gradebook', 'arrays-insertion-sort', 'arrays-binary-search'],
     requiredChallengeIds: SCORE_RANGE_CHALLENGE_IDS,
+  },
+  {
+    id: 'projects-dynamic-records', topicId: 'projects', moduleNumber: 10, lessonNumber: 3, order: 38,
+    title: '動態容量紀錄管理', englishTitle: 'Dynamic Record List',
+    description: '逐筆加入結構紀錄，追蹤容量加倍、配置失敗後的資料保留，以及最後清理。',
+    concepts: ['有效筆數與容量', '動態結構清單', 'realloc 暫存指標', '失敗保留與釋放'],
+    status: 'available', path: '/learn/projects/dynamic-records', estimatedMinutes: 35,
+    prerequisiteLessonIds: ['projects-gradebook', 'memory-reallocation', 'memory-ownership'],
+    requiredChallengeIds: DYNAMIC_RECORDS_CHALLENGE_IDS,
   },
 ]
 
