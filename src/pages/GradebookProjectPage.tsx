@@ -214,7 +214,7 @@ export function GradebookProjectPage() {
         <h2>把有效範圍、查詢結果與輸出狀態分開。</h2>
         <p>used 決定哪些格子有資料。查詢結果決定報告是否寫入一筆。只有成功關檔的報告可下載。程式會以 w 模式建立或清空 lookup.txt，I/O 設定則由模擬器提供。</p>
         {count === 3 && <p role="status">你已完成成績資料管理綜合練習。</p>}
-        <div><Link className="button button-secondary" to="/learn/files/record-filter">上一課：多欄紀錄驗證與檔案輸出</Link><Link className="button button-primary" to="/learn">回到課程地圖</Link></div>
+        <div><Link className="button button-secondary" to="/learn/files/record-filter">上一課：多欄紀錄驗證與檔案輸出</Link><Link className="button button-primary" to="/learn/projects/score-range">下一課：成績排序與區間查詢</Link><Link className="button button-secondary" to="/learn">回到課程地圖</Link></div>
       </section>
     </div>
   )

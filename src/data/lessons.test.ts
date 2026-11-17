@@ -1,3 +1,4 @@
+import { SCORE_RANGE_CHALLENGE_IDS } from './challengeIds'
 import { GRADEBOOK_CHALLENGE_IDS } from './gradebookChallenges'
 import { RECORD_FILE_CHALLENGE_IDS } from './recordFileChallenges'
 import { SCORE_FILE_CHALLENGE_IDS } from './scoreFileChallenges'
@@ -119,6 +120,7 @@ describe('two-level course catalog', () => {
       'files-score-statistics',
       'files-record-filter',
       'projects-gradebook',
+      'projects-score-range',
     ])
     expect(getLessonById('variables-basics')).toMatchObject({
       path: '/learn/variables/basics',
@@ -406,12 +408,21 @@ describe('two-level course catalog', () => {
   })
 
   it('adds the gradebook project after the required input, structures and search lessons', () => {
-    expect(getLessonsByTopicId('projects').map(lesson => lesson.id)).toEqual(['projects-gradebook'])
+    expect(getLessonsByTopicId('projects').map(lesson => lesson.id)).toEqual(['projects-gradebook', 'projects-score-range'])
     expect(getLessonById('projects-gradebook')).toMatchObject({
       topicId: 'projects', moduleNumber: 10, lessonNumber: 1, order: 36,
       path: '/learn/projects/gradebook', status: 'available',
       prerequisiteLessonIds: ['files-record-filter', 'structures-arrays', 'arrays-search'],
       requiredChallengeIds: GRADEBOOK_CHALLENGE_IDS,
+    })
+  })
+
+  it('adds stable score sorting and range queries after the first project', () => {
+    expect(getLessonById('projects-score-range')).toMatchObject({
+      topicId: 'projects', moduleNumber: 10, lessonNumber: 2, order: 37,
+      path: '/learn/projects/score-range', status: 'available',
+      prerequisiteLessonIds: ['projects-gradebook', 'arrays-insertion-sort', 'arrays-binary-search'],
+      requiredChallengeIds: SCORE_RANGE_CHALLENGE_IDS,
     })
   })
 

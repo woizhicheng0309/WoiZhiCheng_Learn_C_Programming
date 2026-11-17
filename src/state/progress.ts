@@ -1,3 +1,4 @@
+import { DEFAULT_SCORE_RANGE_CONFIG, validateScoreRangeConfig, type ScoreRangeConfig } from '../domain/scoreRangeConfig'
 import {
   DEFAULT_GRADEBOOK_CONFIG,
   validateGradebookConfig,
@@ -353,6 +354,7 @@ export function createDefaultSavedState(id: LessonId): JsonObject | null {
   if (id === 'files-score-statistics') return { ...DEFAULT_SCORE_FILE_CONFIG }
   if (id === 'files-record-filter') return { ...DEFAULT_RECORD_FILE_CONFIG }
   if (id === 'projects-gradebook') return { ...DEFAULT_GRADEBOOK_CONFIG }
+  if (id === 'projects-score-range') return { ...DEFAULT_SCORE_RANGE_CONFIG }
   return null
 }
 
@@ -583,6 +585,11 @@ export function isSelectionSortSavedState(value: unknown): value is JsonObject &
   return validateSelectionSortConfig(value as SelectionSortConfig).length === 0
 }
 
+export function isScoreRangeSavedState(value: unknown): value is JsonObject & ScoreRangeConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  return validateScoreRangeConfig(value as ScoreRangeConfig).length === 0
+}
+
 export function isGradebookSavedState(value: unknown): value is JsonObject & GradebookConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   return validateGradebookConfig(value as GradebookConfig).length === 0
@@ -718,6 +725,7 @@ export function isSavedStateForLesson(
   if (id === 'files-score-statistics') return isScoreFileSavedState(value)
   if (id === 'files-record-filter') return isRecordFileSavedState(value)
   if (id === 'projects-gradebook') return isGradebookSavedState(value)
+  if (id === 'projects-score-range') return isScoreRangeSavedState(value)
   return value === null
 }
 

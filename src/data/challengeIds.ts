@@ -1,5 +1,11 @@
 // Stable challenge IDs shared by the course catalog and the lesson challenges.
 
+export const SCORE_RANGE_CHALLENGE_IDS = [
+  'score-range-duplicate-bounds',
+  'score-range-stable-records',
+  'score-range-empty-endpoint',
+] as const
+
 export const GRADEBOOK_CHALLENGE_IDS = [
   'gradebook-capacity-counts',
   'gradebook-duplicate-before-capacity',

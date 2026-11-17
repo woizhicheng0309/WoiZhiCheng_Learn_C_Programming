@@ -1,5 +1,6 @@
 import {
   GRADEBOOK_CHALLENGE_IDS,
+  SCORE_RANGE_CHALLENGE_IDS,
   RECORD_FILE_CHALLENGE_IDS,
   SCORE_FILE_CHALLENGE_IDS,
   INTEGER_PARSING_CHALLENGE_IDS,
@@ -89,6 +90,7 @@ export const LESSON_IDS = [
   'files-score-statistics',
   'files-record-filter',
   'projects-gradebook',
+  'projects-score-range',
 ] as const
 
 export type LessonId = (typeof LESSON_IDS)[number]
@@ -666,6 +668,15 @@ const lessons: readonly LessonDefinition[] = [
     status: 'available', path: '/learn/projects/gradebook', estimatedMinutes: 40,
     prerequisiteLessonIds: ['files-record-filter', 'structures-arrays', 'arrays-search'],
     requiredChallengeIds: GRADEBOOK_CHALLENGE_IDS,
+  },
+  {
+    id: 'projects-score-range', topicId: 'projects', moduleNumber: 10, lessonNumber: 2, order: 37,
+    title: '成績排序與區間查詢', englishTitle: 'Stable Score Sorting & Range Queries',
+    description: '整筆移動結構紀錄，再用兩次二分搜尋找出含同分紀錄的分數範圍。',
+    concepts: ['穩定插入排序', '結構紀錄移動', '二分邊界查找', '半開結果範圍'],
+    status: 'available', path: '/learn/projects/score-range', estimatedMinutes: 35,
+    prerequisiteLessonIds: ['projects-gradebook', 'arrays-insertion-sort', 'arrays-binary-search'],
+    requiredChallengeIds: SCORE_RANGE_CHALLENGE_IDS,
   },
 ]
 

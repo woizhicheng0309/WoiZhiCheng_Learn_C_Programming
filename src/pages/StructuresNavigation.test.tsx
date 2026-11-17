@@ -186,3 +186,15 @@ it('opens the project topic and links the capstone back to multi-field validatio
   await screen.findByRole('heading', { level: 1, name: /逐欄驗證/ })
   expect(screen.getByRole('link', { name: '下一課：成績資料管理綜合練習' })).toHaveAttribute('href', '/learn/projects/gradebook')
 })
+
+it('opens score range queries from the project topic and links adjacent projects', async () => {
+  render(<ProgressProvider><MemoryRouter initialEntries={['/learn']}><App /></MemoryRouter></ProgressProvider>)
+  const group = await screen.findByRole('region', { name: '綜合練習' })
+  fireEvent.click(within(group).getByRole('link', { name: /成績排序與區間查詢，未開始/ }))
+  const heading = await screen.findByRole('heading', { level: 1, name: /先整理成績/ })
+  await waitFor(() => expect(heading).toHaveFocus())
+  expect(document.title).toContain('成績排序與區間查詢')
+  fireEvent.click(screen.getByRole('link', { name: '上一課：成績資料管理綜合練習' }))
+  await screen.findByRole('heading', { level: 1, name: /從讀檔到查詢/ })
+  expect(screen.getByRole('link', { name: '下一課：成績排序與區間查詢' })).toHaveAttribute('href', '/learn/projects/score-range')
+})

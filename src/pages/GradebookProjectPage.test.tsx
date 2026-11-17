@@ -62,7 +62,7 @@ it('completes only the three core challenges and restores the chosen data and qu
   submit('1 0')
   fireEvent.keyDown(screen.getByRole('tab', { name: /滿表時先檢查/ }), { key: 'End' })
   submit('2')
-  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 36, totalChallenges: 108, completedChallenges: 3 })
+  expect(getCourseProgress(loadProgress())).toMatchObject({ totalLessons: 37, totalChallenges: 111, completedChallenges: 3 })
   view.unmount()
   renderLesson()
   expect(screen.getByRole('combobox', { name: '成績檔' })).toHaveValue('sparse')
